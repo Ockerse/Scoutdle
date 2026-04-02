@@ -131,7 +131,6 @@
         let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false;
         const maxGuesses = 10;
 
-        // SYNCED DATE HELPER (Always returns YYYYMMDD in UTC)
         function getSyncedDateString() {
             const now = new Date();
             return now.getUTCFullYear().toString() + 
@@ -149,7 +148,6 @@
                         return row;
                     });
 
-                    // SYNCED SEED LOGIC
                     const syncDate = getSyncedDateString();
                     const seed = parseInt(syncDate);
                     secretChar = characters[seed % characters.length];
@@ -168,7 +166,7 @@
         function updateTimer() {
             const now = new Date();
             const tomorrow = new Date();
-            tomorrow.setUTCHours(24, 0, 0, 0); // Sets timer to next UTC midnight
+            tomorrow.setUTCHours(24, 0, 0, 0); 
             
             const diff = tomorrow - now;
             if (diff <= 0) location.reload();
@@ -197,7 +195,7 @@
         }
 
         function submitGuess(charObj) {
-            if (guesses.includes(charObj.Name) || gameOver) return;
+            if (gameOver) return; // REMOVED: guesses.includes check
             guesses.push(charObj.Name);
             saveProgress();
             renderRow(charObj);
@@ -239,8 +237,8 @@
 
         function loadProgress(currentSyncDate) {
             const saved = JSON.parse(localStorage.getItem('scoutdle_save'));
-            // Check if saved date matches today's synced UTC date
             if (saved && saved.date === currentSyncDate) {
+                // If the same character was guessed twice, find and render all instances
                 saved.list.forEach(name => {
                     const c = characters.find(char => char.Name === name);
                     if (c) { 
