@@ -10,7 +10,8 @@
     <style>
         :root { 
             --green: #538d4e; --yellow: #b59f3b; --bg: #121213; 
-            --dark: #3a3a3c; --text: #ffffff; --blue: #00ccff; --red: #a34040; 
+            --dark: #3a3a3c; --text: #ffffff; --blue: #00ccff; --red: #ff4d4d; 
+            --cell-red: #3a3a3c; 
         }
 
         body { 
@@ -33,7 +34,6 @@
 
         #guess-counter { margin-bottom: 10px; font-size: 1rem; color: #818384; font-weight: bold; }
         
-        /* Hidden by default, only shown in endGame */
         #reopen-stats { 
             display: none; margin-bottom: 20px; background: var(--dark); 
             color: white; border: 1px solid var(--blue); padding: 10px 20px; 
@@ -87,7 +87,7 @@
         
         .green { background-color: var(--green); }
         .yellow { background-color: var(--yellow); }
-        .red { background-color: var(--dark); }
+        .red { background-color: var(--cell-red); }
 
         .timer-box { margin: 15px 0; font-size: 1.1rem; color: var(--blue); }
         .share-btn { background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
@@ -131,6 +131,14 @@
         let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false;
         const maxGuesses = 10;
 
+        // SYNCED DATE HELPER (Always returns YYYYMMDD in UTC)
+        function getSyncedDateString() {
+            const now = new Date();
+            return now.getUTCFullYear().toString() + 
+                   (now.getUTCMonth() + 1).toString().padStart(2, '0') + 
+                   now.getUTCDate().toString().padStart(2, '0');
+        }
+
         async function init() {
             Papa.parse("anime.csv", {
                 download: true, header: true, skipEmptyLines: true,
@@ -140,12 +148,15 @@
                         for (let key in r) { row[key.trim()] = r[key].trim(); }
                         return row;
                     });
-                    const today = new Date();
-                    const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+
+                    // SYNCED SEED LOGIC
+                    const syncDate = getSyncedDateString();
+                    const seed = parseInt(syncDate);
                     secretChar = characters[seed % characters.length];
+                    
                     fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.3 });
                     
-                    loadProgress();
+                    loadProgress(syncDate);
                     setupSearch();
                     updateCounter();
                     setInterval(updateTimer, 1000);
@@ -155,10 +166,13 @@
         }
 
         function updateTimer() {
-            const now = new Date(), tomorrow = new Date();
-            tomorrow.setHours(24, 0, 0, 0); 
+            const now = new Date();
+            const tomorrow = new Date();
+            tomorrow.setUTCHours(24, 0, 0, 0); // Sets timer to next UTC midnight
+            
             const diff = tomorrow - now;
             if (diff <= 0) location.reload();
+            
             const h = Math.floor(diff / 36e5), m = Math.floor((diff % 36e5) / 6e4), s = Math.floor((diff % 6e4) / 1e3);
             document.getElementById('timer').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }
@@ -188,8 +202,6 @@
             saveProgress();
             renderRow(charObj);
             updateCounter();
-            
-            // REMOVED: reopen-stats logic from here
             
             if (charObj.Name === secretChar.Name) endGame(true);
             else if (guesses.length >= maxGuesses) endGame(false);
@@ -222,26 +234,22 @@
         function updateCounter() { document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / ${maxGuesses}`; }
 
         function saveProgress() {
-            localStorage.setItem('scoutdle_save', JSON.stringify({ date: new Date().toDateString(), list: guesses }));
+            localStorage.setItem('scoutdle_save', JSON.stringify({ date: getSyncedDateString(), list: guesses }));
         }
 
-        function loadProgress() {
+        function loadProgress(currentSyncDate) {
             const saved = JSON.parse(localStorage.getItem('scoutdle_save'));
-            if (saved && saved.date === new Date().toDateString()) {
+            // Check if saved date matches today's synced UTC date
+            if (saved && saved.date === currentSyncDate) {
                 saved.list.forEach(name => {
                     const c = characters.find(char => char.Name === name);
                     if (c) { 
                         guesses.push(name); 
                         renderRow(c); 
-                        // Update gameOver state if saved list contains the winner or hit max
                         if (name === secretChar.Name || guesses.length >= maxGuesses) gameOver = true;
                     }
                 });
-                
-                // Only show button if the game was already over from a previous session
-                if (gameOver) {
-                    endGame(guesses.includes(secretChar.Name), true);
-                }
+                if (gameOver) endGame(guesses.includes(secretChar.Name), true);
             }
         }
 
@@ -249,22 +257,35 @@
             gameOver = true;
             document.getElementById('guessInput').disabled = true;
             
-            // SHOW the modal and the persistent button only now
             const area = document.getElementById('status-area');
+            const statusMsg = document.getElementById('status-msg');
+            const statsMsg = document.getElementById('stats-msg');
+            const charInfo = document.getElementById('char-info');
+            
             area.style.display = 'block';
             document.getElementById('reopen-stats').style.display = 'block';
-            
             area.className = won ? 'win' : 'loss';
 
-            document.getElementById('char-info').innerHTML = `<img src="images/${secretChar.Name}.png" class="char-reveal-img" onerror="this.style.display='none'">`;
-            document.getElementById('status-msg').innerHTML = won ? `MATCH DETECTED!<br><span style="color:var(--green)">${secretChar.Name}</span>` : `SCOUTER DEPLETED`;
-            document.getElementById('stats-msg').innerHTML = `<strong>${secretChar.Series}</strong><br>${won ? 'Mission Successful.' : 'The target escaped.'}`;
+            charInfo.innerHTML = `<img src="images/${secretChar.Name}.png" class="char-reveal-img" onerror="this.parentElement.innerHTML='<h1 style=color:var(--blue)>?</h1>'">`;
+            
+            if (won) {
+                statusMsg.innerHTML = `MATCH DETECTED!<br><span style="color:var(--green)">${secretChar.Name}</span>`;
+            } else {
+                statusMsg.innerHTML = `SCOUTER DEPLETED<br><span style="color:var(--red)">Target: ${secretChar.Name}</span>`;
+            }
+
+            statsMsg.innerHTML = `<strong>${secretChar.Series}</strong><br>${won ? 'Mission Successful.' : 'The target escaped.'}`;
 
             if (!silent) {
                 let stats = JSON.parse(localStorage.getItem('scoutdle_lifetime')) || { played: 0, wins: 0, streak: 0, max: 0 };
                 stats.played++;
-                if (won) { stats.wins++; stats.streak++; if (stats.streak > stats.max) stats.max = stats.streak; }
-                else { stats.streak = 0; }
+                if (won) { 
+                    stats.wins++; 
+                    stats.streak++; 
+                    if (stats.streak > stats.max) stats.max = stats.streak; 
+                } else { 
+                    stats.streak = 0; 
+                }
                 localStorage.setItem('scoutdle_lifetime', JSON.stringify(stats));
             }
             showStats();
@@ -280,7 +301,7 @@
 
         function share() {
             const rows = Array.from(document.querySelectorAll('.row:not(.labels)')).reverse();
-            let emoji = `Scoutdle ${new Date().toLocaleDateString()} (${guesses.length}/${maxGuesses})\n`;
+            let emoji = `Scoutdle UTC Day ${getSyncedDateString()} (${guesses.length}/${maxGuesses})\n`;
             rows.forEach(r => {
                 r.querySelectorAll('.cell').forEach(c => {
                     if (c.classList.contains('green')) emoji += "🟩";
