@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoutdle - Daily Anime Guessing Game</title>
+    <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+    
+    <style>
+        :root { 
+            --green: #538d4e; --yellow: #b59f3b; --bg: #121213; 
+            --dark: #3a3a3c; --text: #ffffff; --blue: #00ccff; --red: #a34040; 
+        }
+
+        body { 
+            background-color: var(--bg); color: var(--text); 
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif; 
+            display: flex; flex-direction: column; align-items: center; 
+            padding: 20px; margin: 0; overflow-x: hidden;
+        }
+
+        .header { 
+            font-size: 2.5rem; font-weight: bold; border-bottom: 2px solid var(--dark); 
+            margin-bottom: 20px; width: 100%; text-align: center; 
+            padding-bottom: 10px; letter-spacing: 3px; 
+        }
+
+        /* Animations */
+        @keyframes flipIn {
+            0% { transform: rotateX(-90deg); opacity: 0; }
+            100% { transform: rotateX(0); opacity: 1; }
+        }
+
+        /* UI Elements */
+        #guess-counter { margin-bottom: 10px; font-size: 1rem; color: #818384; font-weight: bold; }
+        
+        #reopen-stats { 
+            display: none; margin-bottom: 20px; background: var(--dark); 
+            color: white; border: 1px solid var(--blue); padding: 10px 20px; 
+            border-radius: 8px; cursor: pointer; font-weight: bold;
+        }
+
+        .search-box { position: relative; width: 100%; max-width: 400px; margin-bottom: 30px; }
+        
+        input { 
+            width: 100%; padding: 15px; border-radius: 8px; border: 2px solid var(--dark); 
+            background: #121213; color: white; font-size: 1.1rem; outline: none; box-sizing: border-box; 
+        }
+
+        #dropdown { 
+            position: absolute; top: 100%; left: 0; right: 0; 
+            background: #252526; border: 1px solid var(--dark); 
+            border-radius: 0 0 8px 8px; z-index: 1000; display: none; 
+            max-height: 250px; overflow-y: auto;
+        }
+        
+        .item { padding: 15px; cursor: pointer; border-bottom: 1px solid var(--dark); display: flex; justify-content: space-between; }
+        .item:hover { background: var(--dark); }
+
+        /* Stats & Result Modal */
+        #status-area { 
+            display: none; position: relative; margin-bottom: 25px; 
+            text-align: center; background: #252526; padding: 25px; 
+            border-radius: 12px; width: 100%; max-width: 450px; border: 2px solid var(--dark);
+        }
+        .win { border-color: var(--green) !important; }
+        .loss { border-color: var(--red) !important; }
+        
+        .char-reveal-img { width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--blue); margin-bottom: 15px; object-fit: cover; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 20px 0; border-top: 1px solid var(--dark); padding-top: 15px; }
+        .stat-box { font-size: 0.8rem; color: #818384; }
+        .stat-val { display: block; font-size: 1.5rem; color: white; font-weight: bold; }
+
+        /* The Grid */
+        .grid { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 900px; overflow-x: auto; padding-bottom: 20px; }
+        .row { display: grid; grid-template-columns: 160px 140px 80px 90px 70px 100px 100px; gap: 8px; }
+        
+        .cell { 
+            padding: 12px 2px; text-align: center; border-radius: 4px; 
+            font-weight: bold; font-size: 0.85rem; display: flex; 
+            align-items: center; justify-content: center; min-height: 50px;
+            animation: flipIn 0.6s ease forwards; opacity: 0;
+        }
+
+        /* Sticky Name Column for Mobile */
+        .row div:first-child { position: sticky; left: 0; z-index: 5; background: var(--bg); border-right: 2px solid var(--dark); }
+        .labels div { background: none !important; border: none !important; }
+        
+        .labels { font-size: 0.7rem; color: #818384; text-transform: uppercase; margin-bottom: 2px; font-weight: normal; }
+        
+        .green { background-color: var(--green); }
+        .yellow { background-color: var(--yellow); }
+        .red { background-color: var(--dark); }
+
+        .timer-box { margin: 15px 0; font-size: 1.1rem; color: var(--blue); }
+        .share-btn { background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="header">SCOUTDLE</div>
+
+    <div id="guess-counter">Guesses: 0 / 10</div>
+
+    <button id="reopen-stats" onclick="document.getElementById('status-area').style.display='block'">📊 SHOW STATS</button>
+
+    <div id="status-area">
+        <button style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; cursor:pointer; font-size:1.5rem;" onclick="this.parentElement.style.display='none'">×</button>
+        
+        <div id="char-info"></div>
+        
+        <h2 id="status-msg"></h2>
+        <p id="stats-msg"></p>
+
+        <div class="stats-grid">
+            <div class="stat-box"><span class="stat-val" id="stat-played">0</span>Played</div>
+            <div class="stat-box"><span class="stat-val" id="stat-winpct">0%</span>Win %</div>
+            <div class="stat-box"><span class="stat-val" id="stat-streak">0</span>Streak</div>
+            <div class="stat-box"><span class="stat-val" id="stat-max">0</span>Max</div>
+        </div>
+        
+        <div class="timer-box">Next Scout: <span id="timer">00:00:00</span></div>
+        <button class="share-btn" onclick="share()">SHARE RESULTS 📋</button>
+    </div>
+
+    <div class="search-box">
+        <input type="text" id="guessInput" placeholder="Enter character name..." autocomplete="off">
+        <div id="dropdown"></div>
+    </div>
+
+    <div id="gameGrid" class="grid">
+        <div class="row labels">
+            <div>Name</div><div>Series</div><div>Age</div><div>Height</div><div>Sex</div><div>Hair</div><div>Eyes</div>
+        </div>
+    </div>
+
+    <script>
+        let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false;
+        const maxGuesses = 10;
+
+        async function init() {
+            Papa.parse("anime.csv", {
+                download: true, header: true, skipEmptyLines: true,
+                complete: function(results) {
+                    characters = results.data.map(r => {
+                        let row = {};
+                        for (let key in r) { row[key.trim()] = r[key].trim(); }
+                        return row;
+                    });
+                    const today = new Date();
+                    const seed = today.getFullYear() * 10000 + (today.getMonth() + 1) * 100 + today.getDate();
+                    secretChar = characters[seed % characters.length];
+                    fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.3 });
+                    
+                    loadProgress();
+                    setupSearch();
+                    updateCounter();
+                    setInterval(updateTimer, 1000);
+                    updateTimer();
+                }
+            });
+        }
+
+        function updateTimer() {
+            const now = new Date(), tomorrow = new Date();
+            tomorrow.setHours(24, 0, 0, 0); 
+            const diff = tomorrow - now;
+            if (diff <= 0) location.reload();
+            const h = Math.floor(diff / 36e5), m = Math.floor((diff % 36e5) / 6e4), s = Math.floor((diff % 6e4) / 1e3);
+            document.getElementById('timer').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+
+        function setupSearch() {
+            const input = document.getElementById('guessInput'), dropdown = document.getElementById('dropdown');
+            input.addEventListener('input', () => {
+                if (gameOver) return;
+                const results = fuse.search(input.value);
+                dropdown.innerHTML = '';
+                if (input.value.length > 0 && results.length > 0) {
+                    dropdown.style.display = 'block';
+                    results.slice(0, 5).forEach(r => {
+                        const div = document.createElement('div');
+                        div.className = 'item';
+                        div.innerHTML = `<span>${r.item.Name}</span><small>${r.item.Series}</small>`;
+                        div.onclick = () => { submitGuess(r.item); dropdown.style.display = 'none'; input.value = ''; };
+                        dropdown.appendChild(div);
+                    });
+                } else dropdown.style.display = 'none';
+            });
+        }
+
+        function submitGuess(charObj) {
+            if (guesses.includes(charObj.Name) || gameOver) return;
+            guesses.push(charObj.Name);
+            saveProgress();
+            renderRow(charObj);
+            updateCounter();
+            document.getElementById('reopen-stats').style.display = 'block';
+            if (charObj.Name === secretChar.Name) endGame(true);
+            else if (guesses.length >= maxGuesses) endGame(false);
+        }
+
+        function renderRow(guess) {
+            const grid = document.getElementById('gameGrid'), row = document.createElement('div');
+            row.className = 'row';
+            const cols = ["Name", "Series", "Age", "Height", "Sex", "Hair", "Eyes"];
+            cols.forEach((col, i) => {
+                const cell = document.createElement('div'), gV = guess[col] || "", sV = secretChar[col] || "";
+                cell.className = 'cell';
+                cell.style.animationDelay = `${i * 0.1}s`;
+
+                if (gV.toLowerCase() === sV.toLowerCase()) cell.classList.add('green');
+                else if (col === "Series") cell.classList.add('red');
+                else if ((col === "Age" || col === "Height") && Math.abs(parseInt(gV) - parseInt(sV)) <= 15) cell.classList.add('yellow');
+                else cell.classList.add('red');
+
+                let display = gV;
+                if ((col === "Age" || col === "Height") && gV !== sV && !isNaN(parseInt(gV))) {
+                    display += parseInt(gV) < parseInt(sV) ? " ↑" : " ↓";
+                }
+                cell.innerText = display;
+                row.appendChild(cell);
+            });
+            grid.insertBefore(row, grid.children[1]);
+        }
+
+        function updateCounter() { document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / ${maxGuesses}`; }
+
+        function saveProgress() {
+            localStorage.setItem('scoutdle_save', JSON.stringify({ date: new Date().toDateString(), list: guesses }));
+        }
+
+        function loadProgress() {
+            const saved = JSON.parse(localStorage.getItem('scoutdle_save'));
+            if (saved && saved.date === new Date().toDateString()) {
+                saved.list.forEach(name => {
+                    const c = characters.find(char => char.Name === name);
+                    if (c) { guesses.push(name); renderRow(c); }
+                });
+                if (guesses.length > 0) document.getElementById('reopen-stats').style.display = 'block';
+                if (guesses.includes(secretChar.Name) || guesses.length >= maxGuesses) endGame(guesses.includes(secretChar.Name), true);
+            }
+        }
+
+        function endGame(won, silent = false) {
+            gameOver = true;
+            document.getElementById('guessInput').disabled = true;
+            const area = document.getElementById('status-area');
+            area.style.display = 'block';
+            area.className = won ? 'win' : 'loss';
+
+            document.getElementById('char-info').innerHTML = `<img src="images/${secretChar.Name}.png" class="char-reveal-img" onerror="this.style.display='none'">`;
+            document.getElementById('status-msg').innerHTML = won ? `MATCH DETECTED!<br><span style="color:var(--green)">${secretChar.Name}</span>` : `SCOUTER DEPLETED`;
+            document.getElementById('stats-msg').innerHTML = `<strong>${secretChar.Series}</strong><br>${won ? 'Mission Successful.' : 'The target escaped.'}`;
+
+            if (!silent) {
+                let stats = JSON.parse(localStorage.getItem('scoutdle_lifetime')) || { played: 0, wins: 0, streak: 0, max: 0 };
+                stats.played++;
+                if (won) { stats.wins++; stats.streak++; if (stats.streak > stats.max) stats.max = stats.streak; }
+                else { stats.streak = 0; }
+                localStorage.setItem('scoutdle_lifetime', JSON.stringify(stats));
+            }
+            showStats();
+        }
+
+        function showStats() {
+            const s = JSON.parse(localStorage.getItem('scoutdle_lifetime')) || { played: 0, wins: 0, streak: 0, max: 0 };
+            document.getElementById('stat-played').innerText = s.played;
+            document.getElementById('stat-winpct').innerText = Math.round((s.wins / s.played) * 100 || 0) + "%";
+            document.getElementById('stat-streak').innerText = s.streak;
+            document.getElementById('stat-max').innerText = s.max;
+        }
+
+        function share() {
+            const rows = Array.from(document.querySelectorAll('.row:not(.labels)')).reverse();
+            let emoji = `Scoutdle ${new Date().toLocaleDateString()} (${guesses.length}/${maxGuesses})\n`;
+            rows.forEach(r => {
+                r.querySelectorAll('.cell').forEach(c => {
+                    if (c.classList.contains('green')) emoji += "🟩";
+                    else if (c.classList.contains('yellow')) emoji += "🟨";
+                    else emoji += "⬛";
+                });
+                emoji += "\n";
+            });
+            navigator.clipboard.writeText(emoji + "\nhttps://scoutdle.gg").then(() => alert("Copied to clipboard!"));
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>

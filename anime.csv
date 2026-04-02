@@ -1,0 +1,434 @@
+Name,Series,Age,Height,Sex,Hair,Eyes
+Eren Yeager,Attack on Titan,19,183,M,Brown,Green
+Mikasa Ackerman,Attack on Titan,19,176,F,Black,Grey
+Levi Ackerman,Attack on Titan,34,160,M,Black,Grey
+Armin Arlert,Attack on Titan,19,163,M,Blonde,Blue
+Reiner Braun,Attack on Titan,21,185,M,Blonde,Gold
+Bertholdt Hoover,Attack on Titan,17,192,M,Black,Green
+Annie Leonhart,Attack on Titan,20,153,F,Blonde,Blue
+Jean Kirschtein,Attack on Titan,19,190,M,Ash Brown,Light Brown
+Sasha Blouse,Attack on Titan,20,168,F,Brown,Amber
+Conny Springer,Attack on Titan,19,158,M,Grey,Hazel
+Historia Reiss,Attack on Titan,19,145,F,Blonde,Blue
+Ymir,Attack on Titan,75,172,F,Brown,Brown
+Erwin Smith,Attack on Titan,38,188,M,Blonde,Blue
+Hange Zoë,Attack on Titan,30,170,NB,Brown,Brown
+Zeke Yeager,Attack on Titan,29,183,M,Blonde,Grey
+Gabi Braun,Attack on Titan,12,153,F,Brown,Brown
+Falco Grice,Attack on Titan,12,140,M,Blonde,Brown
+Pieck Finger,Attack on Titan,21,155,F,Black,Dark Brown
+Porco Galliard,Attack on Titan,20,175,M,Blonde,Grey
+Guts,Berserk,24,204,M,Black,Black
+Griffith,Berserk,24,178,M,White,Blue
+Casca,Berserk,24,165,F,Black,Brown
+Puck,Berserk,100,10,NB,Blue,Black
+Judeau,Berserk,19,168,M,Blonde,Green
+Pippin,Berserk,27,215,M,Black,Black
+Rickert,Berserk,19,155,M,Blonde,Brown
+Serpico,Berserk,25,178,M,Blonde,Blue
+Farnese,Berserk,19,162,F,Blonde,Blue
+Schierke,Berserk,13,142,F,Green,Brown
+Isidro,Berserk,14,150,M,Brown,Brown
+Skull Knight,Berserk,1000,215,M,None,White
+Void,Berserk,1000,250,M,None,None
+Nosferatu Zodd,Berserk,300,220,M,Black,Red
+Asta,Black Clover,16,155,M,Ash Grey,Green
+Noelle Silva,Black Clover,16,161,F,Silver,Pink
+Yami Sukehiro,Black Clover,28,183,M,Black,Black
+Ichigo Kurosaki,Bleach,17,181,M,Orange,Brown
+Rukia Kuchiki,Bleach,150,144,F,Black,Violet
+Uryu Ishida,Bleach,17,177,M,Black,Blue
+Orihime Inoue,Bleach,17,157,F,Orange,Grey
+Yasutora Sado (Chad),Bleach,17,197,M,Black,Brown
+Sosuke Aizen,Bleach,500,186,M,Brown,Brown
+Kisuke Urahara,Bleach,400,183,M,Blonde,Grey
+Toshiro Hitsugaya,Bleach,130,133,M,White,Teal
+Kenpachi Zaraki,Bleach,1000,202,M,Black,Black
+Byakuya Kuchiki,Bleach,250,180,M,Black,Slate
+Rangiku Matsumoto,Bleach,200,172,F,Blonde,Blue
+Yoruichi Shihoin,Bleach,500,156,F,Purple,Gold
+Grimmjow Jaegerjaquez,Bleach,300,186,M,Blue,Blue
+Ulquiorra Cifer,Bleach,400,169,M,Black,Green
+Genryusai Yamamoto,Bleach,2100,168,M,None,Red
+Nel Tu,Bleach,150,176,F,Green,Brown
+Kon,Bleach,2,26,M,Yellow,Brown
+Denji,Chainsaw Man,17,171,M,Blonde,Brown
+Makima,Chainsaw Man,1000,168,F,Red,Yellow
+Aki Hayakawa,Chainsaw Man,21,182,M,Black,Blue
+Power,Chainsaw Man,500,165,F,Strawberry Blonde,Yellow
+Himeno,Chainsaw Man,23,167,F,Black,Brown
+Kobeni Higashiyama,Chainsaw Man,20,155,F,Brown,Brown
+Kishibe,Chainsaw Man,50,185,M,Grey,Black
+Reze,Chainsaw Man,19,162,F,Purple,Green
+Quanxi,Chainsaw Man,500,182,F,White,Brown
+Angel Devil,Chainsaw Man,100,158,NB,Red,Red
+Beam,Chainsaw Man,100,178,M,Grey,Black
+Katana Man,Chainsaw Man,30,185,M,Black,Black
+Pochita,Chainsaw Man,2000,30,M,Orange,Black
+Asa Mitaka,Chainsaw Man,17,158,F,Black,Brown
+Lelouch vi Britannia,Code Geass,17,178,M,Black,Violet
+Suzaku Kururugi,Code Geass,17,176,M,Brown,Green
+C.C.,Code Geass,600,168,F,Green,Gold
+Kallen Stadtfeld,Code Geass,17,173,F,Red,Blue
+Nunnally vi Britannia,Code Geass,14,160,F,Brown,Violet
+Shirley Fenette,Code Geass,17,172,F,Orange,Yellow
+Euphemia li Britannia,Code Geass,16,166,F,Pink,Violet
+Cornelia li Britannia,Code Geass,27,180,F,Purple,Violet
+Schneizel el Britannia,Code Geass,28,200,M,Blonde,Blue
+Charles zi Britannia,Code Geass,63,197,M,White,Violet
+Jeremiah Gottwald,Code Geass,28,192,M,Blue,Orange
+Rolo Lamperouge,Code Geass,15,170,M,Brown,Red
+V.V.,Code Geass,1000,130,M,Blonde,Gold
+Bismarck Waldstein,Code Geass,40,215,M,Grey,Blue
+Spike Spiegel,Cowboy Bebop,27,185,M,Dark Green,Brown
+Jet Black,Cowboy Bebop,36,188,M,Black,Blue
+Faye Valentine,Cowboy Bebop,77,168,F,Purple,Green
+Edward Wong,Cowboy Bebop,13,150,NB,Red,Gold
+Ein,Cowboy Bebop,2,25,M,Brown,Brown
+Vicious,Cowboy Bebop,27,187,M,Silver,Grey
+Julia,Cowboy Bebop,27,168,F,Blonde,Blue
+Gren,Cowboy Bebop,28,175,NB,Blonde,Blue
+Laughing Bull,Cowboy Bebop,60,160,M,Grey,Brown
+Andy Von de Oniyate,Cowboy Bebop,29,190,M,Blonde,Blue
+Punch,Cowboy Bebop,35,178,M,Black,Brown
+Judy,Cowboy Bebop,25,165,F,Blonde,Blue
+Light Yagami,Death Note,17,179,M,Brown,Brown
+L Lawliet,Death Note,24,179,M,Black,Black
+Ryuk,Death Note,1000,230,M,Black,Yellow
+Misa Amane,Death Note,19,152,F,Blonde,Brown
+Near,Death Note,13,155,M,White,Grey
+Mello,Death Note,14,171,M,Blonde,Blue
+Teru Mikami,Death Note,27,185,M,Black,Black
+Touta Matsuda,Death Note,23,174,M,Black,Brown
+Soichiro Yagami,Death Note,48,181,M,Black,Brown
+Rem,Death Note,1000,210,F,White,Blue
+Watari,Death Note,71,175,M,White,Blue
+Naomi Misora,Death Note,28,171,F,Black,Brown
+Kiyomi Takada,Death Note,24,166,F,Black,Dark Brown
+Sidoh,Death Note,1000,250,M,None,Red
+Tanjiro Kamado,Demon Slayer,15,165,M,Black/Red,Dark Red
+Nezuko Kamado,Demon Slayer,14,153,F,Black/Orange,Pink
+Zenitsu Agatsuma,Demon Slayer,16,164,M,Blonde/Orange,Gold
+Inosuke Hashibira,Demon Slayer,15,164,M,Black/Blue,Green
+Kyojuro Rengoku,Demon Slayer,20,177,M,Yellow/Red,Gold
+Muzan Kibutsuji,Demon Slayer,1000,179,M,Black,Plum Red
+Bulla,Dragon Ball Super,1,50,F,Blue,Blue
+Pan,Dragon Ball Super,4,110,F,Black,Black
+Cabba,Dragon Ball Super,20,151,M,Black,Black
+Caulifla,Dragon Ball Super,20,154,F,Black,Black
+Kale,Dragon Ball Super,20,158,F,Black,Black
+Goku Black,Dragon Ball Super,30,175,M,Black,Grey
+Jaco,Dragon Ball Super,40,148,M,None,Yellow
+Broly (Super),Dragon Ball Super,48,239,M,Black,Black
+Hit,Dragon Ball Super,1000,193,M,None,Red
+Toppo,Dragon Ball Super,1600,205,M,None,Yellow
+Dyspo,Dragon Ball Super,1800,175,M,None,Yellow
+Jiren,Dragon Ball Super,4000,195,M,None,Black
+Zamasu,Dragon Ball Super,7000,173,M,White,Grey
+Beerus,Dragon Ball Super,60000,175,M,None,Yellow
+Whis,Dragon Ball Super,60000,230,NB,White,Violet
+Champa,Dragon Ball Super,60000,175,M,None,Yellow
+Vados,Dragon Ball Super,60000,235,NB,White,Violet
+Zeno,Dragon Ball Super,100000,60,NB,None,Pink
+Grand Priest,Dragon Ball Super,100000,130,NB,White,Purple
+Android 16,Dragon Ball Z,0,215,M,Orange,Blue
+Cell,Dragon Ball Z,6,213,M,None,Pink
+Goten,Dragon Ball Z,7,123,M,Black,Black
+Trunks (Kid),Dragon Ball Z,8,129,M,Purple,Blue
+Uub,Dragon Ball Z,10,141,M,Black,Black
+Dende,Dragon Ball Z,15,150,M,None,Black
+Gohan,Dragon Ball Z,21,176,M,Black,Black
+Future Trunks,Dragon Ball Z,21,170,M,Purple,Blue
+Videl,Dragon Ball Z,21,157,F,Black,Blue
+Piccolo,Dragon Ball Z,25,226,M,None,Black
+Android 18,Dragon Ball Z,30,169,F,Blonde,Blue
+Android 17,Dragon Ball Z,30,170,M,Black,Blue
+Raditz,Dragon Ball Z,30,185,M,Black,Black
+Bardock,Dragon Ball Z,35,178,M,Black,Black
+Chi-Chi,Dragon Ball Z,37,163,F,Black,Black
+Chiaotzu,Dragon Ball Z,40,138,M,None,Black
+Krillin,Dragon Ball Z,41,153,M,None,Black
+Bulma,Dragon Ball Z,41,165,F,Blue,Blue
+Mr. Satan,Dragon Ball Z,41,188,M,Black,Black
+Yajirobe,Dragon Ball Z,41,165,M,Black,Black
+Goku,Dragon Ball Z,42,175,M,Black,Black
+Tien Shinhan,Dragon Ball Z,44,187,M,None,Red
+Yamcha,Dragon Ball Z,44,183,M,Black,Black
+Vegeta,Dragon Ball Z,48,164,M,Black,Black
+Frieza,Dragon Ball Z,50,158,M,None,Red
+Nappa,Dragon Ball Z,50,208,M,None,Black
+Majin Buu,Dragon Ball Z,500,240,M,None,Red
+King Kai,Dragon Ball Z,80000,140,M,None,Black
+Shinji Ikari,Evangelion,14,157,M,Brown,Brown
+Rei Ayanami,Evangelion,14,152,F,Blue,Red
+Asuka Langley Soryu,Evangelion,14,157,F,Red,Blue
+Misato Katsuragi,Evangelion,29,163,F,Purple,Brown
+Gendo Ikari,Evangelion,48,183,M,Brown,Brown
+Ritsuko Akagi,Evangelion,30,170,F,Blonde,Hazel
+Kaworu Nagisa,Evangelion,15,165,M,Grey,Red
+Ryoji Kaji,Evangelion,30,182,M,Black,Brown
+Toji Suzuhara,Evangelion,14,160,M,Black,Blue
+Mari Illustrious Makinami,Evangelion,34,168,F,Brown,Teal
+Pen Pen,Evangelion,2,50,M,Blue,Black
+Maya Ibuki,Evangelion,24,160,F,Brown,Brown
+Kozo Fuyutsuki,Evangelion,60,178,M,Grey,Brown
+Yui Ikari,Evangelion,27,163,F,Brown,Brown
+Lucy Heartfilia,Fairy Tail,17,165,F,Blonde,Brown
+Natsu Dragneel,Fairy Tail,18,175,M,Pink,Black
+Erza Scarlet,Fairy Tail,19,169,F,Red,Brown
+Rin Tohsaka,Fate/stay night,17,159,F,Brown,Aqua
+Saber,Fate/stay night,25,154,F,Blonde,Green
+Alphonse Elric,FMA: B,15,233,M,None,None
+Edward Elric,FMA: B,16,149,M,Blonde,Gold
+Riza Hawkeye,FMA: B,25,168,F,Blonde,Brown
+Roy Mustang,FMA: B,30,173,M,Black,Black
+Edward Elric,FMA: B,16,149,M,Blonde,Gold
+Alphonse Elric,FMA: B,15,233,M,None,Red
+Winry Rockbell,FMA: B,16,165,F,Blonde,Blue
+Roy Mustang,FMA: B,30,173,M,Black,Black
+Riza Hawkeye,FMA: B,28,168,F,Blonde,Brown
+Maes Hughes,FMA: B,29,182,M,Black,Hazel
+Alex Louis Armstrong,FMA: B,45,220,M,Blonde,Blue
+Olivier Mira Armstrong,FMA: B,35,175,F,Blonde,Blue
+Ling Yao,FMA: B,15,170,M,Black,Black
+Lan Fan,FMA: B,15,160,F,Black,Black
+Scar,FMA: B,35,185,M,White,Red
+Van Hohenheim,FMA: B,450,180,M,Blonde,Gold
+Father,FMA: B,450,180,M,Blonde,Gold
+Envy,FMA: B,175,160,NB,Dark Green,Purple
+Greed,FMA: B,200,188,M,Black,Black
+Lust,FMA: B,250,170,F,Black,Purple
+Gluttony,FMA: B,150,145,M,None,White
+Pride,FMA: B,300,140,M,Black,Black
+Izumi Curtis,FMA: B,36,175,F,Black,Black
+Soma Yukihira,Food Wars!,16,171,M,Red,Yellow
+Erina Nakiri,Food Wars!,16,162,F,Blonde,Purple
+Fern,Frieren,18,162,F,Purple,Purple
+Stark,Frieren,18,175,M,Red,Red
+Frieren,Frieren,1000,148,F,Silver,Green
+Simon,Gurren Lagann,14,150,M,Dark Blue,Indigo
+Kamina,Gurren Lagann,18,184,M,Blue,Red
+Yoko Littner,Gurren Lagann,14,160,F,Red,Amber
+Nia Teppelin,Gurren Lagann,14,152,F,Blonde/Blue,Flower
+Kittan Bachika,Gurren Lagann,18,175,M,Blonde,Brown
+Viral,Gurren Lagann,1000,175,M,Blonde,Gold
+Lordgenome,Gurren Lagann,1000,210,M,Black,Red
+Rossiu Adai,Gurren Lagann,14,155,M,Black,Grey
+Leeron Littner,Gurren Lagann,24,185,NB,Pink,Green
+Gimmy Adai,Gurren Lagann,10,130,M,Blonde,Blue
+Darry Adai,Gurren Lagann,10,130,F,Blonde,Blue
+Dayakka Ritona,Gurren Lagann,24,195,M,Black,Black
+Gon Freecss,Hunter x Hunter,12,154,M,Black,Brown
+Killua Zoldyck,Hunter x Hunter,12,158,M,Silver,Blue
+Kurapika,Hunter x Hunter,17,171,M,Blonde,Grey
+Leorio Paradinight,Hunter x Hunter,19,193,M,Black,Brown
+Hisoka Morow,Hunter x Hunter,28,187,M,Red,Yellow
+Isaac Netero,Hunter x Hunter,110,155,M,Grey,Black
+Meruem,Hunter x Hunter,0,150,M,Purple,Violet
+Chrollo Lucilfer,Hunter x Hunter,26,177,M,Black,Grey
+Biscuit Krueger,Hunter x Hunter,57,137,F,Blonde,Blue
+Illumi Zoldyck,Hunter x Hunter,24,185,M,Black,Black
+Kite,Hunter x Hunter,30,190,M,White,Brown
+Feitan Portor,Hunter x Hunter,28,155,M,Black,Grey
+Machi Komacine,Hunter x Hunter,24,159,F,Pink,Blue
+Shizuku Murasaki,Hunter x Hunter,19,160,F,Black,Brown
+Ging Freecss,Hunter x Hunter,34,175,M,Black,Hazel
+Neferpitou,Hunter x Hunter,0,175,NB,White,Red
+Pouf,Hunter x Hunter,0,180,M,Blonde,Violet
+Youpi,Hunter x Hunter,0,220,M,None,Red
+Jonathan Joestar,JoJo Part 1,20,195,M,Blue,Blue
+Dio Brando,JoJo Part 1,21,188,M,Blonde,Amber
+Joseph Joestar,JoJo Part 2,18,195,M,Brown,Green
+Caesar Zeppeli,JoJo Part 2,20,186,M,Blonde,Green
+Kars,JoJo Part 2,102000,193,M,Purple,Red
+Jotaro Kujo,JoJo Part 3,17,195,M,Black,Green
+Noriaki Kakyoin,JoJo Part 3,17,178,M,Red,Purple
+Jean Pierre Polnareff,JoJo Part 3,24,185,M,Silver,Blue
+DIO,JoJo Part 3,122,195,M,Blonde,Red
+Josuke Higashikata,JoJo Part 4,16,180,M,Blue,Blue
+Yoshikage Kira,JoJo Part 4,33,175,M,Blonde,Blue
+Rohan Kishibe,JoJo Part 4,20,179,M,Green,Green
+Giorno Giovanna,JoJo Part 5,15,172,M,Blonde,Blue
+Bruno Bucciarati,JoJo Part 5,20,178,M,Black,Blue
+Diavolo,JoJo Part 5,33,191,M,Pink,Green
+Jolyne Cujoh,JoJo Part 6,19,174,F,Green/Black,Blue
+Enrico Pucci,JoJo Part 6,39,181,M,White,Amber
+Johnny Joestar,JoJo Part 7,19,175,M,Blonde,Blue
+Gyro Zeppeli,JoJo Part 7,24,185,M,Blonde,Blue
+Funny Valentine,JoJo Part 7,48,190,M,Blonde,Blue
+Josuke Higashikata (Gappy),JoJo Part 8,19,181,M,Black,Hazel
+Tooru,JoJo Part 8,80,175,M,Black,Black
+Jotaro Kujo,JoJo's Bizarre,17,195,M,Black,Green
+Dio Brando,JoJo's Bizarre,122,195,M,Blonde,Red
+Yuji Itadori,Jujutsu Kaisen,15,173,M,Pink,Brown
+Megumi Fushiguro,Jujutsu Kaisen,15,175,M,Black,Blue
+Nobara Kugisaki,Jujutsu Kaisen,16,160,F,Orange,Orange
+Satoru Gojo,Jujutsu Kaisen,28,190,M,White,Blue
+Megumin,Konosuba,14,150,F,Brown,Red
+Megumin,Konosuba,14,150,F,Brown,Red
+Kazuma Sato,Konosuba,16,165,M,Brown,Green
+Kazuma,Konosuba,16,165,M,Brown,Green
+Aqua,Konosuba,1000,158,F,Blue,Blue
+Kaguya Shinomiya,Love is War,17,158,F,Black,Red
+Miyuki Shirogane,Love is War,17,175,M,Blonde,Blue
+Chika Fujiwara,Love is War,17,154,F,Pink,Blue
+Marin Kitagawa,My Dress-Up Darling,15,164,F,Blonde,Pink
+Ochaco Uraraka,My Hero Academia,16,156,F,Brown,Brown
+Mirio Togata,My Hero Academia,18,181,M,Blonde,Blue
+All Might,My Hero Academia,49,220,M,Blonde,Blue
+Izuku Midoriya,My Hero Academia,16,166,M,Green,Green
+Katsuki Bakugo,My Hero Academia,16,172,M,Ash Blonde,Red
+Shoto Todoroki,My Hero Academia,16,176,M,White/Red,Grey/Blue
+Ochaco Uraraka,My Hero Academia,16,156,F,Brown,Brown
+Tenya Ida,My Hero Academia,16,179,M,Blue,Blue
+Tsuyu Asui,My Hero Academia,16,150,F,Dark Green,Black
+Momo Yaoyorozu,My Hero Academia,16,173,F,Black,Black
+Eijiro Kirishima,My Hero Academia,16,170,M,Red,Red
+Denki Kaminari,My Hero Academia,16,168,M,Blonde,Yellow
+Kyoka Jiro,My Hero Academia,16,154,F,Purple,Black
+Fumikage Tokoyami,My Hero Academia,16,158,M,Black,Red
+Mina Ashido,My Hero Academia,16,159,F,Pink,Yellow
+Shota Aizawa,My Hero Academia,31,183,M,Black,Black
+Endeavor,My Hero Academia,46,195,M,Red,Turquoise
+Hawks,My Hero Academia,23,172,M,Blonde,Gold
+Mirio Togata,My Hero Academia,18,181,M,Blonde,Blue
+Nejire Hado,My Hero Academia,18,164,F,Periwinkle,Blue
+Tamaki Amajiki,My Hero Academia,18,177,M,Indigo,Black
+Tomura Shigaraki,My Hero Academia,21,175,M,Light Blue,Red
+Dabi,My Hero Academia,24,176,M,Black,Turquoise
+Naruto Uzumaki,Naruto,17,166,M,Blonde,Blue
+Sasuke Uchiha,Naruto,17,168,M,Black,Black
+Sakura Haruno,Naruto,17,161,F,Pink,Green
+Kakashi Hatake,Naruto,30,181,M,Silver,Dark Grey
+Itachi Uchiha,Naruto,21,178,M,Black,Black
+Gaara,Naruto,17,166,M,Red,Teal
+Hinata Hyuga,Naruto,16,160,F,Dark Blue,Lavender
+Jiraiya,Naruto,54,191,M,White,Black
+Tsunade,Naruto,54,163,F,Blonde,Amber
+Orochimaru,Naruto,54,179,NB,Black,Amber
+Madara Uchiha,Naruto,120,179,M,Black,Black
+Might Guy,Naruto,30,184,M,Black,Black
+Shikamaru Nara,Naruto,17,176,M,Black,Brown
+Rock Lee,Naruto,17,172,M,Black,Black
+Kisame Hoshigaki,Naruto,32,195,M,Blue,White
+Nagato (Pain),Naruto,35,175,M,Red,Purple
+Konan,Naruto,35,169,F,Blue,Amber
+Killer Bee,Naruto,36,192,M,Blonde,Black
+Gamabunta,Naruto,100,1700,M,Red,Yellow
+Monkey D. Luffy,One Piece,19,174,M,Black,Black
+Roronoa Zoro,One Piece,21,181,M,Green,Black
+Nami,One Piece,20,170,F,Orange,Brown
+Usopp,One Piece,19,176,M,Black,Black
+Sanji,One Piece,21,180,M,Blonde,Blue
+Tony Tony Chopper,One Piece,17,90,M,Brown,Black
+Nico Robin,One Piece,30,188,F,Black,Brown
+Franky,One Piece,36,240,M,Blue,Black
+Brook,One Piece,90,277,M,White,None
+Jinbe,One Piece,46,301,M,Black,Black
+Trafalgar Law,One Piece,26,191,M,Black,Grey
+Portgas D. Ace,One Piece,20,185,M,Black,Black
+Boa Hancock,One Piece,31,191,F,Black,Blue
+Donquixote Doflamingo,One Piece,41,305,M,Blonde,Red
+Crocodile,One Piece,46,253,M,Black,Grey
+Buggy the Clown,One Piece,39,192,M,Blue,Black
+Dracule Mihawk,One Piece,43,198,M,Black,Yellow
+Shanks,One Piece,39,199,M,Red,Black
+Blackbeard,One Piece,40,344,M,Black,Brown
+Kaido,One Piece,59,710,M,Black,Yellow
+Big Mom,One Piece,68,880,F,Pink,Yellow
+Whitebeard,One Piece,72,666,M,None,Yellow
+Genos,One Punch Man,19,178,M,Blonde,Yellow
+Saitama,One Punch Man,25,175,M,Bald,Brown
+Saitama,One Punch Man,25,175,M,None,Brown
+Genos,One Punch Man,19,178,M,Blonde,Yellow
+Tatsumaki,One Punch Man,28,142,F,Green,Green
+Fubuki,One Punch Man,23,167,F,Black,Green
+Silver Fang,One Punch Man,81,165,M,Silver,Blue
+King,One Punch Man,29,187,M,Blonde,Blue
+Mumen Rider,One Punch Man,25,170,M,Brown,Brown
+Speed-o'-Sound Sonic,One Punch Man,25,174,M,Black,Grey
+Garou,One Punch Man,18,177,M,Silver,Yellow
+Puri-Puri Prisoner,One Punch Man,33,220,M,Black,Black
+Child Emperor,One Punch Man,10,135,M,Brown,Brown
+Atomic Samurai,One Punch Man,37,182,M,Black,Black
+Zombieman,One Punch Man,30,174,M,Black,Red
+Drive Knight,One Punch Man,25,185,M,Black,Red
+Boros,One Punch Man,1000,240,M,Pink,Blue
+Orochi,One Punch Man,500,270,M,None,Red
+Hachiman Hikigaya,Oregairu,17,172,M,Black,Black
+Yukino Yukinoshita,Oregairu,17,165,F,Black,Blue
+Ash Ketchum,Pokemon,10,140,M,Black,Brown
+Misty,Pokemon,12,155,F,Orange,Blue
+Brock,Pokemon,15,175,M,Brown,Black
+Cynthia,Pokemon,28,178,F,Blonde,Grey
+Gary Oak,Pokemon,10,140,M,Brown,Black
+Jessie,Pokemon,25,170,F,Magenta,Blue
+James,Pokemon,25,175,M,Blue,Green
+Professor Oak,Pokemon,65,175,M,Grey,Brown
+Dawn,Pokemon,10,145,F,Dark Blue,Blue
+May,Pokemon,10,145,F,Brown,Blue
+Serena,Pokemon,10,148,F,Honey,Blue
+Leon,Pokemon,25,180,M,Purple,Amber
+Steven Stone,Pokemon,25,177,M,Silver,Blue
+Giovanni,Pokemon,44,185,M,Brown,Black
+Erika,Pokemon,18,160,F,Black,Black
+Sabrina,Pokemon,21,165,F,Black,Red
+Blue,Pokemon,10,142,M,Brown,Green
+Red,Pokemon,10,145,M,Black,Red
+N,Pokemon,20,180,M,Green,Green
+Lusamine,Pokemon,41,180,F,Blonde,Green
+Rem,Re:Zero,17,154,F,Blue,Blue
+Subaru Natsuki,Re:Zero,18,173,M,Black,Brown
+Emilia,Re:Zero,100,164,F,Silver,Purple
+Elizabeth Liones,Seven Deadly Sins,16,162,F,Silver,Blue
+Meliodas,Seven Deadly Sins,3000,152,M,Blonde,Green
+Shana,Shakugan no Shana,15,141,F,Red,Red
+Rimuru Tempest,Slime Isekai,39,120,NB,Blue,Gold
+Shirayuki,Snow White / Red Hair,18,162,F,Red,Green
+Zen Wistaria,Snow White / Red Hair,19,176,M,Silver,Blue
+Holo,Spice and Wolf,600,155,F,Brown,Red
+Anya Forger,Spy x Family,6,99,F,Pink,Green
+Yor Forger,Spy x Family,27,170,F,Black,Red
+Loid Forger,Spy x Family,28,187,M,Blonde,Blue
+Kurisu Makise,Steins;Gate,18,160,F,Red,Blue
+Rintarou Okabe,Steins;Gate,18,177,M,Black,Brown
+Yui,Sword Art Online,10,120,F,Black,Black
+Leafa,Sword Art Online,15,172,F,Blonde,Green
+Silica,Sword Art Online,15,150,F,Brown,Red
+Yuuki Konno,Sword Art Online,15,155,F,Purple,Red
+Sinon,Sword Art Online,16,161,F,Blue,Blue
+Kirito,Sword Art Online,17,172,M,Black,Black
+Eugeo,Sword Art Online,17,182,M,Blonde,Green
+Argo,Sword Art Online,17,155,F,Brown,Brown
+Asuna,Sword Art Online,18,168,F,Orange,Hazel
+Lisbeth,Sword Art Online,18,160,F,Pink,Blue
+Alice Zuberg,Sword Art Online,19,165,F,Blonde,Blue
+Death Gun,Sword Art Online,20,175,M,Black,Red
+Klein,Sword Art Online,25,175,M,Red,Brown
+Heathcliff,Sword Art Online,28,190,M,Grey,Grey
+Agil,Sword Art Online,29,204,M,Bald,Brown
+Oberon,Sword Art Online,30,180,M,Blonde,Green
+Fanatio,Sword Art Online,100,175,F,Purple,Purple
+Cardinal,Sword Art Online,200,135,F,Brown,Brown
+Quinella,Sword Art Online,300,170,F,Silver,Silver
+Bercouli,Sword Art Online,300,210,M,Blue,Blue
+Touka Kirishima,Tokyo Ghoul,18,156,F,Blue,Blue
+Kaneki Ken,Tokyo Ghoul,19,170,M,White,Grey
+Violet Evergarden,Violet Evergarden,14,165,F,Blonde,Blue
+Mitsuha Miyamizu,Your Name,17,160,F,Black,Brown
+Taki Tachibana,Your Name,17,167,M,Brown,Brown
+Yugi Muto,Yu-Gi-Oh!,16,153,M,Tri-color,Amethyst
+Yami Yugi,Yu-Gi-Oh!,3000,153,M,Tri-color,Crimson
+Joey Wheeler,Yu-Gi-Oh!,16,178,M,Blonde,Brown
+Seto Kaiba,Yu-Gi-Oh!,16,186,M,Brown,Blue
+Téa Gardner,Yu-Gi-Oh!,16,165,F,Brown,Blue
+Tristan Taylor,Yu-Gi-Oh!,16,180,M,Brown,Brown
+Mai Valentine,Yu-Gi-Oh!,24,175,F,Blonde,Purple
+Maximillion Pegasus,Yu-Gi-Oh!,24,188,M,White,Blue
+Marik Ishtar,Yu-Gi-Oh!,16,180,M,White,Violet
+Bakura Ryou,Yu-Gi-Oh!,16,176,M,White,Brown
+Yami Bakura,Yu-Gi-Oh!,3000,176,M,White,Brown
+Ishizu Ishtar,Yu-Gi-Oh!,20,167,F,Black,Blue
+Mokuba Kaiba,Yu-Gi-Oh!,11,142,M,Black,Grey
+Bandit Keith,Yu-Gi-Oh!,26,190,M,Blonde,Blue
+Solomon Muto,Yu-Gi-Oh!,72,150,M,Grey,Brown
