@@ -21,15 +21,37 @@
             padding: 20px; margin: 0; overflow-x: hidden;
         }
 
+        @keyframes flipIn {
+            0% { transform: rotateX(-90deg); opacity: 0; }
+            100% { transform: rotateX(0); opacity: 1; }
+        }
+
+        #start-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(18, 18, 19, 0.95);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            z-index: 2000; text-align: center;
+        }
+
+        .menu-card {
+            background: #252526; padding: 40px; border-radius: 15px;
+            border: 2px solid var(--dark); max-width: 400px; width: 90%;
+        }
+
+        .menu-btn {
+            width: 100%; padding: 15px; margin: 10px 0; border: none;
+            border-radius: 8px; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; transition: transform 0.2s;
+        }
+
+        .daily-btn { background: var(--blue); color: #000; }
+        .unlimited-btn { background: var(--green); color: #fff; }
+        .menu-btn:hover { transform: scale(1.05); }
+
         .header { 
             font-size: 2.5rem; font-weight: bold; border-bottom: 2px solid var(--dark); 
             margin-bottom: 20px; width: 100%; text-align: center; 
             padding-bottom: 10px; letter-spacing: 3px; 
-        }
-
-        @keyframes flipIn {
-            0% { transform: rotateX(-90deg); opacity: 0; }
-            100% { transform: rotateX(0); opacity: 1; }
         }
 
         #guess-counter { margin-bottom: 10px; font-size: 1rem; color: #818384; font-weight: bold; }
@@ -41,7 +63,6 @@
         }
 
         .search-box { position: relative; width: 100%; max-width: 400px; margin-bottom: 30px; }
-        
         input { 
             width: 100%; padding: 15px; border-radius: 8px; border: 2px solid var(--dark); 
             background: #121213; color: white; font-size: 1.1rem; outline: none; box-sizing: border-box; 
@@ -82,7 +103,6 @@
 
         .row div:first-child { position: sticky; left: 0; z-index: 5; background: var(--bg); border-right: 2px solid var(--dark); }
         .labels div { background: none !important; border: none !important; }
-        
         .labels { font-size: 0.7rem; color: #818384; text-transform: uppercase; margin-bottom: 2px; font-weight: normal; }
         
         .green { background-color: var(--green); }
@@ -90,15 +110,26 @@
         .red { background-color: var(--cell-red); }
 
         .timer-box { margin: 15px 0; font-size: 1.1rem; color: var(--blue); }
-        .share-btn { background: var(--green); color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .share-btn, .retry-btn { border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; font-weight: bold; margin: 5px; }
+        .share-btn { background: var(--green); color: white; }
+        .retry-btn { background: var(--blue); color: black; }
     </style>
 </head>
 <body>
 
+    <div id="start-screen">
+        <div class="menu-card">
+            <h1 style="letter-spacing: 5px;">SCOUTDLE</h1>
+            <p id="loading-msg" style="color: #818384; margin-bottom: 30px;">Initializing Database...</p>
+            <div id="menu-options" style="display:none;">
+                <button class="menu-btn daily-btn" onclick="startGame('daily')">DAILY CHALLENGE</button>
+                <button class="menu-btn unlimited-btn" onclick="startGame('unlimited')">UNLIMITED MODE</button>
+            </div>
+        </div>
+    </div>
+
     <div class="header">SCOUTDLE</div>
-
     <div id="guess-counter">Guesses: 0 / 10</div>
-
     <button id="reopen-stats" onclick="document.getElementById('status-area').style.display='block'">📊 SHOW STATS</button>
 
     <div id="status-area">
@@ -112,8 +143,9 @@
             <div class="stat-box"><span class="stat-val" id="stat-streak">0</span>Streak</div>
             <div class="stat-box"><span class="stat-val" id="stat-max">0</span>Max</div>
         </div>
-        <div class="timer-box">Next Scout: <span id="timer">00:00:00</span></div>
-        <button class="share-btn" onclick="share()">SHARE RESULTS 📋</button>
+        <div id="timer-container" class="timer-box">Next Scout: <span id="timer">00:00:00</span></div>
+        <button class="share-btn" id="share-btn" onclick="share()">SHARE RESULTS 📋</button>
+        <button class="retry-btn" id="retry-btn" style="display:none;" onclick="resetUnlimited()">NEXT TARGET 🔄</button>
     </div>
 
     <div class="search-box">
@@ -129,6 +161,7 @@
 
     <script>
         let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false;
+        let gameMode = 'daily';
         const maxGuesses = 10;
 
         function getSyncedDateString() {
@@ -139,55 +172,110 @@
         }
 
         async function init() {
-            Papa.parse("anime.csv", {
-                download: true, header: true, skipEmptyLines: true,
+            // First try anime.csv, then fallback to the Google export name
+            const primaryPath = "anime.csv";
+            
+            Papa.parse(primaryPath, {
+                download: true,
+                header: false,
+                skipEmptyLines: true,
                 complete: function(results) {
-                    characters = results.data.map(r => {
-                        let row = {};
-                        for (let key in r) { row[key.trim()] = r[key].trim(); }
-                        return row;
+                    processData(results.data);
+                },
+                error: function() {
+                    console.warn("anime.csv not found, checking backup filename...");
+                    Papa.parse("Anime Character Data Setup Guide - Anime Character Data Setup Guide.csv", {
+                        download: true,
+                        header: false,
+                        skipEmptyLines: true,
+                        complete: function(results) { processData(results.data); },
+                        error: function() {
+                            document.getElementById('loading-msg').innerText = "File Not Found. Ensure 'anime.csv' is in your folder.";
+                        }
                     });
-
-                    const syncDate = getSyncedDateString();
-                    const seed = parseInt(syncDate);
-                    secretChar = characters[seed % characters.length];
-                    
-                    fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.3 });
-                    
-                    loadProgress(syncDate);
-                    setupSearch();
-                    updateCounter();
-                    setInterval(updateTimer, 1000);
-                    updateTimer();
                 }
             });
+            setInterval(updateTimer, 1000);
         }
+
+        function processData(data) {
+            characters = data.map(r => ({
+                "Name": r[0]?.trim() || "",
+                "Series": r[1]?.trim() || "",
+                "Age": r[2]?.trim() || "",
+                "Height": r[3]?.trim() || "",
+                "Sex": r[4]?.trim() || "",
+                "Hair": r[5]?.trim() || "",
+                "Eyes": r[6]?.trim() || ""
+            })).filter(c => c.Name && c.Name.toLowerCase() !== "name");
+
+            if (characters.length > 0) {
+                fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.3 });
+                document.getElementById('loading-msg').innerText = "Database Connected.";
+                document.getElementById('menu-options').style.display = 'block';
+            }
+        }
+
+        function startGame(mode) {
+            gameMode = mode;
+            document.getElementById('start-screen').style.display = 'none';
+            resetGameState();
+        }
+
+        function resetGameState() {
+            gameOver = false;
+            guesses = [];
+            updateCounter();
+            document.getElementById('guessInput').disabled = false;
+            document.getElementById('guessInput').value = '';
+            document.getElementById('status-area').style.display = 'none';
+            document.getElementById('reopen-stats').style.display = 'none';
+            
+            const grid = document.getElementById('gameGrid');
+            while (grid.children.length > 1) { grid.removeChild(grid.lastChild); }
+
+            if (gameMode === 'daily') {
+                const seed = parseInt(getSyncedDateString());
+                secretChar = characters[seed % characters.length];
+                loadProgress(getSyncedDateString());
+                document.getElementById('timer-container').style.display = 'block';
+                document.getElementById('retry-btn').style.display = 'none';
+            } else {
+                secretChar = characters[Math.floor(Math.random() * characters.length)];
+                document.getElementById('timer-container').style.display = 'none';
+                document.getElementById('retry-btn').style.display = 'inline-block';
+            }
+            setupSearch();
+        }
+
+        function resetUnlimited() { resetGameState(); }
 
         function updateTimer() {
             const now = new Date();
             const tomorrow = new Date();
             tomorrow.setUTCHours(24, 0, 0, 0); 
-            
             const diff = tomorrow - now;
-            if (diff <= 0) location.reload();
-            
+            if (diff <= 0 && gameMode === 'daily') location.reload();
             const h = Math.floor(diff / 36e5), m = Math.floor((diff % 36e5) / 6e4), s = Math.floor((diff % 6e4) / 1e3);
             document.getElementById('timer').innerText = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
         }
 
         function setupSearch() {
             const input = document.getElementById('guessInput'), dropdown = document.getElementById('dropdown');
-            input.addEventListener('input', () => {
-                if (gameOver) return;
-                const results = fuse.search(input.value);
+            const newInput = input.cloneNode(true);
+            input.parentNode.replaceChild(newInput, input);
+            
+            newInput.addEventListener('input', () => {
+                if (gameOver || !fuse) return;
+                const results = fuse.search(newInput.value);
                 dropdown.innerHTML = '';
-                if (input.value.length > 0 && results.length > 0) {
+                if (newInput.value.length > 0 && results.length > 0) {
                     dropdown.style.display = 'block';
                     results.slice(0, 5).forEach(r => {
                         const div = document.createElement('div');
                         div.className = 'item';
                         div.innerHTML = `<span>${r.item.Name}</span><small>${r.item.Series}</small>`;
-                        div.onclick = () => { submitGuess(r.item); dropdown.style.display = 'none'; input.value = ''; };
+                        div.onclick = () => { submitGuess(r.item); dropdown.style.display = 'none'; newInput.value = ''; };
                         dropdown.appendChild(div);
                     });
                 } else dropdown.style.display = 'none';
@@ -195,13 +283,13 @@
         }
 
         function submitGuess(charObj) {
-            if (gameOver) return; // REMOVED: guesses.includes check
+            if (gameOver) return;
             guesses.push(charObj.Name);
-            saveProgress();
+            if(gameMode === 'daily') saveProgress();
             renderRow(charObj);
             updateCounter();
             
-            if (charObj.Name === secretChar.Name) endGame(true);
+            if (charObj.Name.toLowerCase() === secretChar.Name.toLowerCase()) endGame(true);
             else if (guesses.length >= maxGuesses) endGame(false);
         }
 
@@ -220,7 +308,7 @@
                 else cell.classList.add('red');
 
                 let display = gV;
-                if ((col === "Age" || col === "Height") && gV !== sV && !isNaN(parseInt(gV))) {
+                if ((col === "Age" || col === "Height") && gV !== sV && !isNaN(parseInt(gV)) && !isNaN(parseInt(sV))) {
                     display += parseInt(gV) < parseInt(sV) ? " ↑" : " ↓";
                 }
                 cell.innerText = display;
@@ -231,21 +319,14 @@
 
         function updateCounter() { document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / ${maxGuesses}`; }
 
-        function saveProgress() {
-            localStorage.setItem('scoutdle_save', JSON.stringify({ date: getSyncedDateString(), list: guesses }));
-        }
+        function saveProgress() { localStorage.setItem('scoutdle_save', JSON.stringify({ date: getSyncedDateString(), list: guesses })); }
 
         function loadProgress(currentSyncDate) {
             const saved = JSON.parse(localStorage.getItem('scoutdle_save'));
             if (saved && saved.date === currentSyncDate) {
-                // If the same character was guessed twice, find and render all instances
                 saved.list.forEach(name => {
                     const c = characters.find(char => char.Name === name);
-                    if (c) { 
-                        guesses.push(name); 
-                        renderRow(c); 
-                        if (name === secretChar.Name || guesses.length >= maxGuesses) gameOver = true;
-                    }
+                    if (c) { guesses.push(name); renderRow(c); if (name === secretChar.Name || guesses.length >= maxGuesses) gameOver = true; }
                 });
                 if (gameOver) endGame(guesses.includes(secretChar.Name), true);
             }
@@ -254,36 +335,18 @@
         function endGame(won, silent = false) {
             gameOver = true;
             document.getElementById('guessInput').disabled = true;
-            
             const area = document.getElementById('status-area');
-            const statusMsg = document.getElementById('status-msg');
-            const statsMsg = document.getElementById('stats-msg');
-            const charInfo = document.getElementById('char-info');
-            
             area.style.display = 'block';
             document.getElementById('reopen-stats').style.display = 'block';
             area.className = won ? 'win' : 'loss';
-
-            charInfo.innerHTML = `<img src="images/${secretChar.Name}.png" class="char-reveal-img" onerror="this.parentElement.innerHTML='<h1 style=color:var(--blue)>?</h1>'">`;
-            
-            if (won) {
-                statusMsg.innerHTML = `MATCH DETECTED!<br><span style="color:var(--green)">${secretChar.Name}</span>`;
-            } else {
-                statusMsg.innerHTML = `SCOUTER DEPLETED<br><span style="color:var(--red)">Target: ${secretChar.Name}</span>`;
-            }
-
-            statsMsg.innerHTML = `<strong>${secretChar.Series}</strong><br>${won ? 'Mission Successful.' : 'The target escaped.'}`;
-
-            if (!silent) {
+            document.getElementById('char-info').innerHTML = `<img src="images/${secretChar.Name}.png" class="char-reveal-img" onerror="this.parentElement.innerHTML='<h1 style=color:var(--blue)>?</h1>'">`;
+            document.getElementById('status-msg').innerHTML = won ? `MATCH DETECTED!<br><span style="color:var(--green)">${secretChar.Name}</span>` : `SCOUTER DEPLETED<br><span style="color:var(--red)">Target: ${secretChar.Name}</span>`;
+            document.getElementById('stats-msg').innerHTML = `<strong>${secretChar.Series}</strong><br>${won ? 'Mission Successful.' : 'The target escaped.'}`;
+            if (!silent && gameMode === 'daily') {
                 let stats = JSON.parse(localStorage.getItem('scoutdle_lifetime')) || { played: 0, wins: 0, streak: 0, max: 0 };
                 stats.played++;
-                if (won) { 
-                    stats.wins++; 
-                    stats.streak++; 
-                    if (stats.streak > stats.max) stats.max = stats.streak; 
-                } else { 
-                    stats.streak = 0; 
-                }
+                if (won) { stats.wins++; stats.streak++; if (stats.streak > stats.max) stats.max = stats.streak; }
+                else { stats.streak = 0; }
                 localStorage.setItem('scoutdle_lifetime', JSON.stringify(stats));
             }
             showStats();
@@ -299,7 +362,7 @@
 
         function share() {
             const rows = Array.from(document.querySelectorAll('.row:not(.labels)')).reverse();
-            let emoji = `Scoutdle UTC Day ${getSyncedDateString()} (${guesses.length}/${maxGuesses})\n`;
+            let emoji = `Scoutdle ${gameMode.toUpperCase()} Mode (${guesses.length}/${maxGuesses})\n`;
             rows.forEach(r => {
                 r.querySelectorAll('.cell').forEach(c => {
                     if (c.classList.contains('green')) emoji += "🟩";
@@ -308,7 +371,7 @@
                 });
                 emoji += "\n";
             });
-            navigator.clipboard.writeText(emoji + "\nhttps://scoutdle.gg").then(() => alert("Copied to clipboard!"));
+            navigator.clipboard.writeText(emoji + "\nhttps://scoutdle.vercel.app").then(() => alert("Copied to clipboard!"));
         }
 
         window.onload = init;
