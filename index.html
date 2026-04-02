@@ -26,15 +26,14 @@
             padding-bottom: 10px; letter-spacing: 3px; 
         }
 
-        /* Animations */
         @keyframes flipIn {
             0% { transform: rotateX(-90deg); opacity: 0; }
             100% { transform: rotateX(0); opacity: 1; }
         }
 
-        /* UI Elements */
         #guess-counter { margin-bottom: 10px; font-size: 1rem; color: #818384; font-weight: bold; }
         
+        /* Hidden by default, only shown in endGame */
         #reopen-stats { 
             display: none; margin-bottom: 20px; background: var(--dark); 
             color: white; border: 1px solid var(--blue); padding: 10px 20px; 
@@ -58,7 +57,6 @@
         .item { padding: 15px; cursor: pointer; border-bottom: 1px solid var(--dark); display: flex; justify-content: space-between; }
         .item:hover { background: var(--dark); }
 
-        /* Stats & Result Modal */
         #status-area { 
             display: none; position: relative; margin-bottom: 25px; 
             text-align: center; background: #252526; padding: 25px; 
@@ -72,7 +70,6 @@
         .stat-box { font-size: 0.8rem; color: #818384; }
         .stat-val { display: block; font-size: 1.5rem; color: white; font-weight: bold; }
 
-        /* The Grid */
         .grid { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 900px; overflow-x: auto; padding-bottom: 20px; }
         .row { display: grid; grid-template-columns: 160px 140px 80px 90px 70px 100px 100px; gap: 8px; }
         
@@ -83,7 +80,6 @@
             animation: flipIn 0.6s ease forwards; opacity: 0;
         }
 
-        /* Sticky Name Column for Mobile */
         .row div:first-child { position: sticky; left: 0; z-index: 5; background: var(--bg); border-right: 2px solid var(--dark); }
         .labels div { background: none !important; border: none !important; }
         
@@ -107,19 +103,15 @@
 
     <div id="status-area">
         <button style="position:absolute; top:10px; right:15px; background:none; border:none; color:white; cursor:pointer; font-size:1.5rem;" onclick="this.parentElement.style.display='none'">×</button>
-        
         <div id="char-info"></div>
-        
         <h2 id="status-msg"></h2>
         <p id="stats-msg"></p>
-
         <div class="stats-grid">
             <div class="stat-box"><span class="stat-val" id="stat-played">0</span>Played</div>
             <div class="stat-box"><span class="stat-val" id="stat-winpct">0%</span>Win %</div>
             <div class="stat-box"><span class="stat-val" id="stat-streak">0</span>Streak</div>
             <div class="stat-box"><span class="stat-val" id="stat-max">0</span>Max</div>
         </div>
-        
         <div class="timer-box">Next Scout: <span id="timer">00:00:00</span></div>
         <button class="share-btn" onclick="share()">SHARE RESULTS 📋</button>
     </div>
@@ -196,7 +188,9 @@
             saveProgress();
             renderRow(charObj);
             updateCounter();
-            document.getElementById('reopen-stats').style.display = 'block';
+            
+            // REMOVED: reopen-stats logic from here
+            
             if (charObj.Name === secretChar.Name) endGame(true);
             else if (guesses.length >= maxGuesses) endGame(false);
         }
@@ -236,18 +230,30 @@
             if (saved && saved.date === new Date().toDateString()) {
                 saved.list.forEach(name => {
                     const c = characters.find(char => char.Name === name);
-                    if (c) { guesses.push(name); renderRow(c); }
+                    if (c) { 
+                        guesses.push(name); 
+                        renderRow(c); 
+                        // Update gameOver state if saved list contains the winner or hit max
+                        if (name === secretChar.Name || guesses.length >= maxGuesses) gameOver = true;
+                    }
                 });
-                if (guesses.length > 0) document.getElementById('reopen-stats').style.display = 'block';
-                if (guesses.includes(secretChar.Name) || guesses.length >= maxGuesses) endGame(guesses.includes(secretChar.Name), true);
+                
+                // Only show button if the game was already over from a previous session
+                if (gameOver) {
+                    endGame(guesses.includes(secretChar.Name), true);
+                }
             }
         }
 
         function endGame(won, silent = false) {
             gameOver = true;
             document.getElementById('guessInput').disabled = true;
+            
+            // SHOW the modal and the persistent button only now
             const area = document.getElementById('status-area');
             area.style.display = 'block';
+            document.getElementById('reopen-stats').style.display = 'block';
+            
             area.className = won ? 'win' : 'loss';
 
             document.getElementById('char-info').innerHTML = `<img src="images/${secretChar.Name}.png" class="char-reveal-img" onerror="this.style.display='none'">`;
