@@ -491,7 +491,7 @@
 
                 if (val.toLowerCase() === secretChar[key].toLowerCase()) {
                     status = 'green';
-                } else if ((key === 'Age' || key === 'Height' || key === 'Year') && Math.abs(parseInt(val) - parseInt(secretChar[key])) <= 10) {
+                } else if ((key === 'Age' || key === 'Height' || key === 'Year') && Math.abs(parseInt(val) - parseInt(secretChar[key])) <= 5) {
                     status = 'yellow';
                 }
 
