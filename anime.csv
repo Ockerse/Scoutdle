@@ -343,27 +343,27 @@ Nejire Hado,My Hero Academia,18,164,F,Periwinkle,Blue,149909,Action,2016
 Tamaki Amajiki,My Hero Academia,18,177,M,Indigo,Black,149910,Action,2016
 Tomura Shigaraki,My Hero Academia,21,175,M,Light Blue,Red,122103,Action,2016
 Dabi,My Hero Academia,24,176,M,Black,Turquoise,139262,Action,2016
-Naruto Uzumaki,Naruto,17,166,M,Blonde,Blue,17,Action,2002
-Sasuke Uchiha,Naruto,17,168,M,Black,Black,13,Action,2002
-Sakura Haruno,Naruto,17,161,F,Pink,Green,170683,Action,2002
+Naruto Uzumaki,Naruto,13,166,M,Blonde,Blue,17,Action,2002
+Sasuke Uchiha,Naruto,13,168,M,Black,Black,13,Action,2002
+Sakura Haruno,Naruto,13,161,F,Pink,Green,170683,Action,2002
 Kakashi Hatake,Naruto,30,181,M,Silver,Dark Grey,85,Action,2002
 Itachi Uchiha,Naruto,21,178,M,Black,Black,14,Action,2002
-Gaara,Naruto,17,166,M,Red,Teal,1662,Action,2002
-Hinata Hyuga,Naruto,16,160,F,Dark Blue,Lavender,1555,Action,2002
+Gaara,Naruto,13,166,M,Red,Teal,1662,Action,2002
+Hinata Hyuga,Naruto,13,160,F,Dark Blue,Lavender,1555,Action,2002
 Jiraiya,Naruto,54,191,M,White,Black,123429,Action,2002
 Tsunade,Naruto,54,163,F,Blonde,Amber,2767,Action,2002
 Orochimaru,Naruto,54,179,NB,Black,Amber,2455,Action,2002
 Madara Uchiha,Naruto,120,179,M,Black,Black,53901,Action,2002
 Might Guy,Naruto,30,184,M,Black,Black,307,Action,2002
 Shikamaru Nara,Naruto,17,176,M,Black,Brown,2007,Action,2002
-Rock Lee,Naruto,17,172,M,Black,Black,306,Action,2002
+Rock Lee,Naruto,13,172,M,Black,Black,306,Action,2002
 Kisame Hoshigaki,Naruto,32,195,M,Blue,White,2672,Action,2002
 Nagato (Pain),Naruto,35,175,M,Red,Purple,175901,Action,2002
 Konan,Naruto,35,169,F,Blue,Amber,83335,Action,2002
 Killer Bee,Naruto,36,192,M,Blonde,Black,18473,Action,2002
 Gamabunta,Naruto,100,1700,M,Red,Yellow,4223,Action,2002
-Neji Hyuga,Naruto,18,172,M,Brown,White,1694,Action,2002
-Ino Yamanaka,Naruto,17,162,F,Blonde,Blue,2009,Action,2002
+Neji Hyuga,Naruto,13,172,M,Brown,White,1694,Action,2002
+Ino Yamanaka,Naruto,13,162,F,Blonde,Blue,2009,Action,2002
 Yuko Aioi,Nichijou,16,152,F,Brown,Brown,10418,Comedy,2011
 Mio Naganohara,Nichijou,16,150,F,Blue,Blue,40081,Comedy,2011
 Mai Minakami,Nichijou,16,154,F,Black,Black,10421,Comedy,2011
@@ -509,7 +509,7 @@ Tsubaki Nakatsukasa,Soul Eater,16,169,F,Black,Indigo,8443,Action,2008
 Death the Kid,Soul Eater,14,145,M,Black,Gold,8455,Action,2008
 Franken Stein,Soul Eater,32,193,M,Grey,Green,62627,Action,2008
 Crona,Soul Eater,15,152,NB,Pink,Black,11919,Action,2008
-Medusa Gorgon,Soul Eater,400,185,F,Blonde,Gold,265606,Action,2008
+Medusa Gorgon,Soul Eater,400,185,F,Blonde,Gold,11924,Action,2008
 Blair,Soul Eater,20,172,F,Purple,Amber,8458,Action,2008
 Spirit Albarn,Soul Eater,32,183,M,Red,Blue,8462,Action,2008
 Lord Death,Soul Eater,1000,250,M,,Yellow,8457,Action,2008
@@ -533,7 +533,7 @@ Yuuki Konno,Sword Art Online,15,155,F,Purple,Red,64523,Fantasy,2012
 Sinon,Sword Art Online,16,161,F,Blue,Blue,55147,Fantasy,2012
 Kirito,Sword Art Online,17,172,M,Black,Black,36765,Fantasy,2012
 Eugeo,Sword Art Online,17,182,M,Blonde,Green,70899,Fantasy,2012
-Argo,Sword Art Online,17,155,F,Brown,Brown,249158,Fantasy,2012
+Argo,Sword Art Online,17,155,F,Brown,Brown,66645,Fantasy,2012
 Asuna,Sword Art Online,18,168,F,Orange,Hazel,36828,Fantasy,2012
 Lisbeth,Sword Art Online,18,160,F,Pink,Blue,43906,Fantasy,2012
 Alice Zuberg,Sword Art Online,19,165,F,Blonde,Blue,75450,Fantasy,2012
@@ -577,3 +577,13 @@ Jin,Samurai Champloo,20,179,M,Black,Brown,391,Action,2004
 Fuu Kasumi,Samurai Champloo,15,155,F,Brown,Brown,392,Action,2004
 Kariya Kagetoki,Samurai Champloo,45,182,M,Black,Black,40839,Action,2004
 Sara,Samurai Champloo,25,165,F,Brown,Brown,1835,Action,2004
+Decim,Death Parade,5,182,M,White,Blue,81853,Drama,2015
+Chiyuki,Death Parade,21,170,F,Black/White,Magenta,82037,Drama,2015
+Nona,Death Parade,82,145,F,Light Blue,Purple,118993,Drama,2015
+Ginti,Death Parade,30,185,M,Red/Gold,Yellow,118995,Drama,2015
+Quin,Death Parade,100,164,F,Brown,Green,120251,Drama2015
+Clavis,Death Parade,50,175,M,Green,Brown,120249,Drama2015
+Oculus,Death Parade,1000,160,M,Pink,Black,120255,Drama,2015
+Castra,Death Parade,60,155,F,Skull/Red,Amber,120253,Drama,2015
+Mayu Arita,Death Parade,18,163,F,Light Brown,Brown,123387,Drama,2015
+Harada,Death Parade,20,178,M,Black,Black,124744,Drama,2015
