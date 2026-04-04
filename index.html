@@ -145,7 +145,7 @@
             gap: 12px;
             width: 100%;
             max-width: 480px;
-            padding-bottom: 40px;
+            padding-bottom: 80px;
         }
 
         .char-card {
@@ -272,9 +272,10 @@
             border-radius: 25px;
             z-index: 4000;
             text-align: center;
-            width: 80%;
-            max-width: 350px;
+            width: 85%;
+            max-width: 380px;
             display: none;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
 
         .overlay {
@@ -299,6 +300,29 @@
             margin-top: 15px;
             cursor: pointer;
         }
+
+        /* --- VIEW BOARD UI --- */
+        #view-board-float {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2500;
+            display: none;
+        }
+
+        .float-btn {
+            background: var(--blue);
+            color: #000;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 800;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
     </style>
 </head>
 
@@ -316,11 +340,17 @@
     </div>
 
     <div class="overlay" id="overlay"></div>
+    
     <div id="status-area">
         <h2 id="status-msg"></h2>
         <p id="stats-msg"></p>
         <button class="share-btn" onclick="share()">SHARE RESULTS</button>
+        <button class="menu-btn" style="background: #333; color: white;" onclick="toggleResults(false)">VIEW BOARD</button>
         <button class="menu-btn unlimited-btn" onclick="location.reload()">MAIN MENU</button>
+    </div>
+
+    <div id="view-board-float">
+        <button class="float-btn" onclick="toggleResults(true)">Back to Stats</button>
     </div>
 
     <div class="header-container">
@@ -447,24 +477,18 @@
                 let status = '', val = guess[key];
                 const secretVal = secretChar[key];
 
-                // 1. Exact Match Check
                 if (val.toLowerCase() === secretVal.toLowerCase()) {
                     status = 'green';
                 } 
-                // 2. Numeric Range Logic
                 else if (key === 'Age' || key === 'Height' || key === 'Year') {
                     const guessNum = parseInt(val);
                     const targetNum = parseInt(secretVal);
 
                     if (!isNaN(guessNum) && !isNaN(targetNum)) {
-                        let range = 5; // Default for small numbers and Year
-
+                        let range = 5;
                         if (key !== 'Year') {
-                            if (targetNum >= 2000) {
-                                range = 1000;
-                            } else if (targetNum >= 150) {
-                                range = 50; // Requested update: target >= 150 gets range 50
-                            }
+                            if (targetNum >= 2000) range = 1000;
+                            else if (targetNum >= 150) range = 50;
                         }
 
                         if (Math.abs(guessNum - targetNum) <= range) {
@@ -473,7 +497,6 @@
                     }
                 }
 
-                // 3. Arrow indicators
                 if ((key === 'Age' || key === 'Height' || key === 'Year') && status !== 'green') {
                     const guessNum = parseInt(val);
                     const targetNum = parseInt(secretVal);
@@ -505,6 +528,19 @@
             document.getElementById('status-msg').innerText = won ? "VICTORY!" : "DEFEAT";
             document.getElementById('status-msg').style.color = won ? 'var(--green)' : 'var(--red)';
             document.getElementById('stats-msg').innerText = `Target: ${secretChar.Name} (${secretChar.Series})`;
+        }
+
+        // --- TOGGLE RESULTS VISIBILITY ---
+        function toggleResults(show) {
+            if (show) {
+                document.getElementById('overlay').style.display = 'block';
+                document.getElementById('status-area').style.display = 'block';
+                document.getElementById('view-board-float').style.display = 'none';
+            } else {
+                document.getElementById('overlay').style.display = 'none';
+                document.getElementById('status-area').style.display = 'none';
+                document.getElementById('view-board-float').style.display = 'block';
+            }
         }
 
         function share() {
