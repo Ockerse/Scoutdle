@@ -104,6 +104,7 @@
             font-weight: 800;
             cursor: pointer;
             text-transform: uppercase;
+            transition: all 0.2s;
         }
 
         .daily-btn { background: var(--blue); color: #000; }
@@ -190,21 +191,20 @@
             animation: flip 0.6s ease-in-out forwards;
         }
 
-        /* --- TEXT COLOR FIXED TO WHITE --- */
         .attr-label {
             font-size: 0.6rem;
-            color: #ffffff !important; /* Force white label */
+            color: #ffffff !important;
             text-transform: uppercase;
             margin-bottom: 2px;
             font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5); /* Helps visibility on bright colors */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
         }
 
         .attr-val { 
             font-weight: 700; 
             line-height: 1.1; 
-            color: #ffffff !important; /* Force white value */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            color: #ffffff !important;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.6);
         }
 
         .green { background-color: var(--green) !important; }
@@ -336,7 +336,7 @@
             <h1>SCOUTDLE</h1>
             <p id="loading-msg">Loading Anime Data...</p>
             <div id="menu-options" style="display:none;">
-                <button class="menu-btn daily-btn" onclick="startGame('daily')">Daily Challenge</button>
+                <button class="menu-btn daily-btn" id="daily-btn-text" onclick="startGame('daily')">Daily Challenge</button>
                 <button class="menu-btn unlimited-btn" onclick="startGame('unlimited')">Unlimited Mode</button>
             </div>
         </div>
@@ -391,34 +391,94 @@
                     })).filter(c => c.Name && c.Name.toLowerCase() !== "name");
 
                     fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.3 });
+                    checkDailyStatus();
                     document.getElementById('loading-msg').innerText = "Data Synced.";
                     document.getElementById('menu-options').style.display = 'block';
                 }
             });
         }
 
-        function startGame(mode) {
+        function getDailyKey() {
+            const now = new Date();
+            return `scoutdle_daily_${now.getUTCFullYear()}_${now.getUTCMonth() + 1}_${now.getUTCDate()}`;
+        }
+
+        function checkDailyStatus() {
+            const key = getDailyKey();
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                const data = JSON.parse(saved);
+                const btn = document.getElementById('daily-btn-text');
+                if (data.finished) {
+                    btn.innerText = "Daily Completed ✓";
+                    btn.style.opacity = "0.6";
+                } else {
+                    btn.innerText = "Continue Daily Challenge";
+                }
+            }
+        }
+
+        async function startGame(mode) {
             gameMode = mode;
-            document.getElementById('start-screen').style.display = 'none';
+            const dailyKey = getDailyKey();
+            const now = new Date();
+            const seed = parseInt(now.getUTCFullYear().toString() + (now.getUTCMonth() + 1) + now.getUTCDate());
+            
             if (mode === 'daily') {
-                const now = new Date();
-                const seed = parseInt(now.getUTCFullYear().toString() + (now.getUTCMonth() + 1) + now.getUTCDate());
                 secretChar = characters[seed % characters.length];
+                const saved = localStorage.getItem(dailyKey);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('start-screen').style.display = 'none';
+                    setupSearch();
+                    
+                    // Restore hints
+                    hintsGiven = data.hintsGiven || 0;
+                    if (hintsGiven > 0) {
+                        const hDisplay = document.getElementById('hint-text');
+                        if (hintsGiven >= 1) hDisplay.innerHTML = `HINT 1: Released in ${secretChar.Year}`;
+                        if (hintsGiven >= 2) hDisplay.innerHTML += `<br>HINT 2: Genre is ${secretChar.Genre}`;
+                        if (hintsGiven >= 3) {
+                            hDisplay.innerHTML += `<br>HINT 3: From the series "${secretChar.Series}"`;
+                            document.getElementById('hint-btn').style.display = 'none';
+                        }
+                    }
+
+                    // Silent Restore of guesses
+                    for (let i = 0; i < data.guesses.length; i++) {
+                        const isLast = (i === data.guesses.length - 1);
+                        await submitGuess(data.guesses[i], true, isLast && data.finished);
+                    }
+                    return;
+                }
             } else {
                 secretChar = characters[Math.floor(Math.random() * characters.length)];
             }
+            
+            document.getElementById('start-screen').style.display = 'none';
             setupSearch();
+        }
+
+        function saveProgress(finished = false) {
+            if (gameMode !== 'daily') return;
+            const data = {
+                guesses: guesses,
+                finished: finished,
+                hintsGiven: hintsGiven
+            };
+            localStorage.setItem(getDailyKey(), JSON.stringify(data));
         }
 
         function revealHint() {
             hintsGiven++;
             const hDisplay = document.getElementById('hint-text');
             if (hintsGiven === 1) hDisplay.innerText = `HINT 1: Released in ${secretChar.Year}`;
-            else if (hintsGiven === 2) hDisplay.innerText = `HINT 2: Genre is ${secretChar.Genre}`;
+            else if (hintsGiven === 2) hDisplay.innerHTML = `HINT 1: Released in ${secretChar.Year}<br>HINT 2: Genre is ${secretChar.Genre}`;
             else if (hintsGiven === 3) {
-                hDisplay.innerText = `HINT 3: From the series "${secretChar.Series}"`;
+                hDisplay.innerHTML = `HINT 1: Released in ${secretChar.Year}<br>HINT 2: Genre is ${secretChar.Genre}<br>HINT 3: From the series "${secretChar.Series}"`;
                 document.getElementById('hint-btn').style.display = 'none';
             }
+            saveProgress(gameOver);
         }
 
         function setupSearch() {
@@ -429,15 +489,10 @@
                 dropdown.innerHTML = '';
                 if (input.value.length > 0 && results.length > 0) {
                     dropdown.style.display = 'block';
-                    results.slice(0, 15).forEach((r, index) => {
+                    results.slice(0, 15).forEach((r) => {
                         const div = document.createElement('div');
                         div.className = 'item';
-                        div.innerHTML = `
-                            <div style="display: flex; flex-direction: column;">
-                                <span style="font-weight: 700;">${r.item.Name}</span>
-                                <small style="color: #888; font-size: 0.75rem;">${r.item.Series}</small>
-                            </div>
-                        `;
+                        div.innerHTML = `<div><span style="font-weight:700;">${r.item.Name}</span><br><small style="color:#888;">${r.item.Series}</small></div>`;
                         div.onclick = () => { submitGuess(r.item); dropdown.style.display = 'none'; input.value = ''; };
                         dropdown.appendChild(div);
                     });
@@ -445,11 +500,11 @@
             });
         }
 
-        async function submitGuess(charObj) {
-            if (gameOver) return;
-            guesses.push(charObj);
+        async function submitGuess(charObj, isRestoring = false, showEnd = false) {
+            if (gameOver && !isRestoring) return;
+            if (!isRestoring) guesses.push(charObj);
+            
             document.getElementById('guess-counter').innerText = `Guess ${guesses.length} of 10`;
-
             if (guesses.length >= 3 && hintsGiven < 3) document.getElementById('hint-btn').style.display = 'block';
 
             let img = 'https://via.placeholder.com/50/222/fff?text=?';
@@ -462,10 +517,20 @@
             } catch (e) { }
 
             renderCard(charObj, img);
-            if (charObj.Name.toLowerCase() === secretChar.Name.toLowerCase()) {
-                setTimeout(() => endGame(true), 1500);
-            } else if (guesses.length >= 10) {
-                setTimeout(() => endGame(false), 1500);
+
+            const isCorrect = charObj.Name.toLowerCase() === secretChar.Name.toLowerCase();
+            const outOfGuesses = guesses.length >= 10;
+
+            if (isCorrect || outOfGuesses) {
+                gameOver = true;
+                if (!isRestoring) {
+                    saveProgress(true);
+                    setTimeout(() => endGame(isCorrect), 1200);
+                } else if (showEnd) {
+                    endGame(isCorrect);
+                }
+            } else {
+                if (!isRestoring) saveProgress(false);
             }
         }
 
@@ -473,54 +538,58 @@
             const grid = document.getElementById('gameGrid');
             const card = document.createElement('div');
             card.className = 'char-card';
-
             const cols = ["Series", "Genre", "Year", "Age", "Height", "Sex", "Hair", "Eyes"];
             let attrHtml = cols.map((key, index) => {
                 let status = '', val = guess[key];
-                const secretVal = secretChar[key];
-
-                if (val.toLowerCase() === secretVal.toLowerCase()) {
-                    status = 'green';
-                } 
-                else if (key === 'Age' || key === 'Height' || key === 'Year') {
-                    const guessNum = parseInt(val);
-                    const targetNum = parseInt(secretVal);
-
-                    if (!isNaN(guessNum) && !isNaN(targetNum)) {
-                        let range = 5;
-                        if (key !== 'Year') {
-                            if (targetNum >= 2000) range = 1000;
-                            else if (targetNum >= 150) range = 50;
-                        }
-
-                        if (Math.abs(guessNum - targetNum) <= range) {
-                            status = 'yellow';
-                        }
+                const sVal = secretChar[key];
+                if (val.toLowerCase() === sVal.toLowerCase()) status = 'green';
+                else if (['Age', 'Height', 'Year'].includes(key)) {
+                    const gN = parseInt(val), tN = parseInt(sVal);
+                    if (!isNaN(gN) && !isNaN(tN)) {
+                        let r = 5;
+                        if (key === 'Age') r = 5; else if (key === 'Height') r = 10; else r = 5;
+                        if (Math.abs(gN - tN) <= r) status = 'yellow';
+                        val += gN < tN ? " ↑" : " ↓";
                     }
                 }
-
-                if ((key === 'Age' || key === 'Height' || key === 'Year') && status !== 'green') {
-                    const guessNum = parseInt(val);
-                    const targetNum = parseInt(secretVal);
-                    if (!isNaN(guessNum) && !isNaN(targetNum)) {
-                        val += guessNum < targetNum ? " ↑" : " ↓";
-                    }
-                }
-
-                return `<div class="attr-box ${status}" style="animation-delay: ${index * 0.1}s">
-                            <span class="attr-label">${key}</span>
-                            <span class="attr-val">${val}</span>
-                        </div>`;
+                return `<div class="attr-box ${status}" style="animation-delay: ${index * 0.1}s"><span class="attr-label">${key}</span><span class="attr-val">${val}</span></div>`;
             }).join('');
-
-            card.innerHTML = `
-                <div class="char-header">
-                    <img src="${img}" class="char-thumb">
-                    <div class="char-name">${guess.Name}</div>
-                </div>
-                <div class="attr-grid">${attrHtml}</div>
-            `;
+            card.innerHTML = `<div class="char-header"><img src="${img}" class="char-thumb"><div class="char-name">${guess.Name}</div></div><div class="attr-grid">${attrHtml}</div>`;
             grid.prepend(card);
+        }
+
+        function getEmojiGrid() {
+            return guesses.map(guess => {
+                const cols = ["Series", "Genre", "Year", "Age", "Height", "Sex", "Hair", "Eyes"];
+                return cols.map(key => {
+                    const v = guess[key], sV = secretChar[key];
+                    if (v.toLowerCase() === sV.toLowerCase()) return '🟩';
+                    if (['Age', 'Height', 'Year'].includes(key)) {
+                        const gN = parseInt(v), tN = parseInt(sV);
+                        let r = 5;
+                        if (Math.abs(gN - tN) <= r) return '🟨';
+                    }
+                    return '⬛';
+                }).join('');
+            }).join('\n');
+        }
+
+        function share() {
+            const won = guesses[guesses.length - 1].Name.toLowerCase() === secretChar.Name.toLowerCase();
+            const score = won ? guesses.length : 'X';
+            const text = `Scoutdle ${gameMode.toUpperCase()} ${score}/10\n\n${getEmojiGrid()}\n\nhttps://scoutdle.vercel.app`;
+            if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
+                navigator.share({ title: 'Scoutdle Results', text: text }).catch(() => copyToClipboard(text));
+            } else copyToClipboard(text);
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.querySelector('.share-btn');
+                const old = btn.innerText;
+                btn.innerText = "COPIED!";
+                setTimeout(() => btn.innerText = old, 2000);
+            });
         }
 
         function endGame(won) {
@@ -533,24 +602,12 @@
         }
 
         function toggleResults(show) {
-            if (show) {
-                document.getElementById('overlay').style.display = 'block';
-                document.getElementById('status-area').style.display = 'block';
-                document.getElementById('view-board-float').style.display = 'none';
-            } else {
-                document.getElementById('overlay').style.display = 'none';
-                document.getElementById('status-area').style.display = 'none';
-                document.getElementById('view-board-float').style.display = 'block';
-            }
-        }
-
-        function share() {
-            let text = `Scoutdle ${gameMode.toUpperCase()}\nGuesses: ${guesses.length}/10\nhttps://scoutdle.vercel.app`;
-            navigator.clipboard.writeText(text).then(() => alert("Results copied!"));
+            document.getElementById('overlay').style.display = show ? 'block' : 'none';
+            document.getElementById('status-area').style.display = show ? 'block' : 'none';
+            document.getElementById('view-board-float').style.display = show ? 'none' : 'block';
         }
 
         window.onload = init;
     </script>
 </body>
-
 </html>
