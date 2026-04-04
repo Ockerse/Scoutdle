@@ -96,7 +96,7 @@ Jet Black,Cowboy Bebop,36,188,M,Black,Blue,3,Action,2001
 Faye Valentine,Cowboy Bebop,77,168,F,Purple,Green,2,Action,2001
 Edward Wong,Cowboy Bebop,13,150,NB,Red,Gold,16,Action,2001
 Ein,Cowboy Bebop,2,25,M,Brown,Brown,4,Action,2001
-Vicious,Cowboy Bebop,27,187,M,Silver,Grey,275015,Action,2001
+Vicious,Cowboy Bebop,27,187,M,Silver,Grey,2734,Action,2001
 Julia,Cowboy Bebop,27,168,F,Blonde,Blue,2735,Action,2001
 Gren,Cowboy Bebop,28,175,NB,Blonde,Blue,40936,Action,2017
 Goku Black,Dragon Ball Super,30,175,M,Black,Grey,141729,Action,2017
@@ -119,7 +119,7 @@ Cell,Dragon Ball Z,6,213,M,Green,Pink,3908,Action,1989
 Goten,Dragon Ball Z,7,123,M,Black,Black,2551,Action,1989
 Trunks (Kid),Dragon Ball Z,8,129,M,Purple,Blue,2707,Action,1989
 Uub,Dragon Ball Z,10,141,M,Black,Black,155240,Action,1989
-Dende,Dragon Ball Z,15,150,M,Green,Black,155240,Action,1989
+Dende,Dragon Ball Z,15,150,M,Green,Black,6273,Action,1989
 Gohan,Dragon Ball Z,21,176,M,Black,Black,178565,Action,1989
 Future Trunks,Dragon Ball Z,21,170,M,Purple,Blue,143844,Action,1989
 Videl,Dragon Ball Z,21,157,F,Black,Blue,2111,Action,1989
@@ -234,8 +234,16 @@ Leeron Littner,Gurren Lagann,24,185,NB,Pink,Green,2376,Adventure,2007
 Gimmy Adai,Gurren Lagann,10,130,M,Blonde,Blue,3432,Adventure,2007
 Darry Adai,Gurren Lagann,10,130,F,Blonde,Blue,3433,Adventure,2007
 Dayakka Ritona,Gurren Lagann,24,195,M,Black,Black,18644,Sports,2014
-Shoyo Hinata,Haikyu!!,16,164,M,Orange,Brown,279894,Sports,2014
-Tobio Kageyama,Haikyu!!,16,181,M,Black,Blue,64771,Action,2023
+Yuu Nishinoya,Haikyuu!!,17,160,M,Brown/Blonde,Brown,67327,Sports,2014
+Tooru Oikawa,Haikyuu!!,18,184,M,Brown,Brown,71611,Sports,2014
+Kei Tsukishima,Haikyuu!!,16,190,M,Blonde,Golden,67329,Sports,2014
+Shouyou Hinata,Haikyuu!!,16,164,M,Orange,Brown,64769,Sports,2014
+Tobio Kageyama,Haikyuu!!,16,181,M,Black,Blue/Grey,64771,Sports,2014
+Tetsurou Kuroo,Haikyuu!!,18,188,M,Black,Hazel,71269,Sports,2014
+Koutarou Bokuto,Haikyuu!!,18,185,M,Silver/Black,Gold,101165,Sports,2014
+Kenma Kozume,Haikyuu!!,17,170,M,Blonde/Black,Golden,71267,Sports,2014
+Koushi Sugawara,Haikyuu!!,18,174,M,Grey,Brown,67321,Sports,2014
+Wakatoshi Ushijima,Haikyuu!!,18,189,M,Olive/Brown,Olive,76816,Sports,2014
 Gabimaru,Hell's Paradise,16,150,M,White,Red,171437,Action,2023
 Sagiri,Hell's Paradise,17,170,F,Brown,Brown,241432,Action,2011
 Gon Freecss,Hunter x Hunter,12,154,M,Black,Brown,30,Action,2011
@@ -391,6 +399,12 @@ Usopp,One Piece,19,176,M,Black,Black,724,Action,1999
 Sanji,One Piece,21,180,M,Blonde,Blue,305,Action,1999
 Tony Tony Chopper,One Piece,17,90,M,Brown,Black,309,Action,1999
 Nico Robin,One Piece,30,188,F,Black,Brown,61,Action,1999
+Akainu,One Piece,55,306,M,Black,Brown,22687,Action,1999
+Jewelry Bonney,One Piece,12,174,F,Pink,Brown,20295,Action,1999
+Kizaru,One Piece,58,302,M,Black,Amber,21093,Action,1999
+Marshall D. Teach (Blackbeard),One Piece,40,344,M,Black,Brown,3331,Action,1999
+Edward Newgate (Whitebeard),One Piece,72,666,M,White,Yellow,2751,Action,1999
+Monkey D. Garp,One Piece,78,287,M,White,Brown,8064,Action,1999
 Franky,One Piece,36,240,M,Blue,Black,64,Action,1999
 Brook,One Piece,90,277,M,White,,5627,Action,1999
 Jinbe,One Piece,46,301,M,Black,Black,18938,Action,1999
@@ -399,6 +413,7 @@ Portgas D. Ace,One Piece,20,185,M,Black,Black,2072,Action,1999
 Boa Hancock,One Piece,31,191,F,Black,Blue,16342,Action,1999
 Donquixote Doflamingo,One Piece,41,305,M,Blonde,Red,2754,Action,1999
 Crocodile,One Piece,46,253,M,Black,Grey,2749,Action,1999
+Smoker,One Piece,36,209,M,White,Brown,2753,Action,1999
 Buggy the Clown,One Piece,39,192,M,Blue,Black,725,Action,1999
 Dracule Mihawk,One Piece,43,198,M,Black,Yellow,2064,Action,1999
 Shanks,One Piece,39,199,M,Red,Black,727,Action,1999
@@ -408,7 +423,9 @@ Big Mom,One Piece,68,880,F,Pink,Yellow,54495,Action,1999
 Whitebeard,One Piece,72,666,M,,Yellow,2751,Action,1999
 Yamato,One Piece,28,263,F,White/Green,Gold,184114,Action,1999
 Eustass Kid,One Piece,23,205,M,Red,Amber,14989,Action,1999
+Koby,One Piece,18,167,M,Pink,Black,12361,Action,1999
 Jewelry Bonney,One Piece,12,174,F,Pink,Brown,20295,Action,1999
+Vivi Nefertari,One Piece,18,169,F,Blue,Black,726,Action,1999
 Genos,One Punch Man,19,178,M,Blonde,Yellow,73979,Action,2015
 Saitama,One Punch Man,25,175,M,Bald,Brown,73935,Action,2015
 Tatsumaki,One Punch Man,28,142,F,Green,Green,81929,Action,2015
@@ -484,6 +501,9 @@ Meliodas,Seven Deadly Sins,3000,152,M,Blonde,Green,72921,Action,2014
 Ban,Seven Deadly Sins,43,210,M,White,Red,77605,Action,2014
 King,Seven Deadly Sins,1300,160,M,Brown,Brown,83801,Action,2014
 Escanor,Seven Deadly Sins,40,165,M,Orange,Blue,95985,Action,2014
+Elaine,The Seven Deadly Sins,1000,150,F,Blonde,Golden,86681,Action,2014
+Gowther,The Seven Deadly Sins,3000,175,M,Pink,Amber,95977,Action,2014
+Merlin,The Seven Deadly Sins,3000,177,F,Black,Golden,95981,Action,2014
 Shana,Shakugan no Shana,15,141,F,Red,Red,1426,Action,2005
 Yoh Asakura,Shaman King,14,160,M,Brown,Brown,167,Action,2001
 Anna Kyoyama,Shaman King,14,158,F,Blonde,Black,170,Action,2001
@@ -523,9 +543,10 @@ Yor Forger,Spy x Family,27,170,F,Black,Red,170329,Action,2022
 Loid Forger,Spy x Family,28,187,M,Blonde,Blue,170258,Action,2022
 Yuri Briar,Spy x Family,20,179,M,Black,Red,177507,Action,2022
 Fiona Frost,Spy x Family,24,172,F,White,Lavender,185468,Action,2022
-Kurisu Makise,Steins;Gate,18,160,F,Red,Blue,34470,Drama,2011
-Rintarou Okabe,Steins;Gate,18,177,M,Black,Brown,35252,Drama,2011
-Mayuri Shiina,Steins;Gate,16,152,F,Black,Blue,35253,Drama,2011
+Kurisu Makise,Steins;Gate,18,160,F,Red,Blue,34470,Sci-fi,2011
+Rintarou Okabe,Steins;Gate,18,177,M,Black,Brown,35252,Sci-fi,2011
+Mayuri Shiina,Steins;Gate,16,152,F,Black,Blue,35253,Sci-fi,2011
+Ruka Urushibara,Steins;Gate,16,161,F,Black,Violet,30919,Sci-Fi,2011
 Yui,Sword Art Online,10,120,F,Black,Black,43892,Fantasy,2012
 Suguha Kirigaya,Sword Art Online,15,172,F,Blonde,Green,36831,Fantasy,2012
 Silica,Sword Art Online,15,150,F,Brown,Red,37681,Fantasy,2012
@@ -628,3 +649,14 @@ Ikuno,Darling in the FranXX,14,163,F,Purple,Grey,155686,Action,2018
 Futoshi,Darling in the FranXX,14,168,M,Brown,Brown,155685,Action,2018
 Dr. Franxx,Darling in the FranXX,100,165,M,Grey,Yellow,158050,Action,2018
 Naomi,Darling in the FranXX,14,160,F,Brown,Brown,158053,Action,2018
+Kanna Kamui, Dragon Maid,9,120,F,White,Blue,136728,Slice of Life,2018
+Kobayashi,Dragon Maid,25,160,F,Red,Hazel,136726,Slice of Life,2017
+Tooru,Dragon Maid,5000,162,F,Blonde/Pink,Red-Orange,136727,Slice of Life,2017
+Kanna Kamui,Dragon Maid,7000,120,F,White/Lavender,Blue,136728,Slice of Life,2017
+Fafnir,Dragon Maid,8000,175,M,Black,Red,136730,Slice of Life,2017
+Quetzalcoatl (Lucoa),Dragon Maid,10000,175,F,Blonde,Heterochromia,136731,Slice of Life,2017
+Elma,Dragon Maid,5000,173,F,Black/Purple,Blue,136734,Slice of Life,2017
+Makoto Takiya,Dragon Maid,25,170,M,Brown,Brown,136732,Slice of Life,2017
+Riko Saikawa,Dragon Maid,9,125,F,Brown,Blue,136733,Slice of Life,2017
+Shouta Magatsuchi,Dragon Maid,10,140,M,Purple,Blue,148281,Slice of Life,2017
+Ilulu,Dragon Maid,5000,145,F,Pink,Pink,167425,Slice of Life,2017
