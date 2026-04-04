@@ -1,37 +1,37 @@
 Name,Series,Age,Height,Sex,Hair,Eyes,MAL_ID,Genre,Year Release
-Eren Yeager,Attack on Titan,19,183,M,Brown,Green,40882,Action,2013
-Mikasa Ackerman,Attack on Titan,19,176,F,Black,Grey,40881,Action,2013
-Levi Ackerman,Attack on Titan,34,160,M,Black,Grey,45627,Action,2013
-Armin Arlert,Attack on Titan,19,163,M,Blonde,Blue,46494,Action,2013
-Reiner Braun,Attack on Titan,21,185,M,Blonde,Gold,46484,Action,2013
-Bertholdt Hoover,Attack on Titan,17,192,M,Black,Green,46488,Action,2013
-Annie Leonhart,Attack on Titan,20,153,F,Blonde,Blue,46490,Action,2013
-Jean Kirschtein,Attack on Titan,19,190,M,Ash Brown,Light Brown,46498,Action,2013
-Sasha Blouse,Attack on Titan,20,168,F,Brown,Amber,45887,Action,2013
-Connie Springer,Attack on Titan,19,158,M,Grey,Hazel,46486,Action,2013
-Historia Reiss,Attack on Titan,19,145,F,Blonde,Blue,62481,Action,2013
-Ymir,Attack on Titan,75,172,F,Brown,Brown,71479,Action,2013
-Erwin Smith,Attack on Titan,38,188,M,Blonde,Blue,46496,Action,2013
-Hange Zoë,Attack on Titan,30,170,NB,Brown,Brown,71121,Action,2013
-Zeke Yeager,Attack on Titan,29,183,M,Blonde,Grey,142314,Action,2013
-Gabi Braun,Attack on Titan,12,153,F,Brown,Brown,149205,Action,2013
-Falco Grice,Attack on Titan,12,140,M,Blonde,Brown,150103,Action,2013
-Pieck Finger,Attack on Titan,21,155,F,Black,Dark Brown,150596,Action,2013
-Porco Galliard,Attack on Titan,20,175,M,Blonde,Grey,150594,Action,2013
-Guts,Berserk,24,204,M,Black,Black,422,Action,1997
-Griffith,Berserk,24,178,M,White,Blue,424,Action,1997
-Casca,Berserk,24,165,F,Black,Brown,423,Action,1997
-Puck,Berserk,100,10,NB,Blue,Black,5060,Action,1997
-Judeau,Berserk,19,168,M,Blonde,Green,253945403,Action,1997
-Pippin,Berserk,27,215,M,Black,Black,253903,Action,1997
-Rickert,Berserk,19,155,M,Blonde,Brown,253903,Action,1997
-Serpico,Berserk,25,178,M,Blonde,Blue,5059,Action,1997
-Farnese,Berserk,19,162,F,Blonde,Blue,7857,Action,1997
-Schierke,Berserk,13,142,F,Green,Brown,7864,Action,1997
-Isidro,Berserk,14,150,M,Brown,Brown,7859,Action,1997
-Skull Knight,Berserk,1000,215,M,,White,7881,Action,1997
-Void,Berserk,1000,250,M,,,604,Action,1997
-Nosferatu Zodd,Berserk,300,220,M,Black,Red,600,Action,1997
+Eren Yeager,Attack on Titan,19,183,M,Brown,Green,40882,Dark Fantasy,2013
+Mikasa Ackerman,Attack on Titan,19,176,F,Black,Grey,40881,Dark Fantasy,2013
+Levi Ackerman,Attack on Titan,34,160,M,Black,Grey,45627,Dark Fantasy,2013
+Armin Arlert,Attack on Titan,19,163,M,Blonde,Blue,46494,Dark Fantasy,2013
+Reiner Braun,Attack on Titan,21,185,M,Blonde,Gold,46484,Dark Fantasy,2013
+Bertholdt Hoover,Attack on Titan,17,192,M,Black,Green,46488,Dark Fantasy,2013
+Annie Leonhart,Attack on Titan,20,153,F,Blonde,Blue,46490,Dark Fantasy,2013
+Jean Kirschtein,Attack on Titan,19,190,M,Ash Brown,Light Brown,46498,Dark Fantasy,2013
+Sasha Blouse,Attack on Titan,20,168,F,Brown,Amber,45887,Dark Fantasy,2013
+Connie Springer,Attack on Titan,19,158,M,Grey,Hazel,46486,Dark Fantasy,2013
+Historia Reiss,Attack on Titan,19,145,F,Blonde,Blue,62481,Dark Fantasy,2013
+Ymir,Attack on Titan,75,172,F,Brown,Brown,71479,Dark Fantasy,2013
+Erwin Smith,Attack on Titan,38,188,M,Blonde,Blue,46496,Dark Fantasy,2013
+Hange Zoë,Attack on Titan,30,170,NB,Brown,Brown,71121,Dark Fantasy,2013
+Zeke Yeager,Attack on Titan,29,183,M,Blonde,Grey,142314,Dark Fantasy,2013
+Gabi Braun,Attack on Titan,12,153,F,Brown,Brown,149205,Dark Fantasy,2013
+Falco Grice,Attack on Titan,12,140,M,Blonde,Brown,150103,Dark Fantasy,2013
+Pieck Finger,Attack on Titan,21,155,F,Black,Dark Brown,150596,Dark Fantasy,2013
+Porco Galliard,Attack on Titan,20,175,M,Blonde,Grey,150594,Dark Fantasy,2013
+Guts,Berserk,24,204,M,Black,Black,422,Dark Fantasy,1997
+Griffith,Berserk,24,178,M,White,Blue,424,Dark Fantasy,1997
+Casca,Berserk,24,165,F,Black,Brown,423,Dark Fantasy,1997
+Puck,Berserk,100,10,NB,Blue,Black,5060,Dark Fantasy,1997
+Judeau,Berserk,19,168,M,Blonde,Green,253945403,Dark Fantasy,1997
+Pippin,Berserk,27,215,M,Black,Black,253903,Dark Fantasy,1997
+Rickert,Berserk,19,155,M,Blonde,Brown,253903,Dark Fantasy,1997
+Serpico,Berserk,25,178,M,Blonde,Blue,5059,Fantasy,1997
+Farnese,Berserk,19,162,F,Blonde,Blue,7857,Dark Fantasy,1997
+Schierke,Berserk,13,142,F,Green,Brown,7864,Dark Fantasy,1997
+Isidro,Berserk,14,150,M,Brown,Brown,7859,Dark Fantasy,1997
+Skull Knight,Berserk,1000,215,M,,White,7881,Dark Fantasy,1997
+Void,Berserk,1000,250,M,,,604,Dark Fantasy,1997
+Nosferatu Zodd,Berserk,300,220,M,Black,Red,600,Dark Fantasy,1997
 Asta,Black Clover,16,155,M,Ash Grey,Green,124731,Action,2017
 Noelle Silva,Black Clover,16,161,F,Silver,Pink,127141,Action,2017
 Yami Sukehiro,Black Clover,28,183,M,Black,Black,127764,Action,2017
@@ -79,26 +79,26 @@ Pochita,Chainsaw Man,2000,30,M,Orange,Black,174750,Action,2022
 Asa Mitaka,Chainsaw Man,17,158,F,Black,Brown,213865,Action,2006
 Lelouch vi Britannia,Code Geass,17,178,M,Black,Violet,417,Action,2006
 Suzaku Kururugi,Code Geass,17,176,M,Brown,Green,559,Action,2006
-C.C.,Code Geass,600,168,F,Green,Gold,1111,Action,2006
-Kallen Stadtfeld,Code Geass,17,173,F,Red,Blue,558,Action,2006
-Nunnally vi Britannia,Code Geass,14,160,F,Brown,Violet,287061,Action,2006
-Shirley Fenette,Code Geass,17,172,F,Orange,Yellow,1120,Action,2006
-Euphemia li Britannia,Code Geass,16,166,F,Pink,Violet,1114,Action,2006
-Cornelia li Britannia,Code Geass,27,180,F,Purple,Violet,797,Action,2006
-Schneizel el Britannia,Code Geass,28,200,M,Blonde,Blue,1710,Action,2006
-Charles zi Britannia,Code Geass,63,197,M,White,Violet,5610,Action,2006
-Jeremiah Gottwald,Code Geass,28,192,M,Blue,Orange,1113,Action,2006
-Rolo Lamperouge,Code Geass,15,170,M,Brown,Red,7771,Action,2006
-V.V.,Code Geass,1000,130,M,Blonde,Gold,1808,Action,2006
-Bismarck Waldstein,Code Geass,40,215,M,Grey,Blue,16132,Action,2001
-Spike Spiegel,Cowboy Bebop,27,185,M,Dark Green,Brown,1,Action,2001
-Jet Black,Cowboy Bebop,36,188,M,Black,Blue,3,Action,2001
-Faye Valentine,Cowboy Bebop,77,168,F,Purple,Green,2,Action,2001
-Edward Wong,Cowboy Bebop,13,150,NB,Red,Gold,16,Action,2001
-Ein,Cowboy Bebop,2,25,M,Brown,Brown,4,Action,2001
-Vicious,Cowboy Bebop,27,187,M,Silver,Grey,2734,Action,2001
-Julia,Cowboy Bebop,27,168,F,Blonde,Blue,2735,Action,2001
-Gren,Cowboy Bebop,28,175,NB,Blonde,Blue,40936,Action,2017
+C.C.,Code Geass,600,168,F,Green,Gold,1111,Mecha,2006
+Kallen Stadtfeld,Code Geass,17,173,F,Red,Blue,558,Mecha,2006
+Nunnally vi Britannia,Code Geass,14,160,F,Brown,Violet,287061,Mecha,2006
+Shirley Fenette,Code Geass,17,172,F,Orange,Yellow,1120,Mecha,2006
+Euphemia li Britannia,Code Geass,16,166,F,Pink,Violet,1114,Mecha,2006
+Cornelia li Britannia,Code Geass,27,180,F,Purple,Violet,797,Mecha,2006
+Schneizel el Britannia,Code Geass,28,200,M,Blonde,Blue,1710,Mecha,2006
+Charles zi Britannia,Code Geass,63,197,M,White,Violet,5610,Mecha,2006
+Jeremiah Gottwald,Code Geass,28,192,M,Blue,Orange,1113,Mecha,2006
+Rolo Lamperouge,Code Geass,15,170,M,Brown,Red,7771,Mecha,2006
+V.V.,Code Geass,1000,130,M,Blonde,Gold,1808,Mecha,2006
+Bismarck Waldstein,Code Geass,40,215,M,Grey,Blue,16132,Mecha,2001
+Spike Spiegel,Cowboy Bebop,27,185,M,Dark Green,Brown,1,Neo-noir,2001
+Jet Black,Cowboy Bebop,36,188,M,Black,Blue,3,Neo-noir,2001
+Faye Valentine,Cowboy Bebop,77,168,F,Purple,Green,2,Neo-noir,2001
+Edward Wong,Cowboy Bebop,13,150,NB,Red,Gold,16,Neo-noir,2001
+Ein,Cowboy Bebop,2,25,M,Brown,Brown,4,Neo-noir,2001
+Vicious,Cowboy Bebop,27,187,M,Silver,Grey,2734,Neo-noir,2001
+Julia,Cowboy Bebop,27,168,F,Blonde,Blue,2735,Neo-noir,2001
+Gren,Cowboy Bebop,28,175,NB,Blonde,Blue,40936,Neo-noir,2017
 Goku Black,Dragon Ball Super,30,175,M,Black,Grey,141729,Action,2017
 Jaco,Dragon Ball Super,40,148,M,Purple,Yellow,88229,Action,2017
 Hit,Dragon Ball Super,1000,193,M,Purple,Red,246295,Action,2017
@@ -142,20 +142,20 @@ Frieza,Dragon Ball Z,50,158,M,White,Red,3694,Action,1989
 Nappa,Dragon Ball Z,50,208,M,Bald,Black,5224,Action,1989
 Majin Buu,Dragon Ball Z,500,240,M,Pink,Red,1012,Action,1989
 King Kai,Dragon Ball Z,80000,140,M,Black,Black,4850,Action,1995
-Shinji Ikari,Evangelion,14,157,M,Brown,Brown,89,Action,1995
-Rei Ayanami,Evangelion,14,152,F,Blue,Red,86,Action,1995
-Asuka Langley Soryu,Evangelion,14,157,F,Red,Blue,94,Action,1995
-Misato Katsuragi,Evangelion,29,163,F,Purple,Brown,1259,Action,1995
-Gendo Ikari,Evangelion,48,183,M,Brown,Brown,1257,Action,1995
-Ritsuko Akagi,Evangelion,30,170,F,Blonde,Hazel,1251,Action,1995
-Kaworu Nagisa,Evangelion,15,165,M,Grey,Red,1261,Action,1995
-Ryoji Kaji,Evangelion,30,182,M,Black,Brown,1260,Action,1995
-Toji Suzuhara,Evangelion,14,160,M,Black,Blue,1262,Action,1995
-Mari Illustrious Makinami,Evangelion,34,168,F,Brown,Teal,21512,Action,1995
-Pen Pen,Evangelion,2,50,M,Blue,Black,216358,Action,1995
-Maya Ibuki,Evangelion,24,160,F,Brown,Brown,1256,Action,1995
-Kozo Fuyutsuki,Evangelion,60,178,M,Grey,Brown,1253,Action,1995
-Yui Ikari,Evangelion,27,163,F,Brown,Brown,1258,Action,2006
+Shinji Ikari,Evangelion,14,157,M,Brown,Brown,89,Mecha,1995
+Rei Ayanami,Evangelion,14,152,F,Blue,Red,86,Mecha,1995
+Asuka Langley Soryu,Evangelion,14,157,F,Red,Blue,94,Mecha,1995
+Misato Katsuragi,Evangelion,29,163,F,Purple,Brown,1259,Mecha,1995
+Gendo Ikari,Evangelion,48,183,M,Brown,Brown,1257,Mecha,1995
+Ritsuko Akagi,Evangelion,30,170,F,Blonde,Hazel,1251,Mecha,1995
+Kaworu Nagisa,Evangelion,15,165,M,Grey,Red,1261,Mecha,1995
+Ryoji Kaji,Evangelion,30,182,M,Black,Brown,1260,Mecha,1995
+Toji Suzuhara,Evangelion,14,160,M,Black,Blue,1262,Mecha,1995
+Mari Illustrious Makinami,Evangelion,34,168,F,Brown,Teal,21512,Mecha,1995
+Pen Pen,Evangelion,2,50,M,Blue,Black,216358,Mecha,1995
+Maya Ibuki,Evangelion,24,160,F,Brown,Brown,1256,Mecha,1995
+Kozo Fuyutsuki,Evangelion,60,178,M,Grey,Brown,1253,Mecha,1995
+Yui Ikari,Evangelion,27,163,F,Brown,Brown,1258,Mecha,2006
 Lucy Heartfilia,Fairy Tail,17,165,F,Blonde,Brown,5186,Action,2006
 Natsu Dragneel,Fairy Tail,18,175,M,Pink,Black,5187,Action,2006
 Erza Scarlet,Fairy Tail,19,169,F,Red,Brown,5189,Action,2006
@@ -194,33 +194,33 @@ Greed,FMA: B,200,188,M,Black,Black,351,Action,2009
 Lust,FMA: B,250,170,F,Black,Purple,650,Action,2009
 Gluttony,FMA: B,150,145,M,,White,5411,Action,2009
 Pride,FMA: B,300,140,M,Black,Black,10982,Action,2009
-Izumi Curtis,FMA: B,36,175,F,Black,Black,67,Gourmet,2012
+Izumi Curtis,FMA: B,36,175,F,Black,Black,67,Action,2012
 Soma Yukihira,Food Wars!,16,171,M,Red,Yellow,75216,Gourmet,2012
-Erina Nakiri,Food Wars!,16,162,F,Blonde,Purple,75284,Adventure,2023
-Fern,Frieren,18,162,F,Purple,Purple,188176,Adventure,2023
-Stark,Frieren,18,175,M,Red,Red,188177,Adventure,2023
-Frieren,Frieren,1000,148,F,White,Green,184947,Adventure,2023
-Himmel,Frieren,26,178,M,Blue,Blue,186854,Adventure,2023
-Sein,Frieren,30,182,M,Brown,Brown,196912,Action,2003
-Gintoki Sakata,Gintama,27,177,M,Silver,Brown,672,Action,2003
-Shinpachi Shimura,Gintama,16,166,M,Black,Brown,673,Action,2003
-Kagura,Gintama,14,155,F,Orange,Blue,286647,Action,2003
-Sadaharu,Gintama,2,170,M,White,Black,250848,Action,2003
-Toshiro Hijikata,Gintama,27,177,M,Black,Blue,35374,Action,2003
-Sougo Okita,Gintama,18,170,M,Brown,Brown,2282,Action,2003
-Isao Kondo,Gintama,28,184,M,Brown,Brown,2943,Action,2003
-Kotaro Katsura,Gintama,27,175,M,Black,Brown,1533,Action,2003
-Elizabeth,Gintama,99,180,NB,White,Black,289709,Action,2003
-Shinsuke Takasugi,Gintama,27,170,M,Purple,Green,2948,Action,2003
-Tatsuma Sakamoto,Gintama,28,181,M,Brown,Brown,2945,Action,2003
-Tsukuyo,Gintama,24,170,F,Blonde,Purple,18823,Action,2003
-Kamui,Gintama,18,170,M,Orange,Blue,12946,Action,2003
-Ayame Sarutobi,Gintama,25,169,F,Purple,Purple,1759,Action,2003
-Kyuubei Yagyuu,Gintama,17,157,F,Black,Brown,6110,Action,2003
-Sagaru Yamazaki,Gintama,32,169,M,Black,Brown,4653,Action,2003
-Abuto,Gintama,32,186,M,Brown,Brown,26731,Action,2003
-Nobume Imai,Gintama,18,159,F,Blue,Blue,55577,Action,2003
-Shigeshige Tokugawa,Gintama,20,175,M,Black,Black,7157,Action,2003
+Erina Nakiri,Food Wars!,16,162,F,Blonde,Purple,75284,Gourmet,2023
+Fern,Frieren,18,162,F,Purple,Purple,188176,Fantasy,2023
+Stark,Frieren,18,175,M,Red,Red,188177,Fantasy,2023
+Frieren,Frieren,1000,148,F,White,Green,184947,Fantasy,2023
+Himmel,Frieren,26,178,M,Blue,Blue,186854,Fantasy,2023
+Sein,Frieren,30,182,M,Brown,Brown,196912,Fantasy,2003
+Gintoki Sakata,Gintama,27,177,M,Silver,Brown,672,Adventure,2003
+Shinpachi Shimura,Gintama,16,166,M,Black,Brown,673,ActAdventureion,2003
+Kagura,Gintama,14,155,F,Orange,Blue,286647,Adventure,2003
+Sadaharu,Gintama,2,170,M,White,Black,250848,Adventure,2003
+Toshiro Hijikata,Gintama,27,177,M,Black,Blue,35374,Adventure,2003
+Sougo Okita,Gintama,18,170,M,Brown,Brown,2282,Adventure,2003
+Isao Kondo,Gintama,28,184,M,Brown,Brown,2943,Adventure,2003
+Kotaro Katsura,Gintama,27,175,M,Black,Brown,1533,Adventure,2003
+Elizabeth,Gintama,99,180,NB,White,Black,289709,Adventure,2003
+Shinsuke Takasugi,Gintama,27,170,M,Purple,Green,2948,Adventure,2003
+Tatsuma Sakamoto,Gintama,28,181,M,Brown,Brown,2945,Adventure,2003
+Tsukuyo,Gintama,24,170,F,Blonde,Purple,18823,Adventure,2003
+Kamui,Gintama,18,170,M,Orange,Blue,12946,Adventure,2003
+Ayame Sarutobi,Gintama,25,169,F,Purple,Purple,1759,Adventure,2003
+Kyuubei Yagyuu,Gintama,17,157,F,Black,Brown,6110,Adventure,2003
+Sagaru Yamazaki,Gintama,32,169,M,Black,Brown,4653,Adventure,2003
+Abuto,Gintama,32,186,M,Brown,Brown,26731,Adventure,2003
+Nobume Imai,Gintama,18,159,F,Blue,Blue,55577,Adventure,2003
+Shigeshige Tokugawa,Gintama,20,175,M,Black,Black,7157,Adventure,2003
 Tae Shimura,Gintama,18,168,F,Brown,Brown,2944,Adventure,2007
 Simon,Gurren Lagann,14,150,M,Dark Blue,Indigo,291673,Adventure,2007
 Kamina,Gurren Lagann,18,184,M,Blue,Red,2075,Adventure,2007
@@ -246,24 +246,24 @@ Koushi Sugawara,Haikyuu!!,18,174,M,Grey,Brown,67321,Sports,2014
 Wakatoshi Ushijima,Haikyuu!!,18,189,M,Olive/Brown,Olive,76816,Sports,2014
 Gabimaru,Hell's Paradise,16,150,M,White,Red,171437,Action,2023
 Sagiri,Hell's Paradise,17,170,F,Brown,Brown,241432,Action,2011
-Gon Freecss,Hunter x Hunter,12,154,M,Black,Brown,30,Action,2011
-Killua Zoldyck,Hunter x Hunter,12,158,M,Silver,Blue,27,Action,2011
-Kurapika,Hunter x Hunter,17,171,M,Blonde,Grey,278470,Action,2011
-Leorio Paradinight,Hunter x Hunter,19,193,M,Black,Brown,29,Action,2011
-Hisoka Morow,Hunter x Hunter,28,187,M,Red,Yellow,31,Action,2011
-Isaac Netero,Hunter x Hunter,110,155,M,Grey,Black,14489,Action,2011
-Meruem,Hunter x Hunter,0,150,M,Purple,Violet,278470,Action,2011
-Chrollo Lucilfer,Hunter x Hunter,26,177,M,Black,Grey,58,Action,2011
-Biscuit Krueger,Hunter x Hunter,57,137,F,Blonde,Blue,13898,Action,2011
-Illumi Zoldyck,Hunter x Hunter,24,185,M,Black,Black,57,Action,2011
-Kite,Hunter x Hunter,30,190,M,White,Brown,226632,Action,2011
-Feitan Portor,Hunter x Hunter,28,155,M,Black,Grey,3195,Action,2011
-Machi Komacine,Hunter x Hunter,24,159,F,Pink,Blue,5830,Action,2011
-Shizuku Murasaki,Hunter x Hunter,19,160,F,Black,Brown,5833,Action,2011
-Ging Freecss,Hunter x Hunter,34,175,M,Black,Hazel,26,Action,2011
-Neferpitou,Hunter x Hunter,0,175,NB,White,Red,278470,Action,2011
-Pouf,Hunter x Hunter,0,180,M,Blonde,Violet,278470,Action,2011
-Youpi,Hunter x Hunter,0,220,M,,Red,286399,Action,2012
+Gon Freecss,Hunter x Hunter,12,154,M,Black,Brown,30,Adventure,2011
+Killua Zoldyck,Hunter x Hunter,12,158,M,Silver,Blue,27,Adventure,2011
+Kurapika,Hunter x Hunter,17,171,M,Blonde,Grey,278470,Adventure,2011
+Leorio Paradinight,Hunter x Hunter,19,193,M,Black,Brown,29,Adventure,2011
+Hisoka Morow,Hunter x Hunter,28,187,M,Red,Yellow,31,Adventure,2011
+Isaac Netero,Hunter x Hunter,110,155,M,Grey,Black,14489,Adventure,2011
+Meruem,Hunter x Hunter,0,150,M,Purple,Violet,278470,Adventure,2011
+Chrollo Lucilfer,Hunter x Hunter,26,177,M,Black,Grey,58,Adventure,2011
+Biscuit Krueger,Hunter x Hunter,57,137,F,Blonde,Blue,13898,Adventure,2011
+Illumi Zoldyck,Hunter x Hunter,24,185,M,Black,Black,57,Adventure,2011
+Kite,Hunter x Hunter,30,190,M,White,Brown,226632,Adventure,2011
+Feitan Portor,Hunter x Hunter,28,155,M,Black,Grey,3195,Adventure,2011
+Machi Komacine,Hunter x Hunter,24,159,F,Pink,Blue,5830,Adventure,2011
+Shizuku Murasaki,Hunter x Hunter,19,160,F,Black,Brown,5833,Adventure,2011
+Ging Freecss,Hunter x Hunter,34,175,M,Black,Hazel,26,Adventure,2011
+Neferpitou,Hunter x Hunter,0,175,NB,White,Red,278470,Adventure,2011
+Pouf,Hunter x Hunter,0,180,M,Blonde,Violet,278470,Adventure,2011
+Youpi,Hunter x Hunter,0,220,M,,Red,286399,Adventure,2012
 Jonathan Joestar,JoJo Part 1,20,195,M,Blue,Blue,8087,Action,2012
 Dio Brando,JoJo Part 1,21,188,M,Blonde,Amber,4004,Action,2013
 Joseph Joestar,JoJo Part 2,18,195,M,Brown,Green,6356,Action,2013
@@ -285,27 +285,27 @@ Johnny Joestar,JoJo Part 7,19,175,M,Blonde,Blue,19492,Action,2026
 Gyro Zeppeli,JoJo Part 7,24,185,M,Blonde,Blue,11772,Action,2026
 Josuke Higashikata (Gappy),JoJo Part 8,19,181,M,Black,Hazel,43778,Action,XXXX
 Tooru,JoJo Part 8,80,175,M,Black,Black,167428,Action,XXXX
-Yuji Itadori,Jujutsu Kaisen,15,173,M,Pink,Brown,163847,Action,2020
-Megumi Fushiguro,Jujutsu Kaisen,15,175,M,Black,Blue,164470,Action,2020
-Nobara Kugisaki,Jujutsu Kaisen,16,160,F,Orange,Orange,164472,Action,2020
-Satoru Gojo,Jujutsu Kaisen,28,190,M,White,Blue,164471,Action,2020
-Suguru Geto,Jujutsu Kaisen,27,190,M,Black,Black,175542,Action,2020
-Kento Nanami,Jujutsu Kaisen,28,184,M,Blonde,Hazel,164473,Action,2020
-Maki Zenin,Jujutsu Kaisen,16,170,F,Dark Green,Hazel,164482,Action,2020
-Toge Inumaki,Jujutsu Kaisen,17,164,M,Platinum,Violet,164478,Action,2020
-Aoi Todo,Jujutsu Kaisen,18,191,M,Black,Black,164484,Action,2020
-Mahito,Jujutsu Kaisen,100,179,M,Grey,Grey/Blue,164481,Action,2020
-Choso,Jujutsu Kaisen,150,181,M,Black,Brown,180764,Action,2020
-Toji Fushiguro,Jujutsu Kaisen,30,185,M,Black,Green,175543,Action,2020
-Mei Mei,Jujutsu Kaisen,30,170,F,Light Blue,Brown,180766,Action,2020
+Yuji Itadori,Jujutsu Kaisen,15,173,M,Pink,Brown,163847,Dark Fantasy,2020
+Megumi Fushiguro,Jujutsu Kaisen,15,175,M,Black,Blue,164470,Dark Fantasy,2020
+Nobara Kugisaki,Jujutsu Kaisen,16,160,F,Orange,Orange,164472,Dark Fantasy,2020
+Satoru Gojo,Jujutsu Kaisen,28,190,M,White,Blue,164471,Dark Fantasy,2020
+Suguru Geto,Jujutsu Kaisen,27,190,M,Black,Black,175542,Dark Fantasy,2020
+Kento Nanami,Jujutsu Kaisen,28,184,M,Blonde,Hazel,164473,Dark Fantasy,2020
+Maki Zenin,Jujutsu Kaisen,16,170,F,Dark Green,Hazel,164482,Dark Fantasy,2020
+Toge Inumaki,Jujutsu Kaisen,17,164,M,Platinum,Violet,164478,Dark Fantasy,2020
+Aoi Todo,Jujutsu Kaisen,18,191,M,Black,Black,164484,Dark Fantasy,2020
+Mahito,Jujutsu Kaisen,100,179,M,Grey,Grey/Blue,164481,Dark Fantasy,2020
+Choso,Jujutsu Kaisen,150,181,M,Black,Brown,180764,Dark Fantasy,2020
+Toji Fushiguro,Jujutsu Kaisen,30,185,M,Black,Green,175543,Dark Fantasy,2020
+Mei Mei,Jujutsu Kaisen,30,170,F,Light Blue,Brown,180766,Dark Fantasy,2020
 Yui Hirasawa,K-On!,17,156,F,Brown,Brown,19565,Comedy,2011
 Kafka Hibino,Kaiju No. 8,32,181,M,Black,Blue,187463,Action,2024
 Reno Ichikawa,Kaiju No. 8,18,174,M,Silver,Blue,187497,Action,2024
 Mina Ashiro,Kaiju No. 8,27,169,F,Black,Grey,187500,Action,2024
-Megumin,Konosuba,14,150,F,Brown,Red,117225,Adventure,2012
-Darkness,Konosuba,18,175,F,Blonde,Blue,240734,Adventure,2012
-Kazuma Sato,Konosuba,16,165,M,Brown,Green,8594,Adventure,2012
-Aqua,Konosuba,1000,158,F,Blue,Blue,231415,Adventure,2012
+Megumin,Konosuba,14,150,F,Brown,Red,117225,Fantasy,2012
+Darkness,Konosuba,18,175,F,Blonde,Blue,240734,Fantasy,2012
+Kazuma Sato,Konosuba,16,165,M,Brown,Green,8594,Fantasy,2012
+Aqua,Konosuba,1000,158,F,Blue,Blue,231415,Fantasy,2012
 Kaguya Shinomiya,Love is War,17,158,F,Black,Red,136359,Comedy,2015
 Miyuki Shirogane,Love is War,17,175,M,Blonde,Blue,136685,Comedy,2015
 Chika Fujiwara,Love is War,17,154,F,Pink,Blue,140810,Comedy,2015
@@ -499,11 +499,11 @@ Milim Nava,Reincarnated as a Slime,2000,145,F,Pink,Blue,131936,Fantasy,2018
 Elizabeth Liones,Seven Deadly Sins,16,162,F,Silver,Blue,72923,Action,2014
 Meliodas,Seven Deadly Sins,3000,152,M,Blonde,Green,72921,Action,2014
 Ban,Seven Deadly Sins,43,210,M,White,Red,77605,Action,2014
-King,Seven Deadly Sins,1300,160,M,Brown,Brown,83801,Action,2014
-Escanor,Seven Deadly Sins,40,165,M,Orange,Blue,95985,Action,2014
-Elaine,The Seven Deadly Sins,1000,150,F,Blonde,Golden,86681,Action,2014
-Gowther,The Seven Deadly Sins,3000,175,M,Pink,Amber,95977,Action,2014
-Merlin,The Seven Deadly Sins,3000,177,F,Black,Golden,95981,Action,2014
+King,Seven Deadly Sins,1300,160,M,Brown,Brown,83801,Fantasy,2014
+Escanor,Seven Deadly Sins,40,165,M,Orange,Blue,95985,Fantasy,2014
+Elaine,The Seven Deadly Sins,1000,150,F,Blonde,Golden,86681,Fantasy,2014
+Gowther,The Seven Deadly Sins,3000,175,M,Pink,Amber,95977,Fantasy,2014
+Merlin,The Seven Deadly Sins,3000,177,F,Black,Golden,95981,Fantasy,2014
 Shana,Shakugan no Shana,15,141,F,Red,Red,1426,Action,2005
 Yoh Asakura,Shaman King,14,160,M,Brown,Brown,167,Action,2001
 Anna Kyoyama,Shaman King,14,158,F,Blonde,Black,170,Action,2001
@@ -521,9 +521,9 @@ Jun Tao,Shaman King,17,168,F,Purple,Brown,4327,Action,2001
 Silva,Shaman King,27,185,M,Black,Brown,228943,Action,2001
 Shirayuki,Snow White with the Red Hair,18,162,F,Red,Green,246450,Romance,2015
 Zen Wistaria,Snow White with the Red Hair,19,176,M,Silver,Blue,18324,Romance,2015
-Sung Jinwoo,Solo Leveling,24,185,M,Black,Blue,174185,Action,2024
-Cha Hae-In,Solo Leveling,23,165,F,Blonde,Grey,173979,Action,2024
-Go Gunhee,Solo Leveling,80,182,M,Grey,Brown,173983,Action,2024
+Sung Jinwoo,Solo Leveling,24,185,M,Black,Blue,174185,Power Fantasy,2024
+Cha Hae-In,Solo Leveling,23,165,F,Blonde,Grey,173979,Power Fantasy,2024
+Go Gunhee,Solo Leveling,80,182,M,Grey,Brown,173983,Power Fantasy,2024
 Black Star,Soul Eater,14,150,M,Blue,Green,8464,Action,2008
 Tsubaki Nakatsukasa,Soul Eater,16,169,F,Black,Indigo,8443,Action,2008
 Death the Kid,Soul Eater,14,145,M,Black,Gold,8455,Action,2008
@@ -538,11 +538,11 @@ Sid Barrett,Soul Eater,35,185,M,Blue,Blue,16582,Action,2008
 Justin Law,Soul Eater,17,174,M,Blonde,Blue,14019,Action,2008
 Excalibur,Soul Eater,1000,60,M,White,Black,265606,Action,2008
 Holo,Spice and Wolf,600,155,F,Brown,Red,155631,Adventure,2008
-Anya Forger,Spy x Family,6,99,F,Pink,Green,170256,Action,2022
-Yor Forger,Spy x Family,27,170,F,Black,Red,170329,Action,2022
-Loid Forger,Spy x Family,28,187,M,Blonde,Blue,170258,Action,2022
-Yuri Briar,Spy x Family,20,179,M,Black,Red,177507,Action,2022
-Fiona Frost,Spy x Family,24,172,F,White,Lavender,185468,Action,2022
+Anya Forger,Spy x Family,6,99,F,Pink,Green,170256,Slice of Life,2022
+Yor Forger,Spy x Family,27,170,F,Black,Red,170329,Slice of Life,2022
+Loid Forger,Spy x Family,28,187,M,Blonde,Blue,170258,Slice of Life,2022
+Yuri Briar,Spy x Family,20,179,M,Black,Red,177507,Slice of Life,2022
+Fiona Frost,Spy x Family,24,172,F,White,Lavender,185468,Slice of Life,2022
 Kurisu Makise,Steins;Gate,18,160,F,Red,Blue,34470,Sci-fi,2011
 Rintarou Okabe,Steins;Gate,18,177,M,Black,Brown,35252,Sci-fi,2011
 Mayuri Shiina,Steins;Gate,16,152,F,Black,Blue,35253,Sci-fi,2011
