@@ -369,7 +369,7 @@
     </div>
 
     <div class="search-box">
-        <input type="text" id="guessInput" placeholder="Search character..." autocomplete="off">
+        <input type="text" id="guessInput" placeholder="Search character..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
         <div id="dropdown"></div>
     </div>
 
@@ -390,7 +390,20 @@
                         "Year": r[9]?.trim() || "????"
                     })).filter(c => c.Name && c.Name.toLowerCase() !== "name");
 
-                    fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.3 });
+                    // 1. IMPROVED ENGINE: High weighting on Name + Low Threshold
+                    fuse = new Fuse(characters, { 
+                        keys: [
+                            { name: 'Name', weight: 2 }, 
+                            { name: 'Series', weight: 0.3 }
+                        ], 
+                        threshold: 0.3,       // Strict threshold to avoid irrelevant fuzzy results
+                        location: 0,          // Start searching from the beginning
+                        distance: 100,        // How far from start to look
+                        minMatchCharLength: 1,
+                        includeScore: true,   // Needed for our custom sorting
+                        shouldSort: true
+                    });
+
                     checkDailyStatus();
                     document.getElementById('loading-msg').innerText = "Data Synced.";
                     document.getElementById('menu-options').style.display = 'block';
@@ -432,7 +445,6 @@
                     document.getElementById('start-screen').style.display = 'none';
                     setupSearch();
                     
-                    // Restore hints
                     hintsGiven = data.hintsGiven || 0;
                     if (hintsGiven > 0) {
                         const hDisplay = document.getElementById('hint-text');
@@ -444,7 +456,6 @@
                         }
                     }
 
-                    // Silent Restore of guesses
                     for (let i = 0; i < data.guesses.length; i++) {
                         const isLast = (i === data.guesses.length - 1);
                         await submitGuess(data.guesses[i], true, isLast && data.finished);
@@ -482,21 +493,52 @@
         }
 
         function setupSearch() {
-            const input = document.getElementById('guessInput'), dropdown = document.getElementById('dropdown');
-            input.addEventListener('input', () => {
+            const input = document.getElementById('guessInput');
+            const dropdown = document.getElementById('dropdown');
+            
+            input.addEventListener('input', (e) => {
                 if (gameOver) return;
-                const results = fuse.search(input.value);
+                if (e.isComposing) return;
+
+                const val = input.value.trim().toLowerCase();
+                let results = fuse.search(val);
+                
                 dropdown.innerHTML = '';
-                if (input.value.length > 0 && results.length > 0) {
+                
+                if (val.length > 0 && results.length > 0) {
                     dropdown.style.display = 'block';
+
+                    // 2. CUSTOM SORT: Prioritize matches where the Name starts with input
+                    results.sort((a, b) => {
+                        const aName = a.item.Name.toLowerCase();
+                        const bName = b.item.Name.toLowerCase();
+                        const aStarts = aName.startsWith(val);
+                        const bStarts = bName.startsWith(val);
+
+                        if (aStarts && !bStarts) return -1;
+                        if (!aStarts && bStarts) return 1;
+                        return a.score - b.score;
+                    });
+
                     results.slice(0, 15).forEach((r) => {
                         const div = document.createElement('div');
                         div.className = 'item';
                         div.innerHTML = `<div><span style="font-weight:700;">${r.item.Name}</span><br><small style="color:#888;">${r.item.Series}</small></div>`;
-                        div.onclick = () => { submitGuess(r.item); dropdown.style.display = 'none'; input.value = ''; };
+                        div.onclick = () => { 
+                            submitGuess(r.item); 
+                            dropdown.style.display = 'none'; 
+                            input.value = ''; 
+                        };
                         dropdown.appendChild(div);
                     });
                 } else dropdown.style.display = 'none';
+            });
+
+            input.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const firstResult = dropdown.querySelector('.item');
+                    if (firstResult) firstResult.click();
+                }
             });
         }
 
@@ -546,8 +588,7 @@
                 else if (['Age', 'Height', 'Year'].includes(key)) {
                     const gN = parseInt(val), tN = parseInt(sVal);
                     if (!isNaN(gN) && !isNaN(tN)) {
-                        let r = 5;
-                        if (key === 'Age') r = 5; else if (key === 'Height') r = 10; else r = 5;
+                        let r = (key === 'Height') ? 10 : 5;
                         if (Math.abs(gN - tN) <= r) status = 'yellow';
                         val += gN < tN ? " ↑" : " ↓";
                     }
@@ -566,7 +607,7 @@
                     if (v.toLowerCase() === sV.toLowerCase()) return '🟩';
                     if (['Age', 'Height', 'Year'].includes(key)) {
                         const gN = parseInt(v), tN = parseInt(sV);
-                        let r = 5;
+                        let r = (key === 'Height') ? 10 : 5;
                         if (Math.abs(gN - tN) <= r) return '🟨';
                     }
                     return '⬛';
