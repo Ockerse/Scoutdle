@@ -22,7 +22,7 @@ Guts,Berserk,24,204,M,Black,Black,422,Dark Fantasy,1997
 Griffith,Berserk,24,178,M,White,Blue,424,Dark Fantasy,1997
 Casca,Berserk,24,165,F,Black,Brown,423,Dark Fantasy,1997
 Puck,Berserk,100,10,NB,Blue,Black,5060,Dark Fantasy,1997
-Judeau,Berserk,19,168,M,Blonde,Green,253945403,Dark Fantasy,1997
+Judeau,Berserk,19,168,M,Blonde,Green,597,Dark Fantasy,1997
 Pippin,Berserk,27,215,M,Black,Black,253903,Dark Fantasy,1997
 Rickert,Berserk,19,155,M,Blonde,Brown,598,Dark Fantasy,1997
 Serpico,Berserk,25,178,M,Blonde,Blue,5059,Fantasy,1997
@@ -324,6 +324,7 @@ Takina Inoue,Lycoris Recoil,16,160,F,Black,Purple,204620,Action,2022
 Mob Kageyama,Mob Psycho 100,14,157,M,Black,Black,109929,Action,2016
 Reigen Arataka,Mob Psycho 100,28,179,M,Blonde,Brown,109931,Action,2016
 Teruki Hanazawa,Mob Psycho 100,14,161,M,Blonde,Blue,124795,Action,2016
+Touichirou Suzuki,Mob Psycho 100,48,178,M,Orange,Blue,124797,Action,2016
 Rudeus Greyrat,Mushoku Tensei,18,175,M,Brown,Brown,111245,Adventure,2021
 Sylphiette,Mushoku Tensei,18,160,F,White,Red,111337,Adventure,2021
 Eris Boreas Greyrat,Mushoku Tensei,19,170,F,Red,Blue,111335,Adventure,2021
@@ -660,3 +661,30 @@ Makoto Takiya,Dragon Maid,25,170,M,Brown,Brown,136732,Slice of Life,2017
 Riko Saikawa,Dragon Maid,9,125,F,Brown,Blue,136733,Slice of Life,2017
 Shouta Magatsuchi,Dragon Maid,10,140,M,Purple,Blue,148281,Slice of Life,2017
 Ilulu,Dragon Maid,5000,145,F,Pink,Pink,167425,Slice of Life,2017
+Tanjirou Kamado,Demon Slayer,15,165,M,Burgundy,Dark Red,146156,Action,2019
+Shinobu Kochou,Demon Slayer,18,151,F,Black/Purple,Purple,146736,Action,2019
+Zenitsu Agatsuma,Demon Slayer,16,164,M,Blonde,Brown,146158,Action,2019
+Giyuu Tomioka,Demon Slayer,21,176,M,Black,Blue,146735,Action,2019
+Inosuke Hashibira,Demon Slayer,15,164,M,Black/Blue,Green,146159,Action,2019
+Nezuko Kamado,Demon Slayer,14,153,F,Black,Pink,146157,Action,2019
+Kyoujurou Rengoku,Demon Slayer,20,177,M,Yellow/Red,Golden,151143,Action,2019
+Muichirou Tokitou,Demon Slayer,14,160,M,Black/Turquoise,Mint Green,151147,Action,2019
+Mitsuri Kanroji,Demon Slayer,19,167,F,Pink/Green,Light Green,151145,Action,2019
+Tengen Uzui,Demon Slayer,23,198,M,White,Maroon,151144,Action,2019
+Muzan Kibutsuji,Demon Slayer,1000,179,M,Black,Plum Red,151156,Action,2019
+Nanaka Kotegawa,Grand Blue,20,168,F,Brown,Purple,145328,Comedy,2018
+Chisa Kotegawa,Grand Blue,18,162,F,Brown,Orange,145329,Comedy,2018
+Shinji Tokita,Grand Blue,21,185,M,Brown,Brown,145330,Comedy,2018
+Kouhei Imamura,Grand Blue,18,170,M,Blonde,Blue,144582,Comedy,2018
+Aina Yoshiwara,Grand Blue,18,158,F,Brown,Brown,148495,Comedy,2018
+Azusa Hamaoka,Grand Blue,20,166,F,Black,Purple,145327,Comedy,2018
+Iori Kitahara,Grand Blue,18,170,M,Brown,Brown,144581,Comedy,2018
+Hitagi Senjougahara,Monogatari Series,18,165,F,Purple,Blue,22037,Supernatural,2009
+Koyomi Araragi,Monogatari Series,18,165,M,Black,Grey,22036,Supernatural,2009
+Tsubasa Hanekawa,Monogatari Series,18,160,F,Black,Purple,22055,Supernatural,2009
+Mayoi Hachikuji,Monogatari Series,10,131,F,Black,Red,22052,Supernatural,2009
+Suruga Kanbaru,Monogatari Series,17,159,F,Black,Grey,22054,Supernatural,2009
+Nadeko Sengoku,Monogatari Series,14,153,F,Brown,Brown,22050,Supernatural,2009
+Meme Oshino,Monogatari Series,32,179,M,Blonde,Brown,22552,Supernatural,2009
+Tsukihi Araragi,Monogatari Series,14,158,F,Black,Grey,24195,Supernatural,2009
+Karen Araragi,Monogatari Series,15,170,F,Black,Grey,24194,Supernatural,2009
