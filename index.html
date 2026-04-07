@@ -209,7 +209,7 @@
             flex-direction: column;
             min-height: 45px;
             justify-content: center;
-            opacity: 0; /* Handled by animation */
+            opacity: 0;
         }
 
         .attr-box.animate {
@@ -378,6 +378,12 @@
                              (now.getUTCMonth() + 1).toString().padStart(2, '0') + 
                              now.getUTCDate().toString().padStart(2, '0'));
             
+            guesses = [];
+            gameOver = false;
+            document.getElementById('gameGrid').innerHTML = '';
+            document.getElementById('hint-text').innerHTML = '';
+            document.querySelector('.search-box').style.display = 'block';
+            
             if (mode === 'daily') {
                 const rng = seededRandom(dateSeed);
                 const randomIndex = Math.floor(rng() * characters.length);
@@ -389,8 +395,17 @@
                     document.getElementById('start-screen').style.display = 'none';
                     hintsGiven = data.hintsGiven || 0;
                     if (hintsGiven > 0) renderHints();
-                    for (let g of data.guesses) { await submitGuess(g, true); }
-                    if (data.finished) endGame(guesses[guesses.length-1].Name === secretChar.Name);
+                    
+                    for (let g of data.guesses) { 
+                        await submitGuess(g, true); 
+                    }
+                    
+                    if (data.finished) {
+                        const lastGuess = guesses[guesses.length - 1];
+                        const won = lastGuess && lastGuess.Name.toLowerCase() === secretChar.Name.toLowerCase();
+                        gameOver = true;
+                        endGame(won);
+                    }
                     setupSearch();
                     return;
                 }
@@ -415,7 +430,11 @@
                         const div = document.createElement('div');
                         div.className = 'item';
                         div.innerHTML = `<strong>${r.item.Name}</strong><br><small style="color:#888;">${r.item.Series}</small>`;
-                        div.onclick = () => { submitGuess(r.item); input.value = ''; dropdown.style.display = 'none'; };
+                        div.onclick = () => { 
+                            submitGuess(r.item); 
+                            input.value = ''; 
+                            dropdown.style.display = 'none'; 
+                        };
                         dropdown.appendChild(div);
                     });
                 } else dropdown.style.display = 'none';
@@ -424,29 +443,41 @@
 
         async function submitGuess(charObj, isRestoring = false) {
             if (gameOver && !isRestoring) return;
+
             if (!isRestoring) {
                 guesses.push(charObj);
                 saveProgress();
+            } else {
+                if (!guesses.some(g => g.Name === charObj.Name)) {
+                    guesses.push(charObj);
+                }
             }
             
             document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / 10`;
-            if (guesses.length >= 3 && hintsGiven < 3) document.getElementById('hint-btn').style.display = 'block';
+            
+            if (guesses.length >= 3 && hintsGiven < 3) {
+                document.getElementById('hint-btn').style.display = 'block';
+            }
 
             let img = 'https://via.placeholder.com/50/222/fff?text=?';
-            if (charObj.ID) {
+            
+            if (charObj.ID && !isRestoring) {
                 try {
                     const resp = await fetch(`https://api.jikan.moe/v4/characters/${charObj.ID}`);
                     const data = await resp.json();
                     img = data.data?.images?.jpg?.image_url || img;
-                } catch (e) {}
+                } catch (e) { console.log("Image load failed"); }
             }
 
             renderCard(charObj, img, isRestoring);
+
             const win = charObj.Name.toLowerCase() === secretChar.Name.toLowerCase();
             if (win || guesses.length >= 10) {
                 gameOver = true;
-                saveProgress(true);
-                if (!isRestoring) setTimeout(() => endGame(win), 1500);
+                if (!isRestoring) {
+                    saveProgress(true);
+                    setTimeout(() => endGame(win), 1500);
+                }
             }
         }
 
@@ -471,7 +502,6 @@
                     }
                 }
                 
-                // Add staggered delay for animation if not restoring
                 const delay = isRestoring ? '0s' : `${index * 0.1}s`;
                 return `
                     <div class="attr-box ${status} animate" style="animation-delay: ${delay}">
@@ -480,13 +510,23 @@
                     </div>`;
             }).join('');
 
-            card.innerHTML = `<div class="char-header"><img src="${img}" class="char-thumb"><strong>${guess.Name}</strong></div><div class="attr-grid">${html}</div>`;
+            card.innerHTML = `
+                <div class="char-header">
+                    <img src="${img}" class="char-thumb">
+                    <strong>${guess.Name}</strong>
+                </div>
+                <div class="attr-grid">${html}</div>`;
+            
             grid.prepend(card);
         }
 
         function saveProgress(finished = false) {
             if (gameMode !== 'daily') return;
-            localStorage.setItem(getDailyKey(), JSON.stringify({ guesses, finished, hintsGiven }));
+            localStorage.setItem(getDailyKey(), JSON.stringify({ 
+                guesses, 
+                finished, 
+                hintsGiven 
+            }));
         }
 
         function revealHint() {
@@ -513,6 +553,8 @@
             document.getElementById('status-msg').innerText = won ? "VICTORY!" : "DEFEAT";
             document.getElementById('status-msg').style.color = won ? 'var(--green)' : 'var(--red)';
             document.getElementById('stats-msg').innerText = `Target: ${secretChar.Name} (${secretChar.Series})`;
+            document.querySelector('.search-box').style.display = 'none';
+            document.getElementById('hint-btn').style.display = 'none';
         }
 
         function toggleResults(show) {
@@ -522,7 +564,7 @@
         }
 
         function share() {
-            const won = guesses[guesses.length-1].Name === secretChar.Name;
+            const won = guesses[guesses.length-1].Name.toLowerCase() === secretChar.Name.toLowerCase();
             const score = won ? guesses.length : 'X';
             const text = `Scoutdle ${gameMode.toUpperCase()} ${score}/10\nhttps://scoutdle.vercel.app`;
             navigator.clipboard.writeText(text);
