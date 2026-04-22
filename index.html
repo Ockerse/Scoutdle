@@ -33,7 +33,6 @@
             padding: 15px 0; position: sticky; top: 0; z-index: 2000;
         }
         
-        /* Clickable Title Style */
         .home-link { text-decoration: none; cursor: pointer; transition: 0.2s; }
         .home-link:hover { opacity: 0.8; }
 
@@ -57,29 +56,61 @@
         .view-section { display: none; width: 95%; max-width: 600px; padding: 20px 0; }
         .view-section.active { display: flex; flex-direction: column; align-items: center; }
 
-        /* --- SEARCH INPUTS --- */
         .search-box { width: 100%; position: relative; margin-bottom: 20px; }
         input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #333; background: #111; color: white; box-sizing: border-box; font-size: 1rem; text-align: center; outline: none; }
 
-        /* --- ARCHIVE --- */
-        .archive-table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; }
-        .archive-table th { background: #222; color: var(--green); padding: 12px; text-align: left; font-size: 0.8rem; }
-        .archive-table td { padding: 12px; border-bottom: 1px solid #333; font-size: 0.9rem; }
-        .archive-table tr.hidden { display: none; }
+        /* --- ANIMATIONS --- */
+        @keyframes flipIn {
+            0% { transform: rotateX(0deg); background: #262626; }
+            45% { transform: rotateX(90deg); background: #262626; }
+            55% { transform: rotateX(90deg); }
+            100% { transform: rotateX(0deg); }
+        }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
 
         /* --- GAME CARDS --- */
         .char-card { background: var(--card-bg); border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; width: 100%; box-sizing: border-box; animation: slideDown 0.4s ease-out; }
         .char-header { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; }
         .char-image { width: 60px; height: 85px; border-radius: 8px; object-fit: cover; background: #222; border: 1px solid #444; }
-        .attr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-        .attr-box { background: #262626; padding: 8px 4px; border-radius: 8px; text-align: center; font-size: 0.7rem; min-height: 50px; display: flex; flex-direction: column; justify-content: center; }
+        
+        .attr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; perspective: 1000px; }
+        .attr-box { 
+            background: #262626; padding: 8px 4px; border-radius: 8px; 
+            text-align: center; font-size: 0.7rem; min-height: 50px; 
+            display: flex; flex-direction: column; justify-content: center;
+            animation: flipIn 0.6s ease-in-out forwards;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+        }
+        
         .attr-label { font-size: 0.55rem; color: #aaa; text-transform: uppercase; margin-bottom: 2px; }
-        .green { background: var(--green) !important; color: white; }
-        .yellow { background: var(--yellow) !important; color: black; }
-        @keyframes slideDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
-        .menu-btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; }
+        
+        /* Transition colors only after the flip midpoint */
+        .attr-box.green { animation-name: flipInGreen; }
+        .attr-box.yellow { animation-name: flipInYellow; }
+
+        @keyframes flipInGreen {
+            0% { transform: rotateX(0deg); background: #262626; }
+            45% { transform: rotateX(90deg); background: #262626; }
+            55% { transform: rotateX(90deg); background: var(--green); }
+            100% { transform: rotateX(0deg); background: var(--green); color: white; }
+        }
+
+        .archive-table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; }
+        .archive-table th { background: #222; color: var(--green); padding: 12px; text-align: left; font-size: 0.8rem; }
+        .archive-table td { padding: 12px; border-bottom: 1px solid #333; font-size: 0.9rem; }
+        .archive-table tr.hidden { display: none; }
+
+        .menu-btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s; }
+        .menu-btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+
         #dropdown { position: absolute; width: 100%; background: #1a1a1a; z-index: 3000; border-radius: 10px; max-height: 300px; overflow-y: auto; display: none; border: 1px solid #444; margin-top: 5px; }
         .item { padding: 12px; cursor: pointer; border-bottom: 1px solid #222; text-align: left; }
+        .item:hover { background: #262626; }
     </style>
 </head>
 <body>
@@ -153,13 +184,13 @@
             return "Scoutdle.jpeg";
         }
 
-        // RESET TO MAIN MENU
         function resetToHome() {
             gameOver = false;
             guesses = [];
             document.getElementById('game-content').style.display = 'none';
             document.getElementById('start-screen').style.display = 'block';
             document.getElementById('gameGrid').innerHTML = '';
+            document.getElementById('guessInput').value = '';
             showSection('game-view', document.getElementById('play-nav'));
         }
 
@@ -205,6 +236,7 @@
             document.getElementById('gameGrid').innerHTML = '';
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('game-content').style.display = 'block';
+            document.getElementById('guess-counter').innerText = `Guesses: 0 / 10`;
             secretChar = characters[Math.floor(Math.random() * characters.length)];
             setupSearch();
         }
@@ -233,10 +265,10 @@
             await renderGuessCard(char);
             if (char.Name === secretChar.Name) {
                 gameOver = true;
-                setTimeout(() => alert("✨ Victory! It was " + secretChar.Name), 500);
+                setTimeout(() => alert("✨ Victory! It was " + secretChar.Name), 1200);
             } else if (guesses.length >= 10) {
                 gameOver = true;
-                alert("💀 Game Over! It was " + secretChar.Name);
+                setTimeout(() => alert("💀 Game Over! It was " + secretChar.Name), 1200);
             }
         }
 
@@ -246,11 +278,25 @@
             card.className = 'char-card';
             const imgUrl = await fetchImage(guess.ID);
             const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
-            const attrHtml = attrs.map(k => {
+            
+            const attrHtml = attrs.map((k, index) => {
                 const match = guess[k]?.toLowerCase() === secretChar[k]?.toLowerCase();
-                return `<div class="attr-box ${match ? 'green' : ''}"><span class="attr-label">${k}</span><span><b>${guess[k]}</b></span></div>`;
+                const statusClass = match ? 'green' : '';
+                // Add staggered delay (0.1s per box)
+                const delay = index * 0.1;
+                return `<div class="attr-box ${statusClass}" style="animation-delay: ${delay}s">
+                            <span class="attr-label">${k}</span>
+                            <span><b>${guess[k]}</b></span>
+                        </div>`;
             }).join('');
-            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#888;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
+
+            card.innerHTML = `<div class="char-header">
+                <img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'">
+                <div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br>
+                <small style="color:#888;">${guess.Series}</small></div>
+            </div>
+            <div class="attr-grid">${attrHtml}</div>`;
+            
             grid.prepend(card);
         }
 
