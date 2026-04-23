@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Scoutdle - Anime Guessing Game</title>
     <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
@@ -24,40 +24,68 @@
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
             display: flex; flex-direction: column; align-items: center;
             padding: 0; margin: 0; min-height: 100vh;
+            overflow-x: hidden;
         }
 
         /* --- NAVIGATION --- */
         nav {
             width: 100%; background: #111; border-bottom: 1px solid #333;
             display: flex; flex-direction: column; align-items: center;
-            padding: 15px 0; position: sticky; top: 0; z-index: 2000;
+            padding: 10px 0; position: sticky; top: 0; z-index: 2000;
         }
         
-        .home-link { text-decoration: none; cursor: pointer; transition: 0.2s; }
-        .home-link:hover { opacity: 0.8; }
+        .home-link { text-decoration: none; cursor: pointer; }
 
-        .title-container { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 10px; }
-        .title-logo { width: 50px; height: 50px; border-radius: 10px; border: 2px solid var(--green); object-fit: cover; }
-        .header-main { font-size: 2.2rem; font-weight: 900; color: var(--green); text-shadow: 0 0 10px var(--glow); letter-spacing: 3px; margin: 0; }
+        .title-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
+        .title-logo { width: 40px; height: 40px; border-radius: 8px; border: 2px solid var(--green); object-fit: cover; }
+        .header-main { font-size: 1.8rem; font-weight: 900; color: var(--green); text-shadow: 0 0 10px var(--glow); letter-spacing: 2px; margin: 0; }
         
-        .nav-buttons { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; }
-        .nav-btn { background: none; border: none; color: #888; font-weight: bold; cursor: pointer; padding: 8px 15px; transition: 0.3s; font-size: 0.9rem; text-transform: uppercase; }
+        .nav-buttons { display: flex; justify-content: center; align-items: center; gap: 5px; width: 100%; padding: 0 5px; box-sizing: border-box; }
+        .nav-btn { background: none; border: none; color: #888; font-weight: bold; cursor: pointer; padding: 10px 12px; transition: 0.3s; font-size: 0.8rem; text-transform: uppercase; }
         .nav-btn.active { color: var(--green); border-bottom: 2px solid var(--green); }
         
         .kofi-btn { 
             background: var(--green); color: white; border-radius: 20px; 
-            padding: 8px 15px; text-decoration: none; font-size: 0.8rem; 
-            font-weight: 800; display: flex; align-items: center; gap: 5px;
-            transition: 0.3s;
+            padding: 8px 12px; text-decoration: none; font-size: 0.75rem; 
+            font-weight: 800; display: flex; align-items: center; gap: 4px;
         }
-        .kofi-btn:hover { transform: scale(1.05); filter: brightness(1.1); }
 
         /* --- LAYOUT --- */
-        .view-section { display: none; width: 95%; max-width: 600px; padding: 20px 0; }
+        .view-section { display: none; width: 92%; max-width: 600px; padding: 15px 0; }
         .view-section.active { display: flex; flex-direction: column; align-items: center; }
 
-        .search-box { width: 100%; position: relative; margin-bottom: 20px; }
-        input { width: 100%; padding: 15px; border-radius: 12px; border: 2px solid #333; background: #111; color: white; box-sizing: border-box; font-size: 1rem; text-align: center; outline: none; }
+        .search-box { width: 100%; position: relative; margin-bottom: 15px; }
+        input { 
+            width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #333; 
+            background: #111; color: white; box-sizing: border-box; font-size: 1rem; 
+            text-align: center; outline: none; appearance: none; /* Fix for iOS */
+        }
+
+        /* --- GAME CARDS --- */
+        .char-card { background: var(--card-bg); border-radius: 15px; padding: 12px; border: 1px solid #333; margin-bottom: 12px; width: 100%; box-sizing: border-box; animation: slideDown 0.4s ease-out; }
+        .char-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .char-image { width: 50px; height: 70px; border-radius: 6px; object-fit: cover; background: #222; border: 1px solid #444; }
+        
+        /* Grid adjusts for Mobile */
+        .attr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; perspective: 1000px; }
+        
+        .attr-box { 
+            background: #262626; padding: 6px 2px; border-radius: 6px; 
+            text-align: center; font-size: 0.65rem; min-height: 45px; 
+            display: flex; flex-direction: column; justify-content: center;
+            animation: flipIn 0.6s ease-in-out forwards;
+            backface-visibility: hidden;
+        }
+        
+        .attr-label { font-size: 0.5rem; color: #aaa; text-transform: uppercase; margin-bottom: 1px; }
+        
+        /* MOBILE OVERRIDES */
+        @media (max-width: 480px) {
+            .header-main { font-size: 1.5rem; }
+            .attr-grid { grid-template-columns: repeat(2, 1fr); } /* 2 columns on small phones for readability */
+            .nav-btn { padding: 10px 8px; font-size: 0.7rem; }
+            .char-card { padding: 10px; }
+        }
 
         /* --- ANIMATIONS --- */
         @keyframes flipIn {
@@ -67,32 +95,6 @@
             100% { transform: rotateX(0deg); }
         }
 
-        @keyframes slideDown { 
-            from { opacity: 0; transform: translateY(-20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        /* --- GAME CARDS --- */
-        .char-card { background: var(--card-bg); border-radius: 15px; padding: 15px; border: 1px solid #333; margin-bottom: 15px; width: 100%; box-sizing: border-box; animation: slideDown 0.4s ease-out; }
-        .char-header { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; }
-        .char-image { width: 60px; height: 85px; border-radius: 8px; object-fit: cover; background: #222; border: 1px solid #444; }
-        
-        .attr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; perspective: 1000px; }
-        .attr-box { 
-            background: #262626; padding: 8px 4px; border-radius: 8px; 
-            text-align: center; font-size: 0.7rem; min-height: 50px; 
-            display: flex; flex-direction: column; justify-content: center;
-            animation: flipIn 0.6s ease-in-out forwards;
-            transform-style: preserve-3d;
-            backface-visibility: hidden;
-        }
-        
-        .attr-label { font-size: 0.55rem; color: #aaa; text-transform: uppercase; margin-bottom: 2px; }
-        
-        /* Transition colors only after the flip midpoint */
-        .attr-box.green { animation-name: flipInGreen; }
-        .attr-box.yellow { animation-name: flipInYellow; }
-
         @keyframes flipInGreen {
             0% { transform: rotateX(0deg); background: #262626; }
             45% { transform: rotateX(90deg); background: #262626; }
@@ -100,17 +102,22 @@
             100% { transform: rotateX(0deg); background: var(--green); color: white; }
         }
 
+        .attr-box.green { animation-name: flipInGreen; }
+
+        @keyframes slideDown { 
+            from { opacity: 0; transform: translateY(-15px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
         .archive-table { width: 100%; border-collapse: collapse; background: var(--card-bg); border-radius: 12px; overflow: hidden; border: 1px solid #333; }
-        .archive-table th { background: #222; color: var(--green); padding: 12px; text-align: left; font-size: 0.8rem; }
-        .archive-table td { padding: 12px; border-bottom: 1px solid #333; font-size: 0.9rem; }
+        .archive-table th { background: #222; color: var(--green); padding: 10px; text-align: left; font-size: 0.75rem; }
+        .archive-table td { padding: 10px; border-bottom: 1px solid #333; font-size: 0.85rem; }
         .archive-table tr.hidden { display: none; }
 
-        .menu-btn { width: 100%; padding: 15px; margin: 10px 0; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.2s; }
-        .menu-btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+        .menu-btn { width: 100%; padding: 16px; margin: 8px 0; border: none; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 1rem; }
 
-        #dropdown { position: absolute; width: 100%; background: #1a1a1a; z-index: 3000; border-radius: 10px; max-height: 300px; overflow-y: auto; display: none; border: 1px solid #444; margin-top: 5px; }
+        #dropdown { position: absolute; width: 100%; background: #1a1a1a; z-index: 3000; border-radius: 10px; max-height: 250px; overflow-y: auto; display: none; border: 1px solid #444; margin-top: 5px; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
         .item { padding: 12px; cursor: pointer; border-bottom: 1px solid #222; text-align: left; }
-        .item:hover { background: #262626; }
     </style>
 </head>
 <body>
@@ -127,12 +134,12 @@
             <button class="nav-btn active" id="play-nav" onclick="showSection('game-view', this)">Play</button>
             <button class="nav-btn" onclick="showSection('archive-view', this)">Archive</button>
             <button class="nav-btn" onclick="showSection('stats-view', this)">Stats</button>
-            <a href="https://ko-fi.com/A4853SSA" target="_blank" class="kofi-btn">☕ Support Me</a>
+            <a href="https://ko-fi.com/A4853SSA" target="_blank" class="kofi-btn">☕ Support</a>
         </div>
     </nav>
 
     <div id="game-view" class="view-section active">
-        <div id="start-screen" style="text-align:center; background: var(--card-bg); padding: 40px 20px; border-radius: 20px; border:1px solid #333; width: 100%;">
+        <div id="start-screen" style="text-align:center; background: var(--card-bg); padding: 30px 15px; border-radius: 20px; border:1px solid #333; width: 100%; box-sizing: border-box;">
             <h2 id="loading-msg" style="color: var(--green);">Accessing Data...</h2>
             <div id="menu-options" style="display:none;">
                 <button class="menu-btn" style="background: var(--green); color: #000;" onclick="startGame('daily')">Daily Challenge</button>
@@ -141,9 +148,9 @@
         </div>
 
         <div id="game-content" style="display:none; width:100%;">
-            <div id="guess-counter" style="text-align:center; margin-bottom:15px; font-weight: bold; color: var(--green);">Guesses: 0 / 10</div>
+            <div id="guess-counter" style="text-align:center; margin-bottom:12px; font-weight: bold; color: var(--green); font-size: 0.9rem;">Guesses: 0 / 10</div>
             <div class="search-box">
-                <input type="text" id="guessInput" placeholder="Who is the character?" autocomplete="off">
+                <input type="text" id="guessInput" placeholder="Character Name..." autocomplete="off">
                 <div id="dropdown"></div>
             </div>
             <div id="gameGrid"></div>
@@ -151,8 +158,8 @@
     </div>
 
     <div id="archive-view" class="view-section">
-        <h2 style="color: var(--green); margin-bottom: 20px;">Character Archive</h2>
-        <input type="text" id="archiveSearch" placeholder="Filter by series or name..." onkeyup="filterArchive()" style="margin-bottom:15px; width:100%; padding:12px; border-radius:10px; border:1px solid #333; background:#111; color:white;">
+        <h2 style="color: var(--green); margin-bottom: 15px; font-size: 1.4rem;">Character Archive</h2>
+        <input type="text" id="archiveSearch" placeholder="Search series or name..." onkeyup="filterArchive()">
         <table class="archive-table" id="archiveTable">
             <thead><tr><th>Series</th><th>Character</th></tr></thead>
             <tbody id="archiveBody"></tbody>
@@ -160,9 +167,9 @@
     </div>
 
     <div id="stats-view" class="view-section">
-        <h2 style="color: var(--green);">Your Stats</h2>
-        <div style="text-align:center; background: var(--card-bg); padding: 20px; border-radius: 15px; width: 100%;">
-            <p>Coming Soon: Detailed Tracking</p>
+        <h2 style="color: var(--green); font-size: 1.4rem;">Stats</h2>
+        <div style="text-align:center; background: var(--card-bg); padding: 20px; border-radius: 15px; width: 100%; box-sizing: border-box;">
+            <p style="color: #888;">Tracking enabled soon!</p>
         </div>
     </div>
 
@@ -185,8 +192,7 @@
         }
 
         function resetToHome() {
-            gameOver = false;
-            guesses = [];
+            gameOver = false; guesses = [];
             document.getElementById('game-content').style.display = 'none';
             document.getElementById('start-screen').style.display = 'block';
             document.getElementById('gameGrid').innerHTML = '';
@@ -214,11 +220,7 @@
 
         function populateArchive() {
             const archiveBody = document.getElementById('archiveBody');
-            const sortedChars = [...characters].sort((a, b) => {
-                if (a.Series.toLowerCase() < b.Series.toLowerCase()) return -1;
-                if (a.Series.toLowerCase() > b.Series.toLowerCase()) return 1;
-                return a.Name.toLowerCase().localeCompare(b.Name.toLowerCase());
-            });
+            const sortedChars = [...characters].sort((a, b) => a.Series.localeCompare(b.Series));
             archiveBody.innerHTML = sortedChars.map(c => `<tr><td style="color:#888;">${c.Series}</td><td><strong>${c.Name}</strong></td></tr>`).join('');
         }
 
@@ -226,8 +228,7 @@
             const filter = document.getElementById("archiveSearch").value.toLowerCase();
             const rows = document.getElementById("archiveTable").getElementsByTagName("tr");
             for (let i = 1; i < rows.length; i++) {
-                const text = rows[i].textContent.toLowerCase();
-                rows[i].classList.toggle("hidden", !text.includes(filter));
+                rows[i].classList.toggle("hidden", !rows[i].textContent.toLowerCase().includes(filter));
             }
         }
 
@@ -281,10 +282,8 @@
             
             const attrHtml = attrs.map((k, index) => {
                 const match = guess[k]?.toLowerCase() === secretChar[k]?.toLowerCase();
-                const statusClass = match ? 'green' : '';
-                // Add staggered delay (0.1s per box)
                 const delay = index * 0.1;
-                return `<div class="attr-box ${statusClass}" style="animation-delay: ${delay}s">
+                return `<div class="attr-box ${match ? 'green' : ''}" style="animation-delay: ${delay}s">
                             <span class="attr-label">${k}</span>
                             <span><b>${guess[k]}</b></span>
                         </div>`;
@@ -292,8 +291,8 @@
 
             card.innerHTML = `<div class="char-header">
                 <img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'">
-                <div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br>
-                <small style="color:#888;">${guess.Series}</small></div>
+                <div><strong style="color:var(--green); font-size:1rem;">${guess.Name}</strong><br>
+                <small style="color:#888; font-size:0.8rem;">${guess.Series}</small></div>
             </div>
             <div class="attr-grid">${attrHtml}</div>`;
             
