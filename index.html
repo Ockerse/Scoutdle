@@ -75,10 +75,11 @@
             animation: flipIn 0.6s ease-in-out forwards;
             backface-visibility: hidden;
             position: relative;
+            color: white; /* Forced white text */
         }
         
-        .attr-label { font-size: 0.5rem; color: #aaa; text-transform: uppercase; margin-bottom: 1px; }
-        .arrow { font-size: 0.8rem; font-weight: bold; margin-left: 2px; }
+        .attr-label { font-size: 0.5rem; color: white; opacity: 0.8; text-transform: uppercase; margin-bottom: 1px; }
+        .arrow { font-size: 0.8rem; font-weight: bold; margin-left: 2px; color: white; }
 
         /* MOBILE OVERRIDES */
         @media (max-width: 480px) {
@@ -107,7 +108,7 @@
             0% { transform: rotateX(0deg); background: #262626; }
             45% { transform: rotateX(90deg); background: #262626; }
             55% { transform: rotateX(90deg); background: var(--yellow); }
-            100% { transform: rotateX(0deg); background: var(--yellow); color: black; }
+            100% { transform: rotateX(0deg); background: var(--yellow); color: white; }
         }
 
         .attr-box.green { animation-name: flipInGreen; }
@@ -297,22 +298,16 @@
                 let colorClass = '';
                 let arrow = '';
 
-                // Exact Match logic
                 if (val?.toLowerCase() === target?.toLowerCase()) {
                     colorClass = 'green';
                 } else {
-                    // Numerical Logic for Age, Height, Year
                     const nVal = parseInt(val);
                     const nTarget = parseInt(target);
 
                     if (!isNaN(nVal) && !isNaN(nTarget)) {
                         const diff = Math.abs(nVal - nTarget);
-                        
-                        // Define yellow thresholds
                         const threshold = (k === "Height") ? 10 : 5;
                         if (diff <= threshold) colorClass = 'yellow';
-                        
-                        // Add Arrow
                         if (nVal < nTarget) arrow = ' <span class="arrow">↑</span>';
                         else if (nVal > nTarget) arrow = ' <span class="arrow">↓</span>';
                     }
@@ -345,4 +340,3 @@
     </script>
 </body>
 </html>
-
