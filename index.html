@@ -1,3 +1,6 @@
+This adds a lot of "Hot or Cold" logic to the game! I've updated the renderGuessCard function to handle the numerical comparisons for **Age**, **Height**, and **Year**.
+Now, if a guess is close (within 5 for Age/Year or 10 for Height), the box will turn **yellow**. It also adds "↑" or "↓" arrows to guide the player toward the correct number.
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,7 +61,7 @@
         input { 
             width: 100%; padding: 14px; border-radius: 12px; border: 2px solid #333; 
             background: #111; color: white; box-sizing: border-box; font-size: 1rem; 
-            text-align: center; outline: none; appearance: none; /* Fix for iOS */
+            text-align: center; outline: none; appearance: none;
         }
 
         /* --- GAME CARDS --- */
@@ -66,7 +69,6 @@
         .char-header { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
         .char-image { width: 50px; height: 70px; border-radius: 6px; object-fit: cover; background: #222; border: 1px solid #444; }
         
-        /* Grid adjusts for Mobile */
         .attr-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; perspective: 1000px; }
         
         .attr-box { 
@@ -75,14 +77,16 @@
             display: flex; flex-direction: column; justify-content: center;
             animation: flipIn 0.6s ease-in-out forwards;
             backface-visibility: hidden;
+            position: relative;
         }
         
         .attr-label { font-size: 0.5rem; color: #aaa; text-transform: uppercase; margin-bottom: 1px; }
-        
+        .arrow { font-size: 0.8rem; font-weight: bold; margin-left: 2px; }
+
         /* MOBILE OVERRIDES */
         @media (max-width: 480px) {
             .header-main { font-size: 1.5rem; }
-            .attr-grid { grid-template-columns: repeat(2, 1fr); } /* 2 columns on small phones for readability */
+            .attr-grid { grid-template-columns: repeat(2, 1fr); } 
             .nav-btn { padding: 10px 8px; font-size: 0.7rem; }
             .char-card { padding: 10px; }
         }
@@ -102,7 +106,15 @@
             100% { transform: rotateX(0deg); background: var(--green); color: white; }
         }
 
+        @keyframes flipInYellow {
+            0% { transform: rotateX(0deg); background: #262626; }
+            45% { transform: rotateX(90deg); background: #262626; }
+            55% { transform: rotateX(90deg); background: var(--yellow); }
+            100% { transform: rotateX(0deg); background: var(--yellow); color: black; }
+        }
+
         .attr-box.green { animation-name: flipInGreen; }
+        .attr-box.yellow { animation-name: flipInYellow; }
 
         @keyframes slideDown { 
             from { opacity: 0; transform: translateY(-15px); } 
@@ -281,11 +293,37 @@
             const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
             
             const attrHtml = attrs.map((k, index) => {
-                const match = guess[k]?.toLowerCase() === secretChar[k]?.toLowerCase();
+                const val = guess[k];
+                const target = secretChar[k];
                 const delay = index * 0.1;
-                return `<div class="attr-box ${match ? 'green' : ''}" style="animation-delay: ${delay}s">
+                
+                let colorClass = '';
+                let arrow = '';
+
+                // Exact Match logic
+                if (val?.toLowerCase() === target?.toLowerCase()) {
+                    colorClass = 'green';
+                } else {
+                    // Numerical Logic for Age, Height, Year
+                    const nVal = parseInt(val);
+                    const nTarget = parseInt(target);
+
+                    if (!isNaN(nVal) && !isNaN(nTarget)) {
+                        const diff = Math.abs(nVal - nTarget);
+                        
+                        // Define yellow thresholds
+                        const threshold = (k === "Height") ? 10 : 5;
+                        if (diff <= threshold) colorClass = 'yellow';
+                        
+                        // Add Arrow
+                        if (nVal < nTarget) arrow = ' <span class="arrow">↑</span>';
+                        else if (nVal > nTarget) arrow = ' <span class="arrow">↓</span>';
+                    }
+                }
+
+                return `<div class="attr-box ${colorClass}" style="animation-delay: ${delay}s">
                             <span class="attr-label">${k}</span>
-                            <span><b>${guess[k]}</b></span>
+                            <span><b>${val}${arrow}</b></span>
                         </div>`;
             }).join('');
 
@@ -310,3 +348,5 @@
     </script>
 </body>
 </html>
+
+```
