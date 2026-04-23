@@ -116,20 +116,7 @@
             gap: 4px;
         }
 
-        /* --- LAYOUT --- */
-        .view-section {
-            display: none;
-            width: 92%;
-            max-width: 600px;
-            padding: 15px 0;
-        }
-
-        .view-section.active {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        /* --- SEARCH BOX & DROPDOWN --- */
         .search-box {
             width: 100%;
             position: relative;
@@ -150,7 +137,6 @@
             appearance: none;
         }
 
-        /* --- SEARCH DROPDOWN --- */
         #dropdown {
             position: absolute;
             width: 100%;
@@ -158,7 +144,7 @@
             z-index: 3000;
             border-radius: 12px;
             max-height: 500px;
-            /* INCREASED FOR MORE RESULTS */
+            /* Large scrollable area */
             overflow-y: auto;
             display: none;
             border: 2px solid #444;
@@ -184,6 +170,18 @@
 
         .item small {
             font-size: 0.9rem;
+        }
+
+        /* --- ARCHIVE LINKS --- */
+        .archive-link {
+            color: var(--text);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .archive-link:hover {
+            color: var(--green);
+            text-decoration: underline;
         }
 
         /* --- GAME CARDS --- */
@@ -249,118 +247,20 @@
             font-size: 0.8rem;
             font-weight: bold;
             margin-left: 2px;
-            color: white;
         }
 
-        /* MOBILE OVERRIDES */
-        @media (max-width: 480px) {
-            .header-main {
-                font-size: 1.5rem;
-            }
-
-            .attr-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-btn {
-                padding: 10px 8px;
-                font-size: 0.7rem;
-            }
-
-            .char-card {
-                padding: 10px;
-            }
-
-            #dropdown {
-                max-height: 400px;
-            }
+        /* --- LAYOUT SECTIONS --- */
+        .view-section {
+            display: none;
+            width: 92%;
+            max-width: 600px;
+            padding: 15px 0;
         }
 
-        /* --- ANIMATIONS --- */
-        @keyframes flipIn {
-            0% {
-                transform: rotateX(0deg);
-                background: #262626;
-            }
-
-            45% {
-                transform: rotateX(90deg);
-                background: #262626;
-            }
-
-            55% {
-                transform: rotateX(90deg);
-            }
-
-            100% {
-                transform: rotateX(0deg);
-            }
-        }
-
-        @keyframes flipInGreen {
-            0% {
-                transform: rotateX(0deg);
-                background: #262626;
-            }
-
-            45% {
-                transform: rotateX(90deg);
-                background: #262626;
-            }
-
-            55% {
-                transform: rotateX(90deg);
-                background: var(--green);
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                background: var(--green);
-                color: white;
-            }
-        }
-
-        @keyframes flipInYellow {
-            0% {
-                transform: rotateX(0deg);
-                background: #262626;
-            }
-
-            45% {
-                transform: rotateX(90deg);
-                background: #262626;
-            }
-
-            55% {
-                transform: rotateX(90deg);
-                background: var(--yellow);
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                background: var(--yellow);
-                color: white;
-            }
-        }
-
-        .attr-box.green {
-            animation-name: flipInGreen;
-        }
-
-        .attr-box.yellow {
-            animation-name: flipInYellow;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .view-section.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .archive-table {
@@ -399,6 +299,85 @@
             font-weight: 800;
             cursor: pointer;
             font-size: 1rem;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes flipIn {
+            0% {
+                transform: rotateX(0deg);
+            }
+
+            45% {
+                transform: rotateX(90deg);
+            }
+
+            100% {
+                transform: rotateX(0deg);
+            }
+        }
+
+        @keyframes flipInGreen {
+            0% {
+                transform: rotateX(0deg);
+            }
+
+            55% {
+                background: var(--green);
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                background: var(--green);
+            }
+        }
+
+        @keyframes flipInYellow {
+            0% {
+                transform: rotateX(0deg);
+            }
+
+            55% {
+                background: var(--yellow);
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                background: var(--yellow);
+            }
+        }
+
+        .attr-box.green {
+            animation-name: flipInGreen;
+        }
+
+        .attr-box.yellow {
+            animation-name: flipInYellow;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-main {
+                font-size: 1.5rem;
+            }
+
+            .attr-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            #dropdown {
+                max-height: 400px;
+            }
         }
     </style>
 </head>
@@ -447,7 +426,8 @@
 
     <div id="archive-view" class="view-section">
         <h2 style="color: var(--green); margin-bottom: 15px; font-size: 1.4rem;">Character Archive</h2>
-        <input type="text" id="archiveSearch" placeholder="Search series or name..." onkeyup="filterArchive()">
+        <input type="text" id="archiveSearch" placeholder="Search series or name..." onkeyup="filterArchive()"
+            style="margin-bottom: 10px;">
         <table class="archive-table" id="archiveTable">
             <thead>
                 <tr>
@@ -499,18 +479,20 @@
             Papa.parse("anime.csv", {
                 download: true, header: false, skipEmptyLines: true,
                 complete: function (results) {
-                    characters = results.data.map(r => ({
-                        "Name": r[0]?.trim(), "Series": r[1]?.trim(), "Age": r[2]?.trim(),
-                        "Height": r[3]?.trim(), "Sex": r[4]?.trim(), "Hair": r[5]?.trim(),
-                        "Eyes": r[6]?.trim(), "ID": r[7]?.trim(), "Genre": r[8]?.trim() || "???",
-                        "Year": r[9]?.trim() || "????"
-                    })).filter(c => c.Name && c.Name.toLowerCase() !== "name");
+                    characters = results.data.map(r => {
+                        // Data cleanup and renaming fix
+                        let seriesName = r[1]?.trim() || "???";
+                        if (seriesName === "FMA: B") seriesName = "Full Metal Alchemist Brotherhood";
 
-                    fuse = new Fuse(characters, {
-                        keys: ['Name', 'Series'],
-                        threshold: 0.35
-                    });
+                        return {
+                            "Name": r[0]?.trim(), "Series": seriesName, "Age": r[2]?.trim(),
+                            "Height": r[3]?.trim(), "Sex": r[4]?.trim(), "Hair": r[5]?.trim(),
+                            "Eyes": r[6]?.trim(), "ID": r[7]?.trim(), "Genre": r[8]?.trim() || "???",
+                            "Year": r[9]?.trim() || "????"
+                        };
+                    }).filter(c => c.Name && c.Name.toLowerCase() !== "name");
 
+                    fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.35 });
                     populateArchive();
                     document.getElementById('loading-msg').style.display = "none";
                     document.getElementById('menu-options').style.display = 'block';
@@ -520,15 +502,25 @@
 
         function populateArchive() {
             const archiveBody = document.getElementById('archiveBody');
-            const sortedChars = [...characters].sort((a, b) => a.Series.localeCompare(b.Series));
-            archiveBody.innerHTML = sortedChars.map(c => `<tr><td style="color:#888;">${c.Series}</td><td><strong>${c.Name}</strong></td></tr>`).join('');
+            const sortedChars = [...characters].sort((a, b) => {
+                if (a.Series === b.Series) return a.Name.localeCompare(b.Name);
+                return a.Series.localeCompare(b.Series);
+            });
+
+            archiveBody.innerHTML = sortedChars.map(c => {
+                const malUrl = `https://myanimelist.net/character/${c.ID}`;
+                return `<tr>
+                    <td style="color:#888;">${c.Series}</td>
+                    <td><a href="${malUrl}" target="_blank" class="archive-link"><strong>${c.Name}</strong></a></td>
+                </tr>`;
+            }).join('');
         }
 
         function filterArchive() {
             const filter = document.getElementById("archiveSearch").value.toLowerCase();
-            const rows = document.getElementById("archiveTable").getElementsByTagName("tr");
-            for (let i = 1; i < rows.length; i++) {
-                rows[i].classList.toggle("hidden", !rows[i].textContent.toLowerCase().includes(filter));
+            const rows = document.getElementById("archiveBody").getElementsByTagName("tr");
+            for (let row of rows) {
+                row.classList.toggle("hidden", !row.textContent.toLowerCase().includes(filter));
             }
         }
 
@@ -555,7 +547,6 @@
             } else {
                 secretChar = characters[Math.floor(Math.random() * characters.length)];
             }
-
             setupSearch();
         }
 
@@ -563,8 +554,7 @@
             const input = document.getElementById('guessInput');
             const dropdown = document.getElementById('dropdown');
             input.oninput = () => {
-                // INCREASED TO 20 RESULTS FOR BETTER SCROLLING
-                const results = fuse.search(input.value).slice(0, 20);
+                const results = fuse.search(input.value).slice(0, 20); // 20 results
                 dropdown.innerHTML = results.map(r => `
                     <div class="item" onclick="selectGuess('${r.item.Name}')">
                         <strong style="color:var(--green);">${r.item.Name}</strong><br>
@@ -583,11 +573,8 @@
             document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / 10`;
             await renderGuessCard(char);
 
-            if (char.Name === secretChar.Name) {
-                endGame("✨ Victory! It was " + secretChar.Name);
-            } else if (guesses.length >= 10) {
-                endGame("💀 Game Over! It was " + secretChar.Name);
-            }
+            if (char.Name === secretChar.Name) endGame("✨ Victory! It was " + secretChar.Name);
+            else if (guesses.length >= 10) endGame("💀 Game Over! It was " + secretChar.Name);
         }
 
         function endGame(msg) {
@@ -613,41 +600,24 @@
             const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
 
             const attrHtml = attrs.map((k, index) => {
-                const val = guess[k];
-                const target = secretChar[k];
-                const delay = index * 0.1;
+                const val = guess[k], target = secretChar[k], delay = index * 0.1;
+                let colorClass = '', arrow = '';
 
-                let colorClass = '';
-                let arrow = '';
-
-                if (val?.toLowerCase() === target?.toLowerCase()) {
-                    colorClass = 'green';
-                } else {
-                    const nVal = parseInt(val);
-                    const nTarget = parseInt(target);
-
+                if (val?.toLowerCase() === target?.toLowerCase()) colorClass = 'green';
+                else {
+                    const nVal = parseInt(val), nTarget = parseInt(target);
                     if (!isNaN(nVal) && !isNaN(nTarget)) {
                         const diff = Math.abs(nVal - nTarget);
-                        const threshold = (k === "Height") ? 10 : 5;
-                        if (diff <= threshold) colorClass = 'yellow';
-                        if (nVal < nTarget) arrow = ' <span class="arrow">↑</span>';
-                        else if (nVal > nTarget) arrow = ' <span class="arrow">↓</span>';
+                        if (diff <= (k === "Height" ? 10 : 5)) colorClass = 'yellow';
+                        arrow = nVal < nTarget ? ' <span class="arrow">↑</span>' : ' <span class="arrow">↓</span>';
                     }
                 }
-
-                return `<div class="attr-box ${colorClass}" style="animation-delay: ${delay}s">
-                            <span class="attr-label">${k}</span>
-                            <span><b>${val}${arrow}</b></span>
-                        </div>`;
+                return `<div class="attr-box ${colorClass}" style="animation-delay: ${delay}s"><span class="attr-label">${k}</span><span><b>${val}${arrow}</b></span></div>`;
             }).join('');
 
-            card.innerHTML = `<div class="char-header">
-                <img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'">
-                <div><strong style="color:var(--green); font-size:1rem;">${guess.Name}</strong><br>
-                <small style="color:#888; font-size:0.8rem;">${guess.Series}</small></div>
-            </div>
-            <div class="attr-grid">${attrHtml}</div>`;
-
+            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'">
+                <div><strong style="color:var(--green); font-size:1rem;">${guess.Name}</strong><br><small style="color:#888; font-size:0.8rem;">${guess.Series}</small></div></div>
+                <div class="attr-grid">${attrHtml}</div>`;
             grid.prepend(card);
         }
 
