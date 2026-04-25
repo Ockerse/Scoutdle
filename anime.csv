@@ -80,7 +80,7 @@ Denji,Chainsaw Man,17,171,M,Blonde,Brown,170732,Action,2022
 Makima,Chainsaw Man,1000,168,F,Red,Yellow,170734,Action,2022
 Aki Hayakawa,Chainsaw Man,21,182,M,Black,Blue,170735,Action,2022
 Power,Chainsaw Man,500,165,F,Strawberry Blonde,Yellow,170733,Action,2022
-Himeno,Chainsaw Man,23,167,M,Black,Brown,170765,Action,2022
+Himeno,Chainsaw Man,23,167,F,Black,Brown,170765,Action,2022
 Kobeni Higashiyama,Chainsaw Man,20,155,F,Brown,Brown,174749,Action,2022
 Kishibe,Chainsaw Man,50,185,M,Grey,Black,174748,Action,2022
 Reze,Chainsaw Man,19,162,F,Purple,Green,174751,Action,2022
@@ -328,9 +328,9 @@ Kafka Hibino,Kaiju No. 8,32,181,M,Black,Blue,187463,Action,2024
 Reno Ichikawa,Kaiju No. 8,18,174,M,Silver,Blue,187497,Action,2024
 Mina Ashiro,Kaiju No. 8,27,169,F,Black,Grey,187500,Action,2024
 Megumin,Konosuba,14,150,F,Brown,Red,117225,Fantasy,2012
-Darkness,Konosuba,18,175,F,Blonde,Blue,240734,Fantasy,2012
+Darkness,Konosuba,18,175,F,Blonde,Blue,117285,Fantasy,2012
 Kazuma Sato,Konosuba,16,165,M,Brown,Green,8594,Fantasy,2012
-Aqua,Konosuba,1000,158,F,Blue,Blue,231415,Fantasy,2012
+Aqua,Konosuba,1000,158,F,Blue,Blue,117223,Fantasy,2012
 Kaguya Shinomiya,Love is War,17,158,F,Black,Red,136359,Comedy,2015
 Miyuki Shirogane,Love is War,17,175,M,Blonde,Blue,136685,Comedy,2015
 Chika Fujiwara,Love is War,17,154,F,Pink,Blue,140810,Comedy,2015
@@ -612,7 +612,7 @@ Maximillion Pegasus,Yu-Gi-Oh!,24,188,M,White,Brown,5991,Action,1998
 Tea Gardner,Yu-Gi-Oh!,16,165,F,Brown,Blue,1376,Action,1998
 Bakura Ryou,Yu-Gi-Oh!,16,176,M,White,Brown,1379,Action,1998
 Yami Bakura,Yu-Gi-Oh!,3000,176,M,White,Brown,1380,Action,1998
-Mai Valentine,Yu-Gi-Oh!,24,175,F,Blonde,Purple,1381,Action,1998
+Mai Valentine,Yu-Gi-Oh!,24,175,F,Blonde,Purple,5994,Action,1998
 Marik Ishtar,Yu-Gi-Oh!,16,180,M,Blonde,Violet,5287,Action,1998
 Ishizu Ishtar,Yu-Gi-Oh!,20,167,F,Black,Blue,5993,Action,1998
 Mokuba Kaiba,Yu-Gi-Oh!,11,142,M,Black,Blue,1381,Action,1998
@@ -731,24 +731,24 @@ Nadeko Sengoku,Monogatari Series,14,153,F,Brown,Brown,22050,Supernatural,2009
 Meme Oshino,Monogatari Series,32,179,M,Blonde,Brown,22552,Supernatural,2009
 Tsukihi Araragi,Monogatari Series,14,158,F,Black,Grey,24195,Supernatural,2009
 Karen Araragi,Monogatari Series,15,170,F,Black,Grey,24194,Supernatural,2009
-Inuyasha,Inuyasha,150+,167cm,Male,Silver,Gold,1353,Action/Fantasy,1996
-Kagome Higurashi,Inuyasha,15,158cm,Female,Black,Brown,1354,Action/Fantasy,1996
-Sango,Inuyasha,19,165cm,Female,Brown,Brown,1355,Action/Fantasy,1996
-Miroku,Inuyasha,18,178cm,Male,Black,Blue,1356,Action/Fantasy,1996
-Shippou,Inuyasha,7,70cm,Male,Orange,Green,1357,Action/Fantasy,1996
-Johan Liebert,Monster,23,180cm,Male,Blonde,Blue,719,Psychological,1994
-Kenzou Tenma,Monster,37,175cm,Male,Black,Brown,718,Psychological,1994
-Anna Liebert,Monster,23,163cm,Female,Blonde,Blue,720,Psychological,1994
-Wolfgang Grimmer,Monster,40,178cm,Male,Brown,Brown,3096,Psychological,1994
-Heinrich Lunge,Monster,45,175cm,Male,Black,Black,721,Psychological/,1994
-Motoko Kusanagi,Ghost in the Shell,26,168cm,Female,Purple,Violet,1795,Sci-Fi,1989
-Batou,Ghost in the Shell,35,187cm,Male,Grey,White,2653,Sci-Fi,1989
-Daisuke Aramaki,Ghost in the Shell,56,153cm,Male,White,Brown,2677,Sci-Fi,1989
+Inuyasha,Inuyasha,150+,167cm,M,Silver,Gold,1353,Action/Fantasy,1996
+Kagome Higurashi,Inuyasha,15,158cm,F,Black,Brown,1354,Action/Fantasy,1996
+Sango,Inuyasha,19,165cm,F,Brown,Brown,1355,Action/Fantasy,1996
+Miroku,Inuyasha,18,178cm,M,Black,Blue,1356,Action/Fantasy,1996
+Shippou,Inuyasha,7,70cm,M,Orange,Green,1357,Action/Fantasy,1996
+Johan Liebert,Monster,23,180cm,M,Blonde,Blue,719,Psychological,1994
+Kenzou Tenma,Monster,37,175cm,M,Black,Brown,718,Psychological,1994
+Anna Liebert,Monster,23,163cm,F,Blonde,Blue,720,Psychological,1994
+Wolfgang Grimmer,Monster,40,178cm,M,Brown,Brown,3096,Psychological,1994
+Heinrich Lunge,Monster,45,175cm,M,Black,Black,721,Psychological/,1994
+Motoko Kusanagi,Ghost in the Shell,26,168cm,F,Purple,Violet,1795,Sci-Fi,1989
+Batou,Ghost in the Shell,35,187cm,M,Grey,White,2653,Sci-Fi,1989
+Daisuke Aramaki,Ghost in the Shell,56,153cm,M,White,Brown,2677,Sci-Fi,1989
 Project 2501,Ghost in the Shell,1,165cm,Agender,Blue,Grey,18516,Sci-Fi,1989
-Togusa,Ghost in the Shell,27,172cm,Male,Brown,Brown,2654,Sci-Fi,1989
-Koro-sensei,Assassination Classroom,28,300cm,Male,Yellow,Black,65643,Comedy,2012
-Karma Akabane,Assassination Classroom,14,175cm,Male,Red,Mercury,71933,Comedy,2012
-Nagisa Shiota,Assassination Classroom,14,159cm,Male,Blue,Azure,65645,Comedy,2012
-Kaede Kayano,Assassination Classroom,14,146cm,Female,Green,Hazel,85291,Comedy,2012
-Irina Jelavic,Assassination Classroom,20,170cm,Female,Blonde,Blue,73883,Comedy,2012
-Tadaomi Karasuma,Assassination Classroom,28,180cm,Male,Black,Black,73881,Comedy,2012
+Togusa,Ghost in the Shell,27,172cm,M,Brown,Brown,2654,Sci-Fi,1989
+Koro-sensei,Assassination Classroom,28,300cm,M,Yellow,Black,65643,Comedy,2012
+Karma Akabane,Assassination Classroom,14,175cm,M,Red,Mercury,71933,Comedy,2012
+Nagisa Shiota,Assassination Classroom,14,159cm,M,Blue,Azure,65645,Comedy,2012
+Kaede Kayano,Assassination Classroom,14,146cm,F,Green,Hazel,85291,Comedy,2012
+Irina Jelavic,Assassination Classroom,20,170cm,F,Blonde,Blue,73883,Comedy,2012
+Tadaomi Karasuma,Assassination Classroom,28,180cm,M,Black,Black,73881,Comedy,2012
