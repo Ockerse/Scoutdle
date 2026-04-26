@@ -46,10 +46,7 @@
             z-index: 2000;
         }
 
-        .home-link {
-            text-decoration: none;
-            cursor: pointer;
-        }
+        .home-link { text-decoration: none; cursor: pointer; }
 
         .title-container {
             display: flex;
@@ -143,7 +140,7 @@
             background: #1a1a1a;
             z-index: 3000;
             border-radius: 12px;
-            max-height: 500px;
+            max-height: 350px;
             overflow-y: auto;
             display: none;
             border: 2px solid #444;
@@ -159,9 +156,7 @@
             transition: background 0.2s;
         }
 
-        .item:hover {
-            background: #252525;
-        }
+        .item:hover { background: #252525; }
 
         /* --- GAME CARDS --- */
         .char-card {
@@ -210,22 +205,14 @@
             justify-content: center;
             animation: flipIn 0.6s ease-in-out forwards;
             backface-visibility: hidden;
-            position: relative;
             color: white;
         }
 
         .attr-label {
             font-size: 0.5rem;
-            color: white;
-            opacity: 0.8;
+            color: #aaa;
             text-transform: uppercase;
-            margin-bottom: 1px;
-        }
-
-        .arrow {
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-left: 2px;
+            margin-bottom: 2px;
         }
 
         /* --- LAYOUT SECTIONS --- */
@@ -265,9 +252,7 @@
             font-size: 0.85rem;
         }
 
-        .archive-table tr.hidden {
-            display: none;
-        }
+        .archive-table tr.hidden { display: none; }
 
         .menu-btn {
             width: 100%;
@@ -281,87 +266,33 @@
             transition: 0.2s;
         }
 
-        .menu-btn:active {
-            transform: scale(0.98);
-        }
-
         /* --- ANIMATIONS --- */
-        @keyframes flipIn {
-            0% {
-                transform: rotateX(0deg);
-            }
-
-            45% {
-                transform: rotateX(90deg);
-            }
-
-            100% {
-                transform: rotateX(0deg);
-            }
-        }
-
         @keyframes flipInGreen {
-            0% {
-                transform: rotateX(0deg);
-            }
-
-            55% {
-                background: var(--green);
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                background: var(--green);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--green); }
         }
 
         @keyframes flipInYellow {
-            0% {
-                transform: rotateX(0deg);
-            }
-
-            55% {
-                background: var(--yellow);
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                background: var(--yellow);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--yellow); }
         }
 
-        .attr-box.green {
-            animation-name: flipInGreen;
+        @keyframes flipInNormal {
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; }
         }
 
-        .attr-box.yellow {
-            animation-name: flipInYellow;
-        }
+        .attr-box.green { animation: flipInGreen 0.6s ease-out forwards; }
+        .attr-box.yellow { animation: flipInYellow 0.6s ease-out forwards; }
+        .attr-box:not(.green):not(.yellow) { animation: flipInNormal 0.6s ease-out forwards; }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 480px) {
-            .header-main {
-                font-size: 1.5rem;
-            }
-
-            .attr-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            #dropdown {
-                max-height: 400px;
-            }
+            .attr-grid { grid-template-columns: repeat(2, 1fr); }
         }
     </style>
 </head>
@@ -371,7 +302,7 @@
     <nav>
         <a onclick="resetToHome()" class="home-link">
             <div class="title-container">
-                <img src="Scoutdle.jpeg" class="title-logo" alt="Logo">
+                <img src="Scoutdle.jpeg" class="title-logo" alt="Logo" onerror="this.style.display='none'">
                 <h1 class="header-main">SCOUTDLE</h1>
             </div>
         </a>
@@ -384,22 +315,17 @@
     </nav>
 
     <div id="game-view" class="view-section active">
-        <div id="start-screen"
-            style="text-align:center; background: var(--card-bg); padding: 30px 15px; border-radius: 20px; border:1px solid #333; width: 100%; box-sizing: border-box;">
+        <div id="start-screen" style="text-align:center; background: var(--card-bg); padding: 30px 15px; border-radius: 20px; border:1px solid #333; width: 100%; box-sizing: border-box;">
             <h2 id="loading-msg" style="color: var(--green);">Accessing Data...</h2>
             <div id="menu-options" style="display:none;">
-                <button class="menu-btn" style="background: var(--green); color: #000;"
-                    onclick="startGame('daily')">Daily Challenge</button>
-                <button class="menu-btn" style="background:#333; color:white;"
-                    onclick="startGame('unlimited')">Unlimited Mode</button>
+                <button class="menu-btn" style="background: var(--green); color: #000;" onclick="startGame('daily')">Daily Challenge</button>
+                <button class="menu-btn" style="background:#333; color:white;" onclick="startGame('unlimited')">Unlimited Mode</button>
             </div>
         </div>
 
         <div id="game-content" style="display:none; width:100%;">
             <div id="end-actions"></div>
-            <div id="guess-counter"
-                style="text-align:center; margin-bottom:12px; font-weight: bold; color: var(--green); font-size: 0.9rem;">
-                Guesses: 0 / 10</div>
+            <div id="guess-counter" style="text-align:center; margin-bottom:12px; font-weight: bold; color: var(--green); font-size: 0.9rem;">Guesses: 0 / 10</div>
             <div class="search-box">
                 <input type="text" id="guessInput" placeholder="Character or Anime..." autocomplete="off">
                 <div id="dropdown"></div>
@@ -410,42 +336,38 @@
 
     <div id="archive-view" class="view-section">
         <h2 style="color: var(--green); margin-bottom: 15px; font-size: 1.4rem;">Character Archive</h2>
-        <input type="text" id="archiveSearch" placeholder="Search series or name..." onkeyup="filterArchive()"
-            style="margin-bottom: 10px;">
+        <input type="text" id="archiveSearch" placeholder="Search series or name..." onkeyup="filterArchive()" style="margin-bottom: 10px;">
         <table class="archive-table" id="archiveTable">
             <thead>
-                <tr>
-                    <th>Series</th>
-                    <th>Character</th>
-                </tr>
+                <tr><th>Series</th><th>Character</th></tr>
             </thead>
             <tbody id="archiveBody"></tbody>
         </table>
     </div>
 
     <div id="stats-view" class="view-section">
-        <h2 style="color: var(--green); font-size: 1.4rem;">Stats</h2>
-        <div id="stats-container"
-            style="text-align:center; background: var(--card-bg); padding: 20px; border-radius: 15px; width: 100%; box-sizing: border-box;">
-            <p id="total-wins" style="color: #fff; margin: 5px 0;">Daily Wins: 0</p>
-        </div>
+        <h2 style="color: var(--green); font-size: 1.4rem;">Statistics</h2>
+        <div id="stats-container" style="background: var(--card-bg); padding: 20px; border-radius: 15px; width: 100%; box-sizing: border-box; text-align: center;">
+            </div>
     </div>
 
     <script>
         let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false, currentMode = 'daily';
+        const MAX_GUESSES = 10;
+        const imgCache = new Map();
 
-        async function fetchImage(id, retries = 2) {
+        async function fetchImage(id) {
             if (!id || isNaN(id)) return "Scoutdle.jpeg";
-            for (let i = 0; i < retries; i++) {
-                try {
-                    const res = await fetch(`https://api.jikan.moe/v4/characters/${id}`);
-                    if (res.ok) {
-                        const data = await res.json();
-                        return data.data?.images?.jpg?.image_url || "Scoutdle.jpeg";
-                    }
-                    if (res.status === 429) await new Promise(r => setTimeout(r, 1000));
-                } catch (e) { }
-            }
+            if (imgCache.has(id)) return imgCache.get(id);
+            try {
+                const res = await fetch(`https://api.jikan.moe/v4/characters/${id}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const url = data.data?.images?.jpg?.image_url || "Scoutdle.jpeg";
+                    imgCache.set(id, url);
+                    return url;
+                }
+            } catch (e) { console.error("Img fetch error", e); }
             return "Scoutdle.jpeg";
         }
 
@@ -464,16 +386,18 @@
             Papa.parse("anime.csv", {
                 download: true, header: false, skipEmptyLines: true,
                 complete: function (results) {
-                    characters = results.data.map(r => {
-                        let sName = r[1]?.trim() || "???";
-                        if (sName === "FMA: B") sName = "Full Metal Alchemist Brotherhood";
-                        return {
-                            "Name": r[0]?.trim(), "Series": sName, "Age": r[2]?.trim(),
-                            "Height": r[3]?.trim(), "Sex": r[4]?.trim(), "Hair": r[5]?.trim(),
-                            "Eyes": r[6]?.trim(), "ID": r[7]?.trim(), "Genre": r[8]?.trim() || "???",
-                            "Year": r[9]?.trim() || "????"
-                        };
-                    }).filter(c => c.Name && c.Name.toLowerCase() !== "name");
+                    characters = results.data.slice(1).map(r => ({
+                        "Name": r[0]?.trim(),
+                        "Series": r[1]?.trim() === "FMA: B" ? "Full Metal Alchemist Brotherhood" : r[1]?.trim() || "???",
+                        "Age": r[2]?.trim(),
+                        "Height": r[3]?.trim(),
+                        "Sex": r[4]?.trim(),
+                        "Hair": r[5]?.trim(),
+                        "Eyes": r[6]?.trim(),
+                        "ID": r[7]?.trim(),
+                        "Genre": r[8]?.trim() || "???",
+                        "Year": r[9]?.trim() || "????"
+                    })).filter(c => c.Name);
 
                     fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.35 });
                     populateArchive();
@@ -486,11 +410,8 @@
 
         function populateArchive() {
             const archiveBody = document.getElementById('archiveBody');
-            const sortedChars = [...characters].sort((a, b) => {
-                if (a.Series === b.Series) return a.Name.localeCompare(b.Name);
-                return a.Series.localeCompare(b.Series);
-            });
-            archiveBody.innerHTML = sortedChars.map(c => `<tr><td style="color:#888;">${c.Series}</td><td><a href="https://myanimelist.net/character/${c.ID}" target="_blank" class="archive-link"><strong>${c.Name}</strong></a></td></tr>`).join('');
+            const sortedChars = [...characters].sort((a, b) => a.Series.localeCompare(b.Series) || a.Name.localeCompare(b.Name));
+            archiveBody.innerHTML = sortedChars.map(c => `<tr><td style="color:#888;">${c.Series}</td><td><a href="https://myanimelist.net/character/${c.ID}" target="_blank" style="color:white;text-decoration:none;"><strong>${c.Name}</strong></a></td></tr>`).join('');
         }
 
         function filterArchive() {
@@ -516,35 +437,60 @@
                 secretChar = characters[Math.floor(Math.random() * characters.length)];
             }
             setupSearch();
-            document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / 10`;
+            updateGuessCounter();
         }
 
-        // --- UPDATED: SFC32 Chaotic Daily Picker ---
         function getDailyChar(dateString) {
             let seed = 0;
-            for (let i = 0; i < dateString.length; i++) {
-                seed = ((seed << 5) - seed) + dateString.charCodeAt(i);
-                seed |= 0;
-            }
-            // Small Fast Chaotic (SFC32) PRNG
+            for (let i = 0; i < dateString.length; i++) seed = ((seed << 5) - seed) + dateString.charCodeAt(i);
             let a = seed | 0, b = 0x9e3779b9 | 0, c = 0x12345678 | 0, d = 0xdeadbeef | 0;
             for (let i = 0; i < 20; i++) {
-                a >>>= 0; b >>>= 0; c >>>= 0; d >>>= 0;
-                let t = (a + b | 0) + d | 0;
-                d = d + 1 | 0;
-                a = b ^ b >>> 9;
-                b = c + (c << 3) | 0;
-                c = (c << 21 | c >>> 11);
-                c = c + t | 0;
+                let t = (a + b | 0) + d | 0; d = d + 1 | 0;
+                a = b ^ b >>> 9; b = c + (c << 3) | 0;
+                c = (c << 21 | c >>> 11); c = c + t | 0;
             }
             return characters[Math.abs(c) % characters.length];
+        }
+
+        function setupSearch() {
+            const input = document.getElementById('guessInput');
+            const dropdown = document.getElementById('dropdown');
+            input.oninput = () => {
+                if (!input.value.trim()) { dropdown.style.display = 'none'; return; }
+                const res = fuse.search(input.value).slice(0, 10);
+                dropdown.innerHTML = res.map(r => `<div class="item" onclick="selectGuess('${r.item.Name.replace(/'/g, "\\'")}')"><strong style="color:var(--green);">${r.item.Name}</strong><br><small style="color:#888;">${r.item.Series}</small></div>`).join('');
+                dropdown.style.display = res.length > 0 ? 'block' : 'none';
+            };
+        }
+
+        async function selectGuess(name) {
+            const char = characters.find(c => c.Name === name);
+            if (!char || gameOver || guesses.some(g => g.Name === name)) return;
+            
+            document.getElementById('guessInput').value = '';
+            document.getElementById('dropdown').style.display = 'none';
+            
+            guesses.push(char);
+            updateGuessCounter();
+            await renderGuessCard(char);
+
+            if (char.Name === secretChar.Name) {
+                endGame("✨ Victory! It was " + secretChar.Name);
+            } else if (guesses.length >= MAX_GUESSES) {
+                endGame("💀 Game Over! It was " + secretChar.Name);
+            } else {
+                saveProgress();
+            }
+        }
+
+        function updateGuessCounter() {
+            document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / ${MAX_GUESSES}`;
         }
 
         function saveProgress() {
             if (currentMode !== 'daily') return;
             const today = new Date().toISOString().split('T')[0];
-            const data = { date: today, guesses: guesses.map(g => g.Name), gameOver: gameOver };
-            localStorage.setItem('scoutdle_daily', JSON.stringify(data));
+            localStorage.setItem('scoutdle_daily', JSON.stringify({ date: today, guesses: guesses.map(g => g.Name), gameOver }));
         }
 
         async function loadProgress(today) {
@@ -556,82 +502,129 @@
                         const char = characters.find(c => c.Name === name);
                         if (char) { guesses.push(char); await renderGuessCard(char); }
                     }
+                    updateGuessCounter();
                     if (data.gameOver) {
-                        const last = guesses[guesses.length - 1];
-                        endGame(last.Name === secretChar.Name ? "✨ Victory! It was " + secretChar.Name : "💀 Game Over! It was " + secretChar.Name, false);
+                        const win = guesses.length > 0 && guesses[guesses.length-1].Name === secretChar.Name;
+                        endGame(win ? "✨ Victory! It was " + secretChar.Name : "💀 Game Over! It was " + secretChar.Name, false);
                     }
-                } else localStorage.removeItem('scoutdle_daily');
+                }
             }
         }
 
-        function setupSearch() {
-            const input = document.getElementById('guessInput');
-            const dropdown = document.getElementById('dropdown');
-            input.oninput = () => {
-                const res = fuse.search(input.value).slice(0, 20);
-                dropdown.innerHTML = res.map(r => `<div class="item" onclick="selectGuess('${r.item.Name}')"><strong style="color:var(--green);">${r.item.Name}</strong><br><small style="color:#888;">${r.item.Series}</small></div>`).join('');
-                dropdown.style.display = res.length > 0 ? 'block' : 'none';
-            };
-        }
-
-        async function selectGuess(name) {
-            const char = characters.find(c => c.Name === name);
-            if (!char || gameOver || guesses.some(g => g.Name === name)) return;
-            document.getElementById('guessInput').value = '';
-            document.getElementById('dropdown').style.display = 'none';
-            guesses.push(char);
-            document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / 10`;
-            await renderGuessCard(char);
-
-            if (char.Name === secretChar.Name) {
-                if (currentMode === 'daily') saveWin();
-                endGame("✨ Victory! It was " + secretChar.Name);
-            } else if (guesses.length >= 10) endGame("💀 Game Over! It was " + secretChar.Name);
-            else saveProgress();
-        }
-
-        function saveWin() {
+        function recordGameOver(isWin) {
+            if (currentMode !== 'daily') return;
+            
+            let played = parseInt(localStorage.getItem('scoutdle_played') || '0');
             let wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
-            localStorage.setItem('scoutdle_wins', wins + 1);
+            let dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
+
+            localStorage.setItem('scoutdle_played', played + 1);
+            if (isWin) {
+                localStorage.setItem('scoutdle_wins', wins + 1);
+                let guessCount = guesses.length;
+                dist[guessCount] = (dist[guessCount] || 0) + 1;
+                localStorage.setItem('scoutdle_dist', JSON.stringify(dist));
+            }
             updateStats();
         }
 
         function updateStats() {
-            document.getElementById('total-wins').innerText = `Daily Wins: ${localStorage.getItem('scoutdle_wins') || '0'}`;
+            const played = parseInt(localStorage.getItem('scoutdle_played') || '0');
+            const wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
+            const dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
+            
+            const statsContainer = document.getElementById('stats-container');
+            const maxVal = Math.max(...Object.values(dist), 1);
+
+            let distHtml = '<div style="margin-top:25px; text-align:left;">';
+            distHtml += '<p style="font-size:0.8rem; color:var(--green); font-weight:bold; margin-bottom:12px; text-align:center;">GUESS DISTRIBUTION</p>';
+            
+            for (let i = 1; i <= 10; i++) {
+                const count = dist[i] || 0;
+                const width = Math.max((count / maxVal) * 100, 7); 
+                const barColor = count > 0 ? 'var(--green)' : '#333';
+                
+                distHtml += `
+                    <div style="display:flex; align-items:center; margin-bottom:6px; font-family: sans-serif;">
+                        <div style="width:25px; color:#fff; font-size:0.8rem; font-weight:bold;">${i}</div>
+                        <div style="flex-grow:1; background:#111; border-radius:4px; overflow:hidden; height: 20px;">
+                            <div style="width:${width}%; background:${barColor}; color:white; height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:0.75rem; font-weight:bold; box-sizing:border-box;">
+                                ${count > 0 ? count : ''}
+                            </div>
+                        </div>
+                    </div>`;
+            }
+            distHtml += '</div>';
+
+            statsContainer.innerHTML = `
+                <div style="display: flex; justify-content: space-around; margin-bottom:10px;">
+                    <div><h2 style="margin:0;">${played}</h2><p style="margin:0; font-size:0.6rem; color:#aaa;">PLAYED</p></div>
+                    <div><h2 style="margin:0; color:var(--green);">${wins}</h2><p style="margin:0; font-size:0.6rem; color:#aaa;">WINS</p></div>
+                    <div><h2 style="margin:0; color:var(--yellow);">${played ? Math.round((wins/played)*100) : 0}%</h2><p style="margin:0; font-size:0.6rem; color:#aaa;">WIN %</p></div>
+                </div>
+                ${distHtml}
+            `;
         }
 
         function endGame(msg, shouldSave = true) {
             gameOver = true;
             document.getElementById('guessInput').disabled = true;
-            if (shouldSave) saveProgress();
+            const isWin = guesses.length > 0 && guesses[guesses.length - 1].Name === secretChar.Name;
+
+            if (shouldSave) {
+                saveProgress();
+                recordGameOver(isWin); 
+            }
+
             document.getElementById('end-actions').innerHTML = `
-                <div style="margin-bottom:20px; padding:20px; background:#222; border-radius:15px; border: 2px solid var(--green);">
-                    <h3 style="margin-top:0;">${msg}</h3>
-                    <button class="menu-btn" style="background:var(--green); color:black; margin-bottom:10px;" onclick="shareResult()">Share Result 📊</button>
-                    <button class="menu-btn" style="background:#444; color:white;" onclick="resetToHome()">Back to Menu</button>
+                <div style="margin-bottom:20px; padding:20px; background:#222; border-radius:15px; border: 2px solid ${isWin ? 'var(--green)' : '#ff4444'};">
+                    <h3 style="color: white;">${msg}</h3>
+                    <button class="menu-btn" style="background:var(--green); color:black;" onclick="shareResult()">Share Result 📊</button>
+                    <button class="menu-btn" style="background:#444; color:white; margin-top:10px;" onclick="resetToHome()">Back to Menu</button>
                 </div>`;
         }
 
         function shareResult() {
-            const today = new Date().toISOString().split('T')[0];
-            let grid = `${currentMode === 'daily' ? 'Scoutdle Daily' : 'Scoutdle Unlimited'} (${today}) ${guesses.length}/10\n`;
+            const win = guesses.length > 0 && guesses[guesses.length - 1].Name === secretChar.Name;
+            const score = win ? guesses.length : 'X';
+            let shareText = `Scoutdle ${currentMode === 'daily' ? 'Daily' : 'Unlimited'} ${score}/${MAX_GUESSES}\n\n`;
+
+            const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
             guesses.forEach(g => {
                 let row = "";
-                ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"].forEach(k => {
+                attrs.forEach(k => {
                     const val = g[k], target = secretChar[k];
                     if (val?.toLowerCase() === target?.toLowerCase()) row += "🟩";
                     else if (!isNaN(parseInt(val)) && Math.abs(parseInt(val) - parseInt(target)) <= (k === "Height" ? 10 : 5)) row += "🟨";
                     else row += "⬛";
                 });
-                grid += row + "\n";
+                shareText += row + "\n";
             });
-            const text = `${grid}\nPlay at: http://scoutdle.com/`;
-            if (navigator.share) navigator.share({ title: 'Scoutdle', text: text }).catch(() => copyToClip(text));
-            else copyToClip(text);
+
+            shareText += `\nPlayed at: ${window.location.href}`;
+            copyToClip(shareText);
         }
 
         function copyToClip(text) {
-            navigator.clipboard.writeText(text).then(() => alert("Results copied to clipboard! 📋"));
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => alert("Result copied to clipboard! 📋")).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            textArea.select();
+            try {
+                document.execCommand('copy');
+                alert("Result copied to clipboard! 📋");
+            } catch (err) {
+                alert("Please manually copy the text from the box!");
+            }
+            document.body.removeChild(textArea);
         }
 
         async function renderGuessCard(guess) {
@@ -639,7 +632,8 @@
             const card = document.createElement('div');
             card.className = 'char-card';
             const imgUrl = await fetchImage(guess.ID);
-            const attrHtml = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"].map((k, i) => {
+            const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
+            const attrHtml = attrs.map((k, i) => {
                 const val = guess[k], target = secretChar[k];
                 let cls = '', arr = '';
                 if (val?.toLowerCase() === target?.toLowerCase()) cls = 'green';
@@ -647,9 +641,15 @@
                     if (Math.abs(parseInt(val) - parseInt(target)) <= (k === "Height" ? 10 : 5)) cls = 'yellow';
                     arr = parseInt(val) < parseInt(target) ? ' ↑' : ' ↓';
                 }
-                return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.1}s"><span class="attr-label">${k}</span><span><b>${val}${arr}</b></span></div>`;
+                return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${k}</span><span><b>${val}${arr}</b></span></div>`;
             }).join('');
-            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#888;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
+
+            card.innerHTML = `
+                <div class="char-header">
+                    <img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'">
+                    <div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#888;">${guess.Series}</small></div>
+                </div>
+                <div class="attr-grid">${attrHtml}</div>`;
             grid.prepend(card);
         }
 
@@ -658,9 +658,10 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
+            if (id === 'stats-view') updateStats();
         }
+
         window.onload = init;
     </script>
 </body>
-
 </html>
