@@ -12,6 +12,7 @@
         :root {
             --green: #538d4e;
             --yellow: #b59f3b;
+            --orange: #ce7d2b;
             --bg: #0b0b0b;
             --dark: #212121;
             --text: #ffffff;
@@ -113,7 +114,7 @@
             gap: 4px;
         }
 
-        /* --- SEARCH BOX & DROPDOWN --- */
+        /* --- SEARCH BOX --- */
         .search-box {
             width: 100%;
             position: relative;
@@ -273,6 +274,10 @@
             0% { transform: rotateX(90deg); opacity: 0; }
             100% { transform: rotateX(0deg); opacity: 1; background: var(--yellow); }
         }
+        @keyframes flipInOrange {
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--orange); }
+        }
         @keyframes flipInNormal {
             0% { transform: rotateX(90deg); opacity: 0; }
             100% { transform: rotateX(0deg); opacity: 1; }
@@ -280,7 +285,8 @@
 
         .attr-box.green { animation: flipInGreen 0.6s ease-out forwards; }
         .attr-box.yellow { animation: flipInYellow 0.6s ease-out forwards; }
-        .attr-box:not(.green):not(.yellow) { animation: flipInNormal 0.6s ease-out forwards; }
+        .attr-box.orange { animation: flipInOrange 0.6s ease-out forwards; }
+        .attr-box:not(.green):not(.yellow):not(.orange) { animation: flipInNormal 0.6s ease-out forwards; }
 
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-15px); }
@@ -394,9 +400,7 @@
                         "Year": r[9]?.trim() || "????"
                     })).filter(c => c.Name);
 
-                    // KEY FIX: Sort alphabetically so the list index is the same for everyone
                     characters = parsed.sort((a, b) => a.Name.localeCompare(b.Name));
-
                     fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.35 });
                     populateArchive();
                     document.getElementById('loading-msg').style.display = "none";
@@ -407,7 +411,6 @@
         }
 
         function getDailyChar() {
-            // SYNC FIX: Calculate days since a fixed point (Jan 1, 2024)
             const now = new Date();
             const start = new Date(2024, 0, 1);
             const diff = now - start;
@@ -533,7 +536,32 @@
                 attrs.forEach(k => {
                     const val = g[k], target = secretChar[k];
                     if (val?.toLowerCase() === target?.toLowerCase()) row += "🟩";
-                    else if (!isNaN(parseInt(val)) && Math.abs(parseInt(val) - parseInt(target)) <= (k === "Height" ? 10 : 5)) row += "🟨";
+                    else if (!isNaN(parseInt(val)) && !isNaN(parseInt(target))) {
+                        const diff = Math.abs(parseInt(val) - parseInt(target));
+                        const tVal = parseInt(target);
+
+                        if (k === "Year") {
+                            if (diff <= 3) row += "🟨";
+                            else if (diff <= 5) row += "🟧";
+                            else row += "⬛";
+                        } else if (k === "Age") {
+                            if (tVal < 100) {
+                                if (diff <= 3) row += "🟨";
+                                else if (diff <= 5) row += "🟧";
+                                else row += "⬛";
+                            } else {
+                                if (diff <= 250) row += "🟨";
+                                else if (diff <= 500) row += "🟧";
+                                else row += "⬛";
+                            }
+                        } else if (k === "Height") {
+                            if (diff <= 5) row += "🟨";
+                            else if (diff <= 10) row += "🟧";
+                            else row += "⬛";
+                        } else {
+                            row += diff <= 5 ? "🟨" : "⬛";
+                        }
+                    }
                     else row += "⬛";
                 });
                 shareText += row + "\n";
@@ -567,16 +595,40 @@
             card.className = 'char-card';
             const imgUrl = await fetchImage(guess.ID);
             const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
+            
             const attrHtml = attrs.map((k, i) => {
                 const val = guess[k], target = secretChar[k];
                 let cls = '', arr = '';
-                if (val?.toLowerCase() === target?.toLowerCase()) cls = 'green';
-                else if (!isNaN(parseInt(val)) && !isNaN(parseInt(target))) {
-                    if (Math.abs(parseInt(val) - parseInt(target)) <= (k === "Height" ? 10 : 5)) cls = 'yellow';
+                
+                if (val?.toLowerCase() === target?.toLowerCase()) {
+                    cls = 'green';
+                } else if (!isNaN(parseInt(val)) && !isNaN(parseInt(target))) {
+                    const diff = Math.abs(parseInt(val) - parseInt(target));
+                    const tVal = parseInt(target);
+
+                    if (k === "Year") {
+                        if (diff <= 3) cls = 'yellow';
+                        else if (diff <= 5) cls = 'orange';
+                    } else if (k === "Age") {
+                        if (tVal < 100) {
+                            if (diff <= 3) cls = 'yellow';
+                            else if (diff <= 5) cls = 'orange';
+                        } else {
+                            if (diff <= 250) cls = 'yellow';
+                            else if (diff <= 500) cls = 'orange';
+                        }
+                    } else if (k === "Height") {
+                        if (diff <= 5) cls = 'yellow';
+                        else if (diff <= 10) cls = 'orange';
+                    } else {
+                        if (diff <= 5) cls = 'yellow';
+                    }
                     arr = parseInt(val) < parseInt(target) ? ' ↑' : ' ↓';
                 }
+                
                 return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${k}</span><span><b>${val}${arr}</b></span></div>`;
             }).join('');
+
             card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#888;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
             grid.prepend(card);
         }
