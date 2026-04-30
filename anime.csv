@@ -265,6 +265,11 @@ Rossiu Adai,Gurren Lagann,14,155,M,Black,Grey,2377,Adventure,2007
 Leeron Littner,Gurren Lagann,24,185,NB,Pink,Green,2376,Adventure,2007
 Gimmy Adai,Gurren Lagann,10,130,M,Blonde,Blue,3432,Adventure,2007
 Darry Adai,Gurren Lagann,10,130,F,Blonde,Blue,3433,Adventure,2007
+Taiga Aisaka,Toradora!,17,144,F,Light Brown,Dark Brown,12064,Romance,2008
+Ryuuji Takasu,Toradora!,17,173,M,Dark Blue,Brown,12295,Romance,2008
+Minori Kushieda,Toradora!,17,163,F,Red,Purple,12305,Romance,2008
+Ami Kawashima,Toradora!,17,165,F,Blue,Purple,13725,Romance,2008
+Yuusaku Kitamura,Toradora!,17,175,M,Dark Blue,Dark Blue,12306,Romance,2008
 Dayakka Ritona,Gurren Lagann,24,195,M,Black,Black,18644,Sports,2014
 Yuu Nishinoya,Haikyuu!!,17,160,M,Brown/Blonde,Brown,67327,Sports,2014
 Tooru Oikawa,Haikyuu!!,18,184,M,Brown,Brown,71611,Sports,2014
@@ -276,8 +281,20 @@ Koutarou Bokuto,Haikyuu!!,18,185,M,Silver/Black,Gold,101165,Sports,2014
 Kenma Kozume,Haikyuu!!,17,170,M,Blonde/Black,Golden,71267,Sports,2014
 Koushi Sugawara,Haikyuu!!,18,174,M,Grey,Brown,67321,Sports,2014
 Wakatoshi Ushijima,Haikyuu!!,18,189,M,Olive/Brown,Olive,76816,Sports,2014
-Gabimaru,Hell's Paradise,16,150,M,White,Red,171437,Action,2023
-Sagiri,Hell's Paradise,17,170,F,Brown,Brown,241432,Action,2011
+Gabimaru,Hell's Paradise,16,150,M,White,Brown,171437,Action,2023
+Sagiri Yamada Asaemon,Hell's Paradise,17,172,F,Brown,Brown,155498,Action,2023
+Yuzuriha,Hell's Paradise,18,160,F,Purple,Purple,185983,Action,2023
+Tenza Yamada Asaemon,Hell's Paradise,17,175,M,Black,Black,173139,Action,2023
+Shion Yamada Asaemon,Hell's Paradise,27,178,M,White,Grey,173087,Action,2023
+Chobe Aza,Hell's Paradise,20,176,M,Blonde,Brown,175450,Action,2023
+Toma Aza,Hell's Paradise,16,175,M,Black,Brown,173090,Action,2023
+Nurugai,Hell's Paradise,12,138,F,Black,Black,169235,Action,2023
+Rien (Lord Tensen),Hell's Paradise,1000,175,NB,Blonde,Yellow,173100,Action,2023
+Chizuru Ichinose,Rent-a-Girlfriend,20,163,F,Brown,Brown,161286,Romance,2020
+Kazuya Kinoshita,Rent-a-Girlfriend,20,175,M,Brown,Brown,161283,Romance,2020
+Sumi Sakurasawa,19,156,F,Pink,Brown,171851,Romance,2020
+Ruka Sarashina,Rent-a-Girlfriend,17,153,F,Black,Blue,175269,Romance,2020
+Mami Nanami,Rent-a-Girlfriend,20,158,F,Blonde,Blue,169181,Romance,2020
 Gon Freecss,Hunter x Hunter,12,154,M,Black,Brown,30,Adventure,2011
 Killua Zoldyck,Hunter x Hunter,12,158,M,Silver,Blue,27,Adventure,2011
 Kurapika,Hunter x Hunter,17,171,M,Blonde,Grey,278470,Adventure,2011
@@ -330,6 +347,12 @@ Mahito,Jujutsu Kaisen,100,179,M,Grey,Grey/Blue,164481,Dark Fantasy,2020
 Choso,Jujutsu Kaisen,150,181,M,Black,Brown,180764,Dark Fantasy,2020
 Toji Fushiguro,Jujutsu Kaisen,30,185,M,Black,Green,175543,Dark Fantasy,2020
 Mei Mei,Jujutsu Kaisen,30,170,F,Light Blue,Brown,180766,Dark Fantasy,2020
+Usagi Tsukino,Sailor Moon,14,150,F,Blonde,Blue,2030,Romance,1992
+Rei Hino,Sailor Moon,14,160,F,Black,Purple,2367,Romance,1992
+Minako Aino,Sailor Moon,14,157,F,Blonde,Blue,2826,Romance,1992
+Ami Mizuno,Sailor Moon,14,158,F,Blue,Blue,2366,Romance,1992
+Makoto Kino,Sailor Moon,14,168,F,Brown,Green,2825,Romance,1992
+Mamoru Chiba,Sailor Moon,18,175,M,Black,Blue,4013,Romance,1992
 Yui Hirasawa,K-On!,17,156,F,Brown,Brown,19565,Comedy,2011
 Mio Akiyama,K-On!,17,160,F,Black,Grey,19566,Comedy,2011
 Ritsu Tainaka,K-On!,17,154,F,Brown,Hazel,19567,Comedy,2011
@@ -375,6 +398,9 @@ Eris Boreas Greyrat,Mushoku Tensei,19,170,F,Red,Blue,111335,Adventure,2021
 Roxy Migurdia,Mushoku Tensei,50,145,F,Blue,Blue,111341,Adventure,2021
 Marin Kitagawa,My Dress-Up Darling,15,164,F,Blonde,Pink,166439,Romance,2022
 Wakana Gojo,My Dress-Up Darling,15,180,M,Black,Brown,166438,Romance,2022
+Sajuna Inui,My Dress-Up Darling,17,142,F,Pink,Pink,193037,Romance,2022
+Shinju Inui,My Dress-Up Darling,15,178,F,Pink,Pink,195814,Romance,2022
+Liz,My Dress-Up Darling,100,150,F,Black,Red,207323,Romance,2022
 Izuku Midoriya,My Hero Academia,16,166,M,Green,Green,117909,Action,2016
 Katsuki Bakugo,My Hero Academia,16,172,M,Ash Blonde,Red,117911,Action,2016
 Shoto Todoroki,My Hero Academia,16,176,M,White/Red,Grey/Blue,118489,Action,2016
@@ -417,6 +443,12 @@ Killer Bee,Naruto,36,192,M,Blonde,Black,18473,Action,2002
 Gamabunta,Naruto,100,1700,M,Red,Yellow,4223,Action,2002
 Neji Hyuga,Naruto,13,172,M,Brown,White,1694,Action,2002
 Ino Yamanaka,Naruto,13,162,F,Blonde,Blue,2009,Action,2002
+Obito Uchiha,Naruto,31,182,M,Black,Black,2910,Action,2002
+Deidara,Naruto,19,166,M,Blonde,Blue,1902,Action,2002
+Sasori,Naruto,35,164,M,Red,Brown,1900,Action,2002
+Hidan,Naruto,22,177,M,Silver,Purple,2792,Action,2002
+Kakuzu,Naruto,91,185,M,Black,Green,3178,Action,2002
+Zetsu,Naruto,1000,177,M,Green,Yellow,3150,Action,2002
 Yuko Aioi,Nichijou,16,152,F,Brown,Brown,10418,Comedy,2011
 Mio Naganohara,Nichijou,16,150,F,Blue,Blue,40081,Comedy,2011
 Mai Minakami,Nichijou,16,154,F,Black,Black,10421,Comedy,2011
@@ -588,10 +620,20 @@ Yor Forger,Spy x Family,27,170,F,Black,Red,170329,Slice of Life,2022
 Loid Forger,Spy x Family,28,187,M,Blonde,Blue,170258,Slice of Life,2022
 Yuri Briar,Spy x Family,20,179,M,Black,Red,177507,Slice of Life,2022
 Fiona Frost,Spy x Family,24,172,F,White,Lavender,185468,Slice of Life,2022
+Damian Desmond,Spy x Family,6,110,M,Brown,Gold,177509,Slice of Life,2022
+Becky Blackbell,Spy x Family,6,104,F,Brown,Brown,177510,Slice of Life,2022
+Franky Franklin,Spy x Family,30,166,M,Brown,Black,177512,Slice of Life,2022
+Sylvia Sherwood,Spy x Family,35,175,F,Auburn,Blue,177511,Slice of Life,2022
+Henry Henderson,Spy x Family,66,184,M,White,Blue,177521,Slice of Life,2022
+Bill Watkins,Spy x Family,6,145,M,Brown,Black,177508,Slice of Life,2022
 Kurisu Makise,Steins;Gate,18,160,F,Red,Blue,34470,Sci-fi,2011
 Rintarou Okabe,Steins;Gate,18,177,M,Black,Brown,35252,Sci-fi,2011
 Mayuri Shiina,Steins;Gate,16,152,F,Black,Blue,35253,Sci-fi,2011
 Ruka Urushibara,Steins;Gate,16,161,F,Black,Violet,30919,Sci-Fi,2011
+Itaru Hashida,Steins;Gate,19,164,M,Brown,Brown,35254,Sci-Fi,2011
+Suzuha Amano,Steins;Gate,18,163,F,Brown,Brown,35255,Sci-Fi,2011
+Moeka Kiryuu,Steins;Gate,20,167,F,Brown,Violet,35256,Sci-Fi,2011
+Faris Nyannyan,Steins;Gate,17,143,F,Pink,Brown,35257,Sci-Fi,2011
 Yui,Sword Art Online,10,120,F,Black,Black,43892,Fantasy,2012
 Suguha Kirigaya,Sword Art Online,15,172,F,Blonde,Green,36831,Fantasy,2012
 Silica,Sword Art Online,15,150,F,Brown,Red,37681,Fantasy,2012
@@ -615,8 +657,23 @@ Bercouli,Sword Art Online,300,210,M,Blue,Blue,106217,Fantasy,2012
 Emma,The Promised Neverland,11,145,F,Orange,Green,144337,Horror,2019
 Norman,The Promised Neverland,11,145,M,White,Blue,144916,Horror,2019
 Ray,The Promised Neverland,11,150,M,Black,Black,144919,Fantasy,2019
-Touka Kirishima,Tokyo Ghoul,18,156,F,Blue,Blue,105231,Horror,2014
-Kaneki Ken,Tokyo Ghoul,19,170,M,White,Grey,87275,Horror,2014
+Don,The Promised Neverland,12,155,M,Brown,Brown,145875,Horror,2019
+Gilda,The Promised Neverland,12,152,F,Green,Grey,145874,Horror,2019
+Isabella,The Promised Neverland,31,170,F,Black,Purple,144999,Horror,2019
+Krone,The Promised Neverland,26,175,F,Black,Brown,145557,Horror,2019
+Phil,The Promised Neverland,4,100,M,Black,Blue,150888,Horror,2019
+Conny,The Promised Neverland,6,115,F,Blonde,Blue,161942,Horror,2019
+Mujika,The Promised Neverland,500,160,F,Purple,Purple,161942,Horror,2019
+Sonju,The Promised Neverland,700,190,M,White,Red,153861,Horror,2019
+Juuzou Suzuya,Tokyo Ghoul,19,160,M,White,Red,104437,Horror,2014
+Uta,Tokyo Ghoul,25,177,M,Black,Red,93343,Horror,2014
+Hideyoshi Nagachika,Tokyo Ghoul,19,171,M,Orange,Brown,103415,Horror,2014
+Shuu Tsukiyama,Tokyo Ghoul,21,180,M,Purple,Purple,104059,Horror,2014
+Ken Kaneki,Tokyo Ghoul,19,169,M,White,Grey,87275,Horror,2014
+Touka Kirishima,Tokyo Ghoul,17,156,F,Blue,Blue,87277,Horror,2014
+Rize Kamishiro,Tokyo Ghoul,18,164,F,Purple,Purple,103409,Horror,2014
+Hinami Fueguchi,Tokyo Ghoul,14,148,F,Brown,Brown,99675,Horror,2014
+Kotaro Amon,Tokyo Ghoul,26,191,M,Black,Grey,89025,Horror,2014
 Thorfinn,Vinland Saga,19,155,M,Blonde,Brown,10138,History,2019
 Askeladd,Vinland Saga,44,180,M,Blonde,Blue,13020,History,2019
 Canute,Vinland Saga,19,170,M,Blonde,Blue,17438,History,2019
@@ -771,3 +828,9 @@ Nagisa Shiota,Assassination Classroom,14,159cm,M,Blue,Azure,65645,Comedy,2012
 Kaede Kayano,Assassination Classroom,14,146cm,F,Green,Hazel,85291,Comedy,2012
 Irina Jelavic,Assassination Classroom,20,170cm,F,Blonde,Blue,73883,Comedy,2012
 Tadaomi Karasuma,Assassination Classroom,28,180cm,M,Black,Black,73881,Comedy,2012
+Laios Touden,Delicious in Dungeon,26,185,M,Blonde,Gold,134262,Fantasy,2024
+Marcille Donato,Delicious in Dungeon,50,160,F,Blonde,Green,134263,Fantasy,2024
+Chilchuck Tims,Delicious in Dungeon,29,120,M,Brown,Brown,134264,Fantasy,2024
+Senshi,Delicious in Dungeon,112,140,M,Black,Black,134265,Fantasy,2024
+Falin Touden,Delicious in Dungeon,23,170,F,Blonde,Gold,134266,Fantasy,2024
+Izutsumi,Delicious in Dungeon,17,155,F,Black,Gold,189566,Fantasy,2024
