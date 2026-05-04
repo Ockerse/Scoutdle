@@ -141,7 +141,7 @@
             background: #1a1a1a;
             z-index: 3000;
             border-radius: 12px;
-            max-height: 350px;
+            max-height: 400px;
             overflow-y: auto;
             display: none;
             border: 2px solid #444;
@@ -203,15 +203,16 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            animation: flipIn 0.6s ease-in-out forwards;
-            color: white;
+            color: #ffffff !important; 
+            animation: flipInNormal 0.6s ease-out forwards;
         }
 
         .attr-label {
             font-size: 0.5rem;
-            color: #aaa;
+            color: #e0e0e0; 
             text-transform: uppercase;
             margin-bottom: 2px;
+            font-weight: 600;
         }
 
         /* --- LAYOUT SECTIONS --- */
@@ -283,10 +284,9 @@
             100% { transform: rotateX(0deg); opacity: 1; }
         }
 
-        .attr-box.green { animation: flipInGreen 0.6s ease-out forwards; }
-        .attr-box.yellow { animation: flipInYellow 0.6s ease-out forwards; }
-        .attr-box.orange { animation: flipInOrange 0.6s ease-out forwards; }
-        .attr-box:not(.green):not(.yellow):not(.orange) { animation: flipInNormal 0.6s ease-out forwards; }
+        .attr-box.green { animation: flipInGreen 0.6s ease-out forwards !important; }
+        .attr-box.yellow { animation: flipInYellow 0.6s ease-out forwards !important; }
+        .attr-box.orange { animation: flipInOrange 0.6s ease-out forwards !important; }
 
         @keyframes slideDown {
             from { opacity: 0; transform: translateY(-15px); }
@@ -327,7 +327,17 @@
 
         <div id="game-content" style="display:none; width:100%;">
             <div id="end-actions"></div>
+            
+            <!-- HINT SYSTEM -->
+            <div id="hint-container" style="text-align:center; margin-bottom: 15px; min-height: 50px;">
+                <button id="hint-btn" class="menu-btn" style="display:none; background: var(--orange); color: white; width: auto; padding: 10px 25px; font-size: 0.85rem; border-radius: 30px; box-shadow: 0 4px 10px rgba(206, 125, 43, 0.3);" onclick="revealHint()">
+                    Unlock Hint 💡
+                </button>
+                <div id="hint-text" style="margin-top: 10px; color: var(--yellow); font-weight: bold; font-size: 0.9rem; min-height: 1.2rem;"></div>
+            </div>
+
             <div id="guess-counter" style="text-align:center; margin-bottom:12px; font-weight: bold; color: var(--green); font-size: 0.9rem;">Guesses: 0 / 10</div>
+            
             <div class="search-box">
                 <input type="text" id="guessInput" placeholder="Character or Anime..." autocomplete="off">
                 <div id="dropdown"></div>
@@ -354,6 +364,7 @@
 
     <script>
         let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false, currentMode = 'daily';
+        let hintsRevealed = 0; 
         const MAX_GUESSES = 10;
         const imgCache = new Map();
 
@@ -373,11 +384,15 @@
         }
 
         function resetToHome() {
-            gameOver = false; guesses = [];
+            gameOver = false; 
+            guesses = [];
+            hintsRevealed = 0; 
             document.getElementById('game-content').style.display = 'none';
             document.getElementById('start-screen').style.display = 'block';
             document.getElementById('gameGrid').innerHTML = '';
             document.getElementById('end-actions').innerHTML = '';
+            document.getElementById('hint-text').innerHTML = ''; 
+            document.getElementById('hint-btn').style.display = 'none'; 
             document.getElementById('guessInput').value = '';
             document.getElementById('guessInput').disabled = false;
             showSection('game-view', document.getElementById('play-nav'));
@@ -387,7 +402,9 @@
             Papa.parse("anime.csv", {
                 download: true, header: false, skipEmptyLines: true,
                 complete: function (results) {
-                    const parsed = results.data.slice(1).map(r => ({
+                    const startIdx = (results.data[0][0]?.toLowerCase() === "name" || results.data[0][1]?.toLowerCase() === "series") ? 1 : 0;
+                    
+                    const parsed = results.data.slice(startIdx).map(r => ({
                         "Name": r[0]?.trim(),
                         "Series": r[1]?.trim() === "FMA: B" ? "Full Metal Alchemist Brotherhood" : r[1]?.trim() || "???",
                         "Age": r[2]?.trim(),
@@ -401,11 +418,29 @@
                     })).filter(c => c.Name);
 
                     characters = parsed.sort((a, b) => a.Name.localeCompare(b.Name));
-                    fuse = new Fuse(characters, { keys: ['Name', 'Series'], threshold: 0.35 });
+                    
+                    // UPDATED: Stricter search settings
+                    fuse = new Fuse(characters, { 
+                        keys: [
+                            { name: 'Series', weight: 0.7 },
+                            { name: 'Name', weight: 0.3 }
+                        ], 
+                        threshold: 0.2, // Lower = stricter (fewer random matches)
+                        location: 0,    // Start looking at the beginning of the string
+                        distance: 100,  // How far out a match can be
+                        minMatchCharLength: 2
+                    });
+                    
                     populateArchive();
                     document.getElementById('loading-msg').style.display = "none";
                     document.getElementById('menu-options').style.display = 'block';
                     updateStats();
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-box')) {
+                    document.getElementById('dropdown').style.display = 'none';
                 }
             });
         }
@@ -419,14 +454,46 @@
             return characters[dayIndex % characters.length];
         }
 
+        function revealHint() {
+            hintsRevealed++;
+            const hintText = document.getElementById('hint-text');
+            let currentHints = [];
+
+            if (hintsRevealed >= 1) currentHints.push(`<span style="color:#ffffff">Genre:</span> ${secretChar.Genre}`);
+            if (hintsRevealed >= 2) currentHints.push(`<span style="color:#ffffff">Year:</span> ${secretChar.Year}`);
+            if (hintsRevealed >= 3) currentHints.push(`<span style="color:#ffffff">Series:</span> ${secretChar.Series}`);
+
+            hintText.innerHTML = currentHints.join(' | ');
+            updateHintButtonVisibility();
+        }
+
+        function updateHintButtonVisibility() {
+            const btn = document.getElementById('hint-btn');
+            const count = guesses.length;
+
+            const canRevealNext = (
+                (count >= 3 && hintsRevealed < 1) || 
+                (count >= 5 && hintsRevealed < 2) || 
+                (count >= 7 && hintsRevealed < 3)
+            );
+
+            btn.style.display = (canRevealNext && !gameOver) ? 'inline-block' : 'none';
+        }
+
         async function startGame(mode) {
             currentMode = mode;
-            gameOver = false; guesses = [];
+            gameOver = false; 
+            guesses = [];
+            hintsRevealed = 0; 
+            
             document.getElementById('gameGrid').innerHTML = '';
             document.getElementById('end-actions').innerHTML = '';
+            document.getElementById('hint-text').innerHTML = '';
+            document.getElementById('hint-btn').style.display = 'none';
             document.getElementById('start-screen').style.display = 'none';
             document.getElementById('game-content').style.display = 'block';
             document.getElementById('guessInput').disabled = false;
+            document.getElementById('guessInput').value = '';
 
             if (mode === 'daily') {
                 secretChar = getDailyChar();
@@ -435,24 +502,34 @@
             } else {
                 secretChar = characters[Math.floor(Math.random() * characters.length)];
             }
+            
             setupSearch();
             updateGuessCounter();
+            updateHintButtonVisibility();
         }
 
         function setupSearch() {
             const input = document.getElementById('guessInput');
             const dropdown = document.getElementById('dropdown');
             input.oninput = () => {
-                if (!input.value.trim()) { dropdown.style.display = 'none'; return; }
-                const res = fuse.search(input.value).slice(0, 10);
-                dropdown.innerHTML = res.map(r => `<div class="item" onclick="selectGuess('${r.item.Name.replace(/'/g, "\\'")}')"><strong style="color:var(--green);">${r.item.Name}</strong><br><small style="color:#888;">${r.item.Series}</small></div>`).join('');
+                const query = input.value.trim().toLowerCase();
+                if (!query) { dropdown.style.display = 'none'; return; }
+                
+                const res = fuse.search(query).slice(0, 50);
+                
+                dropdown.innerHTML = res.map(r => `
+                    <div class="item" onclick="selectGuess('${r.item.Name.replace(/'/g, "\\'")}')">
+                        <strong style="color:#ffffff; font-size:1rem;">${r.item.Name}</strong><br>
+                        <small style="color:#aaa;">${r.item.Series}</small>
+                    </div>`).join('');
                 dropdown.style.display = res.length > 0 ? 'block' : 'none';
             };
         }
 
         async function selectGuess(name) {
+            if (gameOver) return;
             const char = characters.find(c => c.Name === name);
-            if (!char || gameOver || guesses.some(g => g.Name === name)) return;
+            if (!char || guesses.some(g => g.Name === name)) return;
             
             document.getElementById('guessInput').value = '';
             document.getElementById('dropdown').style.display = 'none';
@@ -462,11 +539,12 @@
             await renderGuessCard(char);
 
             if (char.Name === secretChar.Name) {
-                endGame("✨ Victory! It was " + secretChar.Name);
+                await endGame("✨ Victory! It was " + secretChar.Name);
             } else if (guesses.length >= MAX_GUESSES) {
-                endGame("💀 Game Over! It was " + secretChar.Name);
+                await endGame("💀 Game Over! It was " + secretChar.Name);
             } else {
                 saveProgress();
+                updateHintButtonVisibility(); 
             }
         }
 
@@ -487,13 +565,18 @@
                 if (data.date === today) {
                     for (const name of data.guesses) {
                         const char = characters.find(c => c.Name === name);
-                        if (char) { guesses.push(char); await renderGuessCard(char); }
+                        if (char) { 
+                            guesses.push(char); 
+                            await renderGuessCard(char); 
+                        }
                     }
                     updateGuessCounter();
                     if (data.gameOver) {
                         const win = guesses.length > 0 && guesses[guesses.length-1].Name === secretChar.Name;
-                        endGame(win ? "✨ Victory! It was " + secretChar.Name : "💀 Game Over! It was " + secretChar.Name, false);
+                        await endGame(win ? "✨ Victory! It was " + secretChar.Name : "💀 Game Over! It was " + secretChar.Name, false);
                     }
+                } else {
+                    localStorage.removeItem('scoutdle_daily');
                 }
             }
         }
@@ -503,6 +586,7 @@
             let played = parseInt(localStorage.getItem('scoutdle_played') || '0');
             let wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
             let dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
+            
             localStorage.setItem('scoutdle_played', played + 1);
             if (isWin) {
                 localStorage.setItem('scoutdle_wins', wins + 1);
@@ -517,6 +601,7 @@
             const wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
             const dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
             const maxVal = Math.max(...Object.values(dist), 1);
+            
             let distHtml = '<div style="margin-top:25px; text-align:left;"><p style="font-size:0.8rem; color:var(--green); font-weight:bold; margin-bottom:12px; text-align:center;">GUESS DISTRIBUTION</p>';
             for (let i = 1; i <= 10; i++) {
                 const count = dist[i] || 0;
@@ -531,6 +616,7 @@
             const score = win ? guesses.length : 'X';
             let shareText = `Scoutdle ${currentMode === 'daily' ? 'Daily' : 'Unlimited'} ${score}/${MAX_GUESSES}\n\n`;
             const attrs = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
+            
             guesses.forEach(g => {
                 let row = "";
                 attrs.forEach(k => {
@@ -583,10 +669,25 @@
             document.body.removeChild(textArea);
         }
 
-        function endGame(msg, shouldSave = true) {
-            gameOver = true; document.getElementById('guessInput').disabled = true;
-            if (shouldSave) { saveProgress(); recordGameOver(guesses[guesses.length - 1].Name === secretChar.Name); }
-            document.getElementById('end-actions').innerHTML = `<div style="margin-bottom:20px; padding:20px; background:#222; border-radius:15px; border: 2px solid var(--green);"><h3 style="color: white;">${msg}</h3><button class="menu-btn" style="background:var(--green); color:black;" onclick="shareResult()">Share Result 📊</button><button class="menu-btn" style="background:#444; color:white; margin-top:10px;" onclick="resetToHome()">Back to Menu</button></div>`;
+        async function endGame(msg, shouldSave = true) {
+            gameOver = true; 
+            document.getElementById('guessInput').disabled = true;
+            document.getElementById('hint-btn').style.display = 'none'; 
+            
+            if (shouldSave) { 
+                saveProgress(); 
+                recordGameOver(guesses[guesses.length - 1].Name === secretChar.Name); 
+            }
+
+            const secretImgUrl = await fetchImage(secretChar.ID);
+
+            document.getElementById('end-actions').innerHTML = `
+                <div style="margin-bottom:20px; padding:20px; background:#222; border-radius:15px; border: 2px solid var(--green); text-align: center;">
+                    <img src="${secretImgUrl}" style="width: 120px; height: 170px; border-radius: 10px; border: 2px solid var(--green); margin-bottom: 15px; object-fit: cover;" onerror="this.src='Scoutdle.jpeg'">
+                    <h3 style="color: white; margin-top: 0;">${msg}</h3>
+                    <button class="menu-btn" style="background:var(--green); color:black;" onclick="shareResult()">Share Result 📊</button>
+                    <button class="menu-btn" style="background:#444; color:white; margin-top:10px;" onclick="resetToHome()">Back to Menu</button>
+                </div>`;
         }
 
         async function renderGuessCard(guess) {
@@ -626,23 +727,24 @@
                     arr = parseInt(val) < parseInt(target) ? ' ↑' : ' ↓';
                 }
                 
-                return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${k}</span><span><b>${val}${arr}</b></span></div>`;
+                return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${k}</span><span><b style="color:#ffffff;">${val}${arr}</b></span></div>`;
             }).join('');
 
-            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#888;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
+            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
             grid.prepend(card);
         }
 
         function showSection(id, btn) {
             document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active'); btn.classList.add('active');
+            document.getElementById(id).classList.add('active'); 
+            btn.classList.add('active');
             if (id === 'stats-view') updateStats();
         }
 
         function populateArchive() {
             const sortedChars = [...characters].sort((a, b) => a.Series.localeCompare(b.Series) || a.Name.localeCompare(b.Name));
-            document.getElementById('archiveBody').innerHTML = sortedChars.map(c => `<tr><td style="color:#888;">${c.Series}</td><td><a href="https://myanimelist.net/character/${c.ID}" target="_blank" style="color:white;text-decoration:none;"><strong>${c.Name}</strong></a></td></tr>`).join('');
+            document.getElementById('archiveBody').innerHTML = sortedChars.map(c => `<tr><td style="color:#ffffff;">${c.Series}</td><td><a href="https://myanimelist.net/character/${c.ID}" target="_blank" style="color:white;text-decoration:none;"><strong>${c.Name}</strong></a></td></tr>`).join('');
         }
 
         function filterArchive() {
