@@ -111,7 +111,7 @@ Edward Wong,Cowboy Bebop,13,150,NB,Red,Gold,16,Neo-noir,2001
 Ein,Cowboy Bebop,2,25,M,Brown,Brown,4,Neo-noir,2001
 Vicious,Cowboy Bebop,27,187,M,Silver,Grey,2734,Neo-noir,2001
 Julia,Cowboy Bebop,27,168,F,Blonde,Blue,2735,Neo-noir,2001
-Gren,Cowboy Bebop,28,175,NB,Blonde,Blue,40936,Neo-noir,2017
+Gren,Cowboy Bebop,28,175,NB,Blonde,Blue,2736,Neo-noir,2017
 Goku Black,Dragon Ball Super,30,175,M,Black,Grey,141729,Action,2017
 Jaco,Dragon Ball Super,40,148,M,Purple,Yellow,88229,Action,2017
 Hit,Dragon Ball Super,1000,193,M,Purple,Red,246295,Action,2017
@@ -292,7 +292,7 @@ Nurugai,Hell's Paradise,12,138,F,Black,Black,169235,Action,2023
 Rien (Lord Tensen),Hell's Paradise,1000,175,NB,Blonde,Yellow,173100,Action,2023
 Chizuru Ichinose,Rent-a-Girlfriend,20,163,F,Brown,Brown,161286,Romance,2020
 Kazuya Kinoshita,Rent-a-Girlfriend,20,175,M,Brown,Brown,161283,Romance,2020
-Sumi Sakurasawa,Rent-a-Girlfriend,19,156,F,Pink,Brown,171851,Romance,2020
+Sumi Sakurasawa,19,156,F,Pink,Brown,171851,Romance,2020
 Ruka Sarashina,Rent-a-Girlfriend,17,153,F,Black,Blue,175269,Romance,2020
 Mami Nanami,Rent-a-Girlfriend,20,158,F,Blonde,Blue,169181,Romance,2020
 Gon Freecss,Hunter x Hunter,12,154,M,Black,Brown,30,Adventure,2011
@@ -462,7 +462,7 @@ Manabu Takasaki,Nichijou,26,180,M,Black,Black,42957,Comedy,2011
 Tsuyoshi Nakanojo,Nichijou,16,168,M,Blonde,Black,42956,Comedy,2011
 Annaka,Nichijou,16,158,F,Blonde,Brown,41899,Comedy,2011
 Kenzaburo Daiku,Nichijou,16,165,M,Brown,Black,42955,Comedy,2011
-Yurigi Sekiguchi,Nichijou,16,162,F,Black,Black,281278,Comedy,2011
+Yurigi Sekiguchi,Nichijou,16,162,F,Black,Black,42494,Comedy,2011
 Yoshino Naganohara,Nichijou,19,158,F,Blue,Blue,41898,Comedy,2011
 Makoto Sakurai,Nichijou,15,155,M,Black,Brown,43937,Comedy,2011
 Principal Shinonome,Nichijou,62,164,M,Grey,Black,41618,Comedy,2011
@@ -494,7 +494,8 @@ Smoker,One Piece,36,209,M,White,Brown,2753,Action,1999
 Buggy the Clown,One Piece,39,192,M,Blue,Black,725,Action,1999
 Dracule Mihawk,One Piece,43,198,M,Black,Yellow,2064,Action,1999
 Shanks,One Piece,39,199,M,Red,Black,727,Action,1999
-Kaido,One Piece,59,710,M,Black,Yellow,46109,Action,1999
+Blackbeard,One Piece,40,344,M,Black,Brown,163759,Action,1999
+Kaido,One Piece,59,710,M,Black,Yellow,185450,Action,1999
 Big Mom,One Piece,68,880,F,Pink,Yellow,54495,Action,1999
 Whitebeard,One Piece,72,666,M,,Yellow,2751,Action,1999
 Yamato,One Piece,28,263,F,White/Green,Gold,184114,Action,1999
@@ -692,7 +693,7 @@ Marik Ishtar,Yu-Gi-Oh!,16,180,M,Blonde,Violet,5287,Action,1998
 Ishizu Ishtar,Yu-Gi-Oh!,20,167,F,Black,Blue,5993,Action,1998
 Mokuba Kaiba,Yu-Gi-Oh!,11,142,M,Black,Blue,1381,Action,1998
 Duke Devlin,Yu-Gi-Oh!,16,179,M,Black,Grey,5990,Action,1998
-Serenity Wheeler,Yu-Gi-Oh!,13,158,F,Brown,Amber,1386,Action,1998
+Serenity Wheeler,Yu-Gi-Oh!,13,158,F,Brown,Amber,5989,Action,1998
 Mako Tsunami,Yu-Gi-Oh!,19,180,M,Black,Blue,38451,Action,1998
 Weevil Underwood,Yu-Gi-Oh!,14,155,M,Blue,Green,13298,Action,1998
 Rex Raptor,Yu-Gi-Oh!,15,160,M,Brown,Brown,1389,Action,1998
@@ -833,3 +834,19 @@ Chilchuck Tims,Delicious in Dungeon,29,120,M,Brown,Brown,134264,Fantasy,2024
 Senshi,Delicious in Dungeon,112,140,M,Black,Black,134265,Fantasy,2024
 Falin Touden,Delicious in Dungeon,23,170,F,Blonde,Gold,134266,Fantasy,2024
 Izutsumi,Delicious in Dungeon,17,155,F,Black,Gold,189566,Fantasy,2024
+Light Yagami,Death Note,17,179cm,M,Brown,Brown,80,Psychological,2006
+L Lawliet,Death Note,24,179cm,M,Black,Black,71,Psychological,2006
+Misa Amane,Death Note,19,152cm,F,Blonde,Brown,835,Psychological,2006
+Ryuk,Death Note,?,240cm,M,Black,Yellow,75,Psychological,2006
+David Martinez,Cyberpunk: Edgerunners,17,170cm,M,Brown,Brown,213390,Sci-Fi,2022
+Lucy,Cyberpunk: Edgerunners,20,171cm,F,Multi,Purple,213159,Sci-Fi,2022
+Rebecca,Cyberpunk: Edgerunners,20,152cm,F,Green,Red,215035,Sci-Fi,2022
+Maine,Cyberpunk: Edgerunners,35,215cm,M,Black,Brown,215031,Sci-Fi,2022
+Adam Smasher,Cyberpunk: Edgerunners,90,292cm,M,None,Red,217484,Sci-Fi,2022
+Kiyotaka Ayanokouji,Classroom of the Elite,16,176cm,M,Brown,Brown,128909,Psychological,2017
+Suzune Horikita,Classroom of the Elite,16,156cm,F,Black,Red,128910,Psychological,2017
+Kikyo Kushida,Classroom of the Elite,16,155cm,F,Beige,Crimson,128911,Psychological,2017
+Arisu Sakayanagi,Classroom of the Elite,16,150cm,F,Lilac,Blue,152154,Psychological,2017
+Ainz Ooal Gown,Overlord,?,177cm,M,None,Red,116281,Isekai,2015
+Albedo,Overlord,?,170cm,F,Black,Yellow,116275,Isekai,2015
+Shalltear Bloodfallen,Overlord,?,140cm,F,Silver,Red,116319,Isekai,2015
