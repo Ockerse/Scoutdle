@@ -215,6 +215,19 @@
             font-weight: 600;
         }
 
+        /* --- LINKS --- */
+        .char-link {
+            color: inherit;
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+            transition: 0.2s;
+        }
+
+        .char-link:hover {
+            color: var(--green);
+            border-bottom: 1px dashed var(--green);
+        }
+
         /* --- LAYOUT SECTIONS --- */
         .view-section {
             display: none;
@@ -418,19 +431,13 @@
 
                     characters = parsed.sort((a, b) => a.Name.localeCompare(b.Name));
                     
-                    // IMPROVED SEARCH CONFIGURATION - TRIGGER ON 1 CHARACTER
                     fuse = new Fuse(characters, { 
                         keys: [
                             { name: 'Name', weight: 1.0 },
                             { name: 'Series', weight: 0.5 }
                         ], 
                         threshold: 0.35,
-                        location: 0,
-                        distance: 100,
-                        includeScore: true,
-                        useExtendedSearch: true,
-                        shouldSort: true,
-                        minMatchCharLength: 1 // Trigger search with 1 letter
+                        minMatchCharLength: 1
                     });
                     
                     populateArchive();
@@ -448,44 +455,57 @@
         }
 
         function getDailyChar() {
-            // This creates a "seed" based on the year, month, and day
             const now = new Date();
             const seed = now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate();
-            
-            // Custom pseudo-random number generator (Mulberry32)
-            // This ensures it's "random" but the same for everyone on this specific date
             let t = seed + 0x6D2B79F5;
             t = Math.imul(t ^ t >>> 15, t | 1);
             t ^= t + Math.imul(t ^ t >>> 7, t | 61);
             const randomFloat = ((t ^ t >>> 14) >>> 0) / 4294967296;
-
-            const randomIndex = Math.floor(randomFloat * characters.length);
-            return characters[randomIndex];
-}
+            return characters[Math.floor(randomFloat * characters.length)];
+        }
 
         function revealHint() {
-            hintsRevealed++;
             const hintText = document.getElementById('hint-text');
-            let currentHints = [];
+            const categories = [
+                { key: 'Series', label: 'Series' }, { key: 'Genre',  label: 'Genre' },
+                { key: 'Year',   label: 'Year' },   { key: 'Sex',    label: 'Sex' },
+                { key: 'Age',    label: 'Age' },    { key: 'Height', label: 'Height' },
+                { key: 'Hair',   label: 'Hair' },   { key: 'Eyes',   label: 'Eyes' }
+            ];
 
-            if (hintsRevealed >= 1) currentHints.push(`<span style="color:#ffffff">Genre:</span> ${secretChar.Genre}`);
-            if (hintsRevealed >= 2) currentHints.push(`<span style="color:#ffffff">Year:</span> ${secretChar.Year}`);
-            if (hintsRevealed >= 3) currentHints.push(`<span style="color:#ffffff">Series:</span> ${secretChar.Series}`);
+            // Filter for categories the user HASN'T gotten "Green" yet across all guesses
+            const unsolved = categories.filter(cat => {
+                const isCorrect = guesses.some(g => String(g[cat.key]).trim().toLowerCase() === String(secretChar[cat.key]).trim().toLowerCase());
+                return !isCorrect;
+            });
 
-            hintText.innerHTML = currentHints.join(' | ');
+            // Filter out hints already displayed
+            const displayedHints = hintText.innerText;
+            const availableToReveal = unsolved.filter(cat => !displayedHints.includes(cat.label));
+
+            if (availableToReveal.length > 0) {
+                hintsRevealed++;
+                const randomCat = availableToReveal[Math.floor(Math.random() * availableToReveal.length)];
+                const newHint = `<span style="color:#ffffff">${randomCat.label}:</span> ${secretChar[randomCat.key]}`;
+                
+                const currentContent = hintText.innerHTML;
+                hintText.innerHTML = currentContent ? `${currentContent} | ${newHint}` : newHint;
+            } else if (hintsRevealed < 3) {
+                hintsRevealed++;
+                hintText.innerHTML += " | <span style='color:var(--green)'>All traits discovered!</span>";
+            }
+            
             updateHintButtonVisibility();
         }
 
         function updateHintButtonVisibility() {
             const btn = document.getElementById('hint-btn');
             const count = guesses.length;
-
             const canRevealNext = (
                 (count >= 3 && hintsRevealed < 1) || 
                 (count >= 5 && hintsRevealed < 2) || 
                 (count >= 7 && hintsRevealed < 3)
             );
-
             btn.style.display = (canRevealNext && !gameOver) ? 'inline-block' : 'none';
         }
 
@@ -523,7 +543,6 @@
             
             input.oninput = () => {
                 const query = input.value.trim();
-                // Changed from < 2 to < 1
                 if (query.length < 1) { dropdown.style.display = 'none'; return; }
                 
                 const results = fuse.search(query).slice(0, 15);
@@ -554,9 +573,9 @@
             await renderGuessCard(char);
 
             if (char.Name === secretChar.Name) {
-                await endGame("✨ Victory! It was " + secretChar.Name);
+                await endGame("Victory!");
             } else if (guesses.length >= MAX_GUESSES) {
-                await endGame("💀 Game Over! It was " + secretChar.Name);
+                await endGame("Game Over!");
             } else {
                 saveProgress();
                 updateHintButtonVisibility(); 
@@ -588,7 +607,7 @@
                     updateGuessCounter();
                     if (data.gameOver) {
                         const win = guesses.length > 0 && guesses[guesses.length-1].Name === secretChar.Name;
-                        await endGame(win ? "✨ Victory! It was " + secretChar.Name : "💀 Game Over! It was " + secretChar.Name, false);
+                        await endGame(win ? "Victory!" : "Game Over!", false);
                     }
                 } else {
                     localStorage.removeItem('scoutdle_daily');
@@ -684,7 +703,7 @@
             document.body.removeChild(textArea);
         }
 
-        async function endGame(msg, shouldSave = true) {
+        async function endGame(status, shouldSave = true) {
             gameOver = true; 
             document.getElementById('guessInput').disabled = true;
             document.getElementById('hint-btn').style.display = 'none'; 
@@ -695,6 +714,8 @@
             }
 
             const secretImgUrl = await fetchImage(secretChar.ID);
+            const nameLink = `<a href="https://myanimelist.net/character/${secretChar.ID}" target="_blank" class="char-link" style="color:var(--green)">${secretChar.Name}</a>`;
+            const msg = status === "Victory!" ? `✨ Victory! It was ${nameLink}` : `💀 Game Over! It was ${nameLink}`;
 
             document.getElementById('end-actions').innerHTML = `
                 <div style="margin-bottom:20px; padding:20px; background:#222; border-radius:15px; border: 2px solid var(--green); text-align: center;">
@@ -745,7 +766,8 @@
                 return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${k}</span><span><b style="color:#ffffff;">${val}${arr}</b></span></div>`;
             }).join('');
 
-            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong><br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
+            const nameLink = `<a href="https://myanimelist.net/character/${guess.ID}" target="_blank" class="char-link"><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong></a>`;
+            card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div>${nameLink}<br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
             grid.prepend(card);
         }
 
@@ -759,7 +781,7 @@
 
         function populateArchive() {
             const sortedChars = [...characters].sort((a, b) => a.Series.localeCompare(b.Series) || a.Name.localeCompare(b.Name));
-            document.getElementById('archiveBody').innerHTML = sortedChars.map(c => `<tr><td style="color:#ffffff;">${c.Series}</td><td><a href="https://myanimelist.net/character/${c.ID}" target="_blank" style="color:white;text-decoration:none;"><strong>${c.Name}</strong></a></td></tr>`).join('');
+            document.getElementById('archiveBody').innerHTML = sortedChars.map(c => `<tr><td style="color:#ffffff;">${c.Series}</td><td><a href="https://myanimelist.net/character/${c.ID}" target="_blank" class="char-link"><strong>${c.Name}</strong></a></td></tr>`).join('');
         }
 
         function filterArchive() {
