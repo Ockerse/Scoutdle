@@ -473,13 +473,11 @@
                 { key: 'Hair',   label: 'Hair' },   { key: 'Eyes',   label: 'Eyes' }
             ];
 
-            // Filter for categories the user HASN'T gotten "Green" yet across all guesses
             const unsolved = categories.filter(cat => {
                 const isCorrect = guesses.some(g => String(g[cat.key]).trim().toLowerCase() === String(secretChar[cat.key]).trim().toLowerCase());
                 return !isCorrect;
             });
 
-            // Filter out hints already displayed
             const displayedHints = hintText.innerText;
             const availableToReveal = unsolved.filter(cat => !displayedHints.includes(cat.label));
 
@@ -658,7 +656,7 @@
                     if (val?.toLowerCase() === target?.toLowerCase()) row += "🟩";
                     else if (!isNaN(parseInt(val)) && !isNaN(parseInt(target))) {
                         const diff = Math.abs(parseInt(val) - parseInt(target));
-                        const tVal = parseInt(target);
+                        const gVal = parseInt(val), tVal = parseInt(target);
 
                         if (k === "Year") {
                             if (diff <= 3) row += "🟨";
@@ -670,17 +668,16 @@
                                 else if (diff <= 5) row += "🟧";
                                 else row += "⬛";
                             } else {
-                                if (diff <= 250) row += "🟨";
-                                else if (diff <= 500) row += "🟧";
+                                if (gVal >= tVal && (gVal - tVal) <= 100) row += "🟨";
+                                else if (diff <= 3) row += "🟨";
+                                else if (diff <= 5) row += "🟧";
                                 else row += "⬛";
                             }
                         } else if (k === "Height") {
                             if (diff <= 5) row += "🟨";
                             else if (diff <= 10) row += "🟧";
                             else row += "⬛";
-                        } else {
-                            row += diff <= 5 ? "🟨" : "⬛";
-                        }
+                        } else { row += "⬛"; }
                     }
                     else row += "⬛";
                 });
@@ -741,7 +738,7 @@
                     cls = 'green';
                 } else if (!isNaN(parseInt(val)) && !isNaN(parseInt(target))) {
                     const diff = Math.abs(parseInt(val) - parseInt(target));
-                    const tVal = parseInt(target);
+                    const gVal = parseInt(val), tVal = parseInt(target);
 
                     if (k === "Year") {
                         if (diff <= 3) cls = 'yellow';
@@ -751,16 +748,17 @@
                             if (diff <= 3) cls = 'yellow';
                             else if (diff <= 5) cls = 'orange';
                         } else {
-                            if (diff <= 250) cls = 'yellow';
-                            else if (diff <= 500) cls = 'orange';
+                            if (gVal >= tVal && (gVal - tVal) <= 100) cls = 'yellow';
+                            else if (diff <= 3) cls = 'yellow';
+                            else if (diff <= 5) cls = 'orange';
                         }
                     } else if (k === "Height") {
                         if (diff <= 5) cls = 'yellow';
                         else if (diff <= 10) cls = 'orange';
-                    } else {
+                    } else if (k === "Year" || k === "Age" || k === "Height") {
                         if (diff <= 5) cls = 'yellow';
                     }
-                    arr = parseInt(val) < parseInt(target) ? ' ↑' : ' ↓';
+                    arr = gVal < tVal ? ' ↑' : ' ↓';
                 }
                 
                 return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${k}</span><span><b style="color:#ffffff;">${val}${arr}</b></span></div>`;
