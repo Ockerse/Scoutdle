@@ -494,27 +494,24 @@
         const MAX_GUESSES = 10;
         const imgCache = new Map();
 
-    // Updated toggleAuth to work smoothly across script modules
-    async function toggleAuth() {
-        if (!window.auth) {
-            alert("Firebase is still connecting. Try again in 2 seconds!");
-            return;
-        }
-        if (window.auth.currentUser) {
-            if (confirm("Do you want to log out?")) {
-                await window.signOut(window.auth);
+        // Firebase Login/Logout functionality
+        async function toggleAuth() {
+            if (!window.auth) {
+                alert("Firebase is still loading. Please try again in a moment!");
+                return;
             }
-        } else {
-            try {
-                // This launches the popup window
-                const result = await window.signInWithPopup(window.auth, window.googleProvider);
-                console.log("Logged in successfully as:", result.user.displayName);
-            } catch (e) {
-                console.error("Login Error: ", e);
-                alert("Authentication dropped or blocked by browser popup blocker.");
+            if (window.auth.currentUser) {
+                if (confirm("Do you want to log out?")) {
+                    await window.signOut(window.auth);
+                }
+            } else {
+                try {
+                    await window.signInWithPopup(window.auth, window.googleProvider);
+                } catch (e) {
+                    console.error("Login Error: ", e);
+                }
             }
         }
-    }
 
         async function fetchImage(id) {
             if (!id || isNaN(id)) return "Scoutdle.jpeg";
@@ -749,36 +746,44 @@
             }
         }
 
+        // INTEGRATED: Your clean, customized score synchronizer function
         async function recordGameOver(isWin) {
             if (currentMode !== 'daily') return;
+
+            // 1. First, fetch the latest numbers from the browser's local cache
             let played = parseInt(localStorage.getItem('scoutdle_played') || '0');
             let wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
             let dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
 
-            localStorage.setItem('scoutdle_played', played + 1);
+            played++;
+            localStorage.setItem('scoutdle_played', played);
             if (isWin) {
-                localStorage.setItem('scoutdle_wins', wins + 1);
+                wins++;
+                localStorage.setItem('scoutdle_wins', wins);
                 dist[guesses.length] = (dist[guesses.length] || 0) + 1;
                 localStorage.setItem('scoutdle_dist', JSON.stringify(dist));
             }
 
-            // Cloud Save: Sync stats to Firebase Firestore if the user is authenticated
+            // 2. Check if the player is authenticated with Google
             if (window.auth && window.auth.currentUser) {
                 try {
+                    // 3. Pinpoint their exact document inside a database collection named "users"
                     const userRef = window.doc(window.db, "users", window.auth.currentUser.uid);
+
+                    // 4. Ship the payload up to the Cloud
                     await window.setDoc(userRef, {
                         username: window.auth.currentUser.displayName,
-                        totalPlayed: played + 1,
-                        totalWins: isWin ? wins + 1 : wins,
+                        totalPlayed: played,
+                        totalWins: wins,
                         guessDistribution: dist,
                         lastPlayedTimestamp: new Date().toISOString()
-                    }, { merge: true });
+                    }, { merge: true }); // '{ merge: true }' ensures we don't wipe out other fields
+
                     console.log("Stats securely backed up online!");
                 } catch (error) {
                     console.error("Cloud saving issue:", error);
                 }
             }
-
             updateStats();
         }
 
