@@ -41,10 +41,10 @@
         onAuthStateChanged(window.auth, (user) => {
             const loginBtn = document.getElementById('login-btn');
             if (user) {
-                loginBtn.innerText = `👋 ${user.displayName.split(' ')[0]}`;
+                loginBtn.innerText = `${user.displayName.split(' ')[0]}`;
                 loginBtn.style.color = "var(--green)";
             } else {
-                loginBtn.innerText = "🔑 Login";
+                loginBtn.innerText = "Login";
                 loginBtn.style.color = "#888";
             }
         });
