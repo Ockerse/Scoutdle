@@ -5,115 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Scoutdle - Anime Guessing Game</title>
-    
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyCTefnDY6NQFhANMiv5zhhutNYVvzd6ZZ4",
-            authDomain: "scoutdle.firebaseapp.com",
-            projectId: "scoutdle",
-            storageBucket: "scoutdle.firebasestorage.app",
-            messagingSenderId: "53941181297",
-            appId: "1:53941181297:web:898db2fde02363790ff4d0",
-            measurementId: "G-H2TSYK1HDJ"
-        };
-
-        // Initialize Firebase and attach to window so the rest of your script can read them
-        const app = initializeApp(firebaseConfig);
-        window.auth = getAuth(app);
-        window.db = getFirestore(app);
-        window.googleProvider = new GoogleAuthProvider();
-        window.signInWithPopup = signInWithPopup;
-        window.signOut = signOut;
-        window.doc = doc;
-        window.setDoc = setDoc;
-        window.getDoc = getDoc;
-        window.collection = collection;
-        window.query = query;
-        window.orderBy = orderBy;
-        window.limit = limit;
-        window.getDocs = getDocs;
-
-        // Listen for authentication changes to update button UI and handle account syncing instantly
-        onAuthStateChanged(window.auth, async (user) => {
-            const loginBtn = document.getElementById('login-btn');
-            if (user) {
-                loginBtn.innerText = `👋 ${user.displayName.split(' ')[0]}`;
-                loginBtn.style.color = "var(--green)";
-                
-                // --- INSTANT CLOUD SYNCING ON LOGIN ---
-                try {
-                    const userRef = window.doc(window.db, "users", user.uid);
-                    const snap = await window.getDoc(userRef);
-                    
-                    let localPlayed = parseInt(localStorage.getItem('scoutdle_played') || '0');
-                    let localWins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
-                    let localPoints = parseInt(localStorage.getItem('scoutdle_total_points') || '0');
-                    let localDist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"GX":0}');
-
-                    if (snap.exists()) {
-                        // Cloud data exists! Compare scores to make sure we keep the highest progress
-                        const cloudData = snap.data();
-                        const cloudPoints = cloudData.totalPoints || 0;
-                        
-                        if (cloudPoints >= localPoints) {
-                            // Cloud save is ahead or equal. Pull down cloud stats to local device
-                            localStorage.setItem('scoutdle_played', cloudData.totalPlayed || 0);
-                            localStorage.setItem('scoutdle_wins', cloudData.totalWins || 0);
-                            localStorage.setItem('scoutdle_total_points', cloudPoints);
-                            localStorage.setItem('scoutdle_dist', JSON.stringify(cloudData.guessDistribution || localDist));
-                            console.log("Profile successfully synced down from the cloud!");
-                        } else {
-                            // Local device stats are somehow ahead. Update cloud with local values
-                            await window.setDoc(userRef, {
-                                username: user.displayName,
-                                totalPlayed: localPlayed,
-                                totalWins: localWins,
-                                guessDistribution: localDist,
-                                totalPoints: localPoints,
-                                lastPlayedTimestamp: new Date().toISOString()
-                            }, { merge: true });
-                            console.log("Local milestone backup saved to cloud account!");
-                        }
-                    } else {
-                        // First time logging in ever! Back up existing local stats to their new cloud profile
-                        if (localPlayed > 0) {
-                            await window.setDoc(userRef, {
-                                username: user.displayName,
-                                totalPlayed: localPlayed,
-                                totalWins: localWins,
-                                guessDistribution: localDist,
-                                totalPoints: localPoints,
-                                lastPlayedTimestamp: new Date().toISOString()
-                            }, { merge: true });
-                            console.log("Anonymous milestone successfully synced to your new Google profile!");
-                        }
-                    }
-                    
-                    // Trigger a re-evaluation of daily state in case game board needs to refresh layout
-                    if (document.getElementById('game-content').style.display === 'block' && currentMode === 'daily') {
-                        const today = new Date().toISOString().split('T')[0];
-                        guesses = [];
-                        document.getElementById('gameGrid').innerHTML = '';
-                        await loadProgress(today);
-                    }
-                    
-                    // Refresh stats visual panel if open
-                    if (typeof updateStats === "function") updateStats();
-                } catch (err) {
-                    console.error("Sync listener error:", err);
-                }
-                
-            } else {
-                loginBtn.innerText = "🔑 Login";
-                loginBtn.style.color = "#888";
-            }
-        });
-    </script>
 
     <script src="https://unpkg.com/papaparse@5.3.2/papaparse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
@@ -123,7 +14,6 @@
             --green: #538d4e;
             --yellow: #b59f3b;
             --orange: #ce7d2b;
-            --red: #af4444;
             --bg: #0b0b0b;
             --dark: #212121;
             --text: #ffffff;
@@ -190,23 +80,12 @@
 
         .nav-buttons {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            width: 100%;
-            max-width: 600px;
-            padding: 0 15px;
-            box-sizing: border-box;
-        }
-
-        .left-nav {
-            display: flex;
-            gap: 2px;
-        }
-
-        .right-nav {
-            display: flex;
             gap: 5px;
-            align-items: center;
+            width: 100%;
+            padding: 0 5px;
+            box-sizing: border-box;
         }
 
         .nav-btn {
@@ -215,7 +94,7 @@
             color: #888;
             font-weight: bold;
             cursor: pointer;
-            padding: 10px 10px;
+            padding: 10px 12px;
             transition: 0.3s;
             font-size: 0.8rem;
             text-transform: uppercase;
@@ -408,91 +287,86 @@
             transition: 0.2s;
         }
 
-        /* --- LEADERBOARD & SPREAD UI --- */
-        .lb-card {
-            background: var(--card-bg);
-            border: 1px solid #333;
-            border-radius: 12px;
-            width: 100%;
-            padding: 15px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-        }
-        .lb-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: bold;
-        }
-        .lb-rank {
-            color: var(--yellow);
-            font-size: 1.2rem;
-            margin-right: 10px;
-        }
-        .mini-spread-container {
-            display: flex;
-            gap: 3px;
-            margin-top: 10px;
-            background: #0b0b0b;
-            padding: 8px;
-            border-radius: 6px;
-            overflow-x: auto;
-        }
-        .mini-box {
-            flex: 1;
-            text-align: center;
-            font-size: 0.6rem;
-            background: #222;
-            padding: 4px 2px;
-            border-radius: 4px;
-            min-width: 28px;
-        }
-        .mini-box.has-val {
-            background: #2a442a;
-            border: 1px solid var(--green);
-        }
-        .mini-box.failed-box {
-            background: #221a1a;
-        }
-        .mini-box.failed-box.has-val {
-            background: #442121;
-            border: 1px solid var(--red);
-        }
-
         /* --- ANIMATIONS --- */
         @keyframes flipInGreen {
-            0% { transform: rotateX(90deg); opacity: 0; }
-            100% { transform: rotateX(0deg); opacity: 1; background: var(--green); }
+            0% {
+                transform: rotateX(90deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+                background: var(--green);
+            }
         }
 
         @keyframes flipInYellow {
-            0% { transform: rotateX(90deg); opacity: 0; }
-            100% { transform: rotateX(0deg); opacity: 1; background: var(--yellow); }
+            0% {
+                transform: rotateX(90deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+                background: var(--yellow);
+            }
         }
 
         @keyframes flipInOrange {
-            0% { transform: rotateX(90deg); opacity: 0; }
-            100% { transform: rotateX(0deg); opacity: 1; background: var(--orange); }
+            0% {
+                transform: rotateX(90deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+                background: var(--orange);
+            }
         }
 
         @keyframes flipInNormal {
-            0% { transform: rotateX(90deg); opacity: 0; }
-            100% { transform: rotateX(0deg); opacity: 1; }
+            0% {
+                transform: rotateX(90deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: rotateX(0deg);
+                opacity: 1;
+            }
         }
 
-        .attr-box.green { animation: flipInGreen 0.6s ease-out forwards !important; }
-        .attr-box.yellow { animation: flipInYellow 0.6s ease-out forwards !important; }
-        .attr-box.orange { animation: flipInOrange 0.6s ease-out forwards !important; }
+        .attr-box.green {
+            animation: flipInGreen 0.6s ease-out forwards !important;
+        }
+
+        .attr-box.yellow {
+            animation: flipInYellow 0.6s ease-out forwards !important;
+        }
+
+        .attr-box.orange {
+            animation: flipInOrange 0.6s ease-out forwards !important;
+        }
 
         @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(-15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 480px) {
-            .attr-grid { grid-template-columns: repeat(2, 1fr); }
-            .nav-buttons { padding: 0 5px; }
-            .nav-btn { padding: 10px 6px; font-size: 0.7rem; }
+            .attr-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
     </style>
 </head>
@@ -507,16 +381,10 @@
             </div>
         </a>
         <div class="nav-buttons">
-            <div class="left-nav">
-                <button class="nav-btn active" id="play-nav" onclick="showSection('game-view', this)">Play</button>
-                <button class="nav-btn" onclick="showSection('archive-view', this)">Archive</button>
-                <button class="nav-btn" onclick="showSection('stats-view', this)">Stats</button>
-                <button class="nav-btn" onclick="showSection('leaderboard-view', this)">🏆 Leaderboard</button>
-            </div>
-            <div class="right-nav">
-                <button class="nav-btn" id="login-btn" onclick="toggleAuth()">🔑 Login</button>
-                <a href="https://ko-fi.com/A4853SSA" target="_blank" class="kofi-btn">☕ Support</a>
-            </div>
+            <button class="nav-btn active" id="play-nav" onclick="showSection('game-view', this)">Play</button>
+            <button class="nav-btn" onclick="showSection('archive-view', this)">Archive</button>
+            <button class="nav-btn" onclick="showSection('stats-view', this)">Stats</button>
+            <a href="https://ko-fi.com/A4853SSA" target="_blank" class="kofi-btn">☕ Support</a>
         </div>
     </nav>
 
@@ -580,38 +448,11 @@
         </div>
     </div>
 
-    <div id="leaderboard-view" class="view-section">
-        <h2 style="color: var(--green); font-size: 1.4rem; margin-bottom: 5px;">Global Leaderboard</h2>
-        <p style="color: #888; font-size: 0.8rem; margin-bottom: 15px; text-align: center;">Top 10 Global Players ranked by lifetime score points</p>
-        <div id="leaderboard-container" style="width: 100%;">
-            <p style="text-align: center; color: var(--yellow);">Loading global ranks...</p>
-        </div>
-    </div>
-
     <script>
         let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false, currentMode = 'daily';
         let hintsRevealed = 0;
         const MAX_GUESSES = 10;
         const imgCache = new Map();
-
-        // Firebase Login/Logout functionality
-        async function toggleAuth() {
-            if (!window.auth) {
-                alert("Firebase is still loading. Please try again in a moment!");
-                return;
-            }
-            if (window.auth.currentUser) {
-                if (confirm("Do you want to log out?")) {
-                    await window.signOut(window.auth);
-                }
-            } else {
-                try {
-                    await window.signInWithPopup(window.auth, window.googleProvider);
-                } catch (e) {
-                    console.error("Login Error: ", e);
-                }
-            }
-        }
 
         async function fetchImage(id) {
             if (!id || isNaN(id)) return "Scoutdle.jpeg";
@@ -808,7 +649,7 @@
             } else if (guesses.length >= MAX_GUESSES) {
                 await endGame("Game Over!");
             } else {
-                await saveProgress();
+                saveProgress();
                 updateHintButtonVisibility();
             }
         }
@@ -817,157 +658,56 @@
             document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / ${MAX_GUESSES}`;
         }
 
-        // --- NEW REALTIME CROSS-DEVICE SAVE METHOD ---
-        async function saveProgress() {
+        function saveProgress() {
             if (currentMode !== 'daily') return;
             const today = new Date().toISOString().split('T')[0];
-            const activeGameState = { date: today, guesses: guesses.map(g => g.Name), gameOver };
-
-            // 1. Fallback update to local device memory
-            localStorage.setItem('scoutdle_daily', JSON.stringify(activeGameState));
-
-            // 2. Main replication straight to cloud account if logged in
-            if (window.auth && window.auth.currentUser) {
-                try {
-                    const matchRef = window.doc(window.db, "daily_sessions", window.auth.currentUser.uid);
-                    await window.setDoc(matchRef, activeGameState, { merge: true });
-                    console.log("Mid-game progress securely replicated to Cloud session!");
-                } catch (e) {
-                    console.error("Failed to mirror active game state online:", e);
-                }
-            }
+            localStorage.setItem('scoutdle_daily', JSON.stringify({ date: today, guesses: guesses.map(g => g.Name), gameOver }));
         }
 
-        // --- NEW REALTIME CROSS-DEVICE LOAD METHOD ---
         async function loadProgress(today) {
-            let stateData = null;
-
-            // 1. Check cloud server logs first if signed into Google
-            if (window.auth && window.auth.currentUser) {
-                try {
-                    const matchRef = window.doc(window.db, "daily_sessions", window.auth.currentUser.uid);
-                    const snap = await window.getDoc(matchRef);
-                    if (snap.exists()) {
-                        const cloudState = snap.data();
-                        if (cloudState.date === today) {
-                            stateData = cloudState;
-                            console.log("Restored mid-game sequence from cloud session!");
+            const saved = localStorage.getItem('scoutdle_daily');
+            if (saved) {
+                const data = JSON.parse(saved);
+                if (data.date === today) {
+                    for (const name of data.guesses) {
+                        const char = characters.find(c => c.Name === name);
+                        if (char) {
+                            guesses.push(char);
+                            await renderGuessCard(char);
                         }
                     }
-                } catch (e) {
-                    console.error("Cloud progress retrieval issue:", e);
-                }
-            }
-
-            // 2. Fall back to local browser storage if offline or cloud returned nothing
-            if (!stateData) {
-                const saved = localStorage.getItem('scoutdle_daily');
-                if (saved) {
-                    const localState = JSON.parse(saved);
-                    if (localState.date === today) {
-                        stateData = localState;
-                        console.log("Restored mid-game sequence from local browser memory.");
-                    } else {
-                        localStorage.removeItem('scoutdle_daily');
+                    updateGuessCounter();
+                    if (data.gameOver) {
+                        const win = guesses.length > 0 && guesses[guesses.length - 1].Name === secretChar.Name;
+                        await endGame(win ? "Victory!" : "Game Over!", false);
                     }
-                }
-            }
-
-            // 3. Render any recovered active row calculations
-            if (stateData && stateData.guesses) {
-                guesses = []; // Ensure clear slate before running parsing arrays
-                for (const name of stateData.guesses) {
-                    const char = characters.find(c => c.Name === name);
-                    if (char) {
-                        guesses.push(char);
-                        await renderGuessCard(char);
-                    }
-                }
-                updateGuessCounter();
-                
-                if (stateData.gameOver) {
-                    const win = guesses.length > 0 && guesses[guesses.length - 1].Name === secretChar.Name;
-                    await endGame(win ? "Victory!" : "Game Over!", false);
+                } else {
+                    localStorage.removeItem('scoutdle_daily');
                 }
             }
         }
 
-        // Score synchronizer function with points matrix allocation and GX loss metrics
         async function recordGameOver(isWin) {
             if (currentMode !== 'daily') return;
-
             let played = parseInt(localStorage.getItem('scoutdle_played') || '0');
             let wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
-            let dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"GX":0}');
-            let localTotalPoints = parseInt(localStorage.getItem('scoutdle_total_points') || '0');
+            let dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
 
-            played++;
-            localStorage.setItem('scoutdle_played', played);
-            
-            let pointsEarned = 0;
+            localStorage.setItem('scoutdle_played', played + 1);
             if (isWin) {
-                wins++;
-                localStorage.setItem('scoutdle_wins', wins);
-                
-                const guessCount = guesses.length;
-                dist[guessCount] = (dist[guessCount] || 0) + 1;
-
-                if (guessCount === 1) pointsEarned = 12;
-                else if (guessCount === 2) pointsEarned = 11;
-                else if (guessCount === 3) pointsEarned = 10;
-                else if (guessCount === 4) pointsEarned = 9;
-                else if (guessCount === 5) pointsEarned = 6; 
-                else if (guessCount === 6) pointsEarned = 5;
-                else if (guessCount === 7) pointsEarned = 4;
-                else if (guessCount === 8) pointsEarned = 3;
-                else if (guessCount === 9) pointsEarned = 2;
-                else if (guessCount === 10) pointsEarned = 1;
-            } else {
-                pointsEarned = 0;
-                dist["GX"] = (dist["GX"] || 0) + 1;
+                localStorage.setItem('scoutdle_wins', wins + 1);
+                dist[guesses.length] = (dist[guesses.length] || 0) + 1;
+                localStorage.setItem('scoutdle_dist', JSON.stringify(dist));
             }
 
-            localStorage.setItem('scoutdle_dist', JSON.stringify(dist));
-            localTotalPoints += pointsEarned;
-            localStorage.setItem('scoutdle_total_points', localTotalPoints);
-
-            // Cloud Save Sync
-            if (window.auth && window.auth.currentUser) {
-                try {
-                    const userRef = window.doc(window.db, "users", window.auth.currentUser.uid);
-                    let currentCloudScore = 0;
-                    try {
-                        const snap = await window.getDoc(userRef);
-                        if (snap.exists() && snap.data().totalPoints) {
-                            currentCloudScore = snap.data().totalPoints;
-                        }
-                    } catch(e) { console.error("Cloud point reading error: ", e); }
-
-                    let finalScoreToSave = currentCloudScore > 0 ? (currentCloudScore + pointsEarned) : localTotalPoints;
-
-                    await window.setDoc(userRef, {
-                        username: window.auth.currentUser.displayName,
-                        totalPlayed: played,
-                        totalWins: wins,
-                        guessDistribution: dist,
-                        totalPoints: finalScoreToSave,
-                        lastPlayedTimestamp: new Date().toISOString()
-                    }, { merge: true });
-                    
-                    console.log("Stats securely backed up online!");
-                } catch (error) {
-                    console.error("Cloud saving issue:", error);
-                }
-            }
             updateStats();
         }
 
         function updateStats() {
             const played = parseInt(localStorage.getItem('scoutdle_played') || '0');
             const wins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
-            const dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"GX":0}');
-            const points = parseInt(localStorage.getItem('scoutdle_total_points') || '0');
-            const maxVal = Math.max(...Object.values(dist).filter((_, k) => k !== "GX"), 1);
+            const dist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0}');
+            const maxVal = Math.max(...Object.values(dist), 1);
 
             let distHtml = '<div style="margin-top:25px; text-align:left;"><p style="font-size:0.8rem; color:var(--green); font-weight:bold; margin-bottom:12px; text-align:center;">GUESS DISTRIBUTION</p>';
             for (let i = 1; i <= 10; i++) {
@@ -975,74 +715,7 @@
                 const width = Math.max((count / maxVal) * 100, 7);
                 distHtml += `<div style="display:flex; align-items:center; margin-bottom:6px;"><div style="width:25px; color:#fff; font-size:0.8rem;">${i}</div><div style="flex-grow:1; background:#111; border-radius:4px; height:20px;"><div style="width:${width}%; background:${count > 0 ? 'var(--green)' : '#333'}; color:white; height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:0.75rem;">${count > 0 ? count : ''}</div></div></div>`;
             }
-            const gxCount = dist["GX"] || 0;
-            distHtml += `<div style="display:flex; align-items:center; margin-top:10px; border-top:1px dashed #333; padding-top:6px;"><div style="width:25px; color:var(--red); font-size:0.8rem; font-weight:bold;">GX</div><div style="flex-grow:1; background:#111; border-radius:4px; height:20px;"><div style="width:${Math.max((gxCount / maxVal) * 100, 7)}%; background:${gxCount > 0 ? 'var(--red)' : '#222'}; color:white; height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:0.75rem;">${gxCount > 0 ? gxCount : ''}</div></div></div></div>`;
-
-            document.getElementById('stats-container').innerHTML = `<div style="display:flex; justify-content:space-around;"><div><h2>${played}</h2><p>PLAYED</p></div><div><h2 style="color:var(--green);">${wins}</h2><p>WINS</p></div><div><h2 style="color:var(--orange);">${points}</h2><p>POINTS</p></div><div><h2 style="color:var(--yellow);">${played ? Math.round((wins / played) * 100) : 0}%</h2><p>WIN %</p></div></div>${distHtml}`;
-        }
-
-        async function fetchAndRenderLeaderboard() {
-            const container = document.getElementById('leaderboard-container');
-            if(!window.db) {
-                container.innerHTML = `<p style="text-align: center; color: var(--orange);">Database is offline. Connect to internet or wait initialization.</p>`;
-                return;
-            }
-
-            container.innerHTML = `<p style="text-align: center; color: var(--yellow);">Querying global records...</p>`;
-
-            try {
-                const usersRef = window.collection(window.db, "users");
-                const q = window.query(usersRef, window.orderBy("totalPoints", "desc"), window.limit(10));
-                const querySnapshot = await window.getDocs(q);
-
-                if (querySnapshot.empty) {
-                    container.innerHTML = `<p style="text-align: center; color: #888;">No scores logged on the global leaderboard yet. Finish a match to be the first!</p>`;
-                    return;
-                }
-
-                let html = "";
-                let rank = 1;
-
-                querySnapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    const name = data.username || "Anonymous Scout";
-                    const score = data.totalPoints || 0;
-                    const totalPlayedGames = data.totalPlayed || 0;
-                    const d = data.guessDistribution || {"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"GX":0};
-
-                    let spreadBoxes = "";
-                    for(let i = 1; i <= 10; i++) {
-                        const count = d[i] || 0;
-                        spreadBoxes += `<div class="mini-box ${count > 0 ? 'has-val' : ''}"><b>G${i}</b><br>${count}</div>`;
-                    }
-                    
-                    const gxCount = d["GX"] || 0;
-                    spreadBoxes += `<div class="mini-box failed-box ${gxCount > 0 ? 'has-val' : ''}" style="color:var(--red);"><b>GX</b><br>${gxCount}</div>`;
-
-                    html += `
-                        <div class="lb-card">
-                            <div class="lb-header">
-                                <div>
-                                    <span class="lb-rank">#${rank}</span>
-                                    <span style="color: #fff; font-size: 1rem;">${name}</span>
-                                    <div style="font-size: 0.75rem; color: #888; font-weight: normal; margin-top: 2px; margin-left: 32px;">Played: ${totalPlayedGames} rounds</div>
-                                </div>
-                                <div style="color: var(--green); font-size: 1.1rem; font-weight: 900;">${score} pts</div>
-                            </div>
-                            <div class="mini-spread-container">
-                                ${spreadBoxes}
-                            </div>
-                        </div>
-                    `;
-                    rank++;
-                });
-
-                container.innerHTML = html;
-
-            } catch(e) {
-                console.error("Leaderboard build failure: ", e);
-                container.innerHTML = `<p style="text-align: center; color: red;">Failed to retrieve data scores. Check Firestore permission Rules tab.</p>`;
-            }
+            document.getElementById('stats-container').innerHTML = `<div style="display:flex; justify-content:space-around;"><div><h2>${played}</h2><p>PLAYED</p></div><div><h2 style="color:var(--green);">${wins}</h2><p>WINS</p></div><div><h2 style="color:var(--yellow);">${played ? Math.round((wins / played) * 100) : 0}%</h2><p>WIN %</p></div></div>${distHtml}`;
         }
 
         function shareResult() {
@@ -1108,7 +781,7 @@
             document.getElementById('hint-btn').style.display = 'none';
 
             if (shouldSave) {
-                await saveProgress();
+                saveProgress();
                 await recordGameOver(guesses[guesses.length - 1].Name === secretChar.Name);
             }
 
@@ -1176,9 +849,7 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
-            
             if (id === 'stats-view') updateStats();
-            if (id === 'leaderboard-view') fetchAndRenderLeaderboard();
         }
 
         function populateArchive() {
