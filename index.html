@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Scoutdle - Anime Guessing Game</title>
-
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, doc, setDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         // Your Firebase configuration
         const firebaseConfig = {
@@ -31,20 +31,76 @@
         window.signOut = signOut;
         window.doc = doc;
         window.setDoc = setDoc;
+        window.getDoc = getDoc;
         window.collection = collection;
         window.query = query;
         window.orderBy = orderBy;
         window.limit = limit;
         window.getDocs = getDocs;
 
-        // Listen for authentication changes to update button UI automatically
-        onAuthStateChanged(window.auth, (user) => {
+        // Listen for authentication changes to update button UI and handle account syncing instantly
+        onAuthStateChanged(window.auth, async (user) => {
             const loginBtn = document.getElementById('login-btn');
             if (user) {
-                loginBtn.innerText = `${user.displayName.split(' ')[0]}`;
+                loginBtn.innerText = `👋 ${user.displayName.split(' ')[0]}`;
                 loginBtn.style.color = "var(--green)";
+                
+                // --- INSTANT CLOUD SYNCING ON LOGIN ---
+                try {
+                    const userRef = window.doc(window.db, "users", user.uid);
+                    const snap = await window.getDoc(userRef);
+                    
+                    let localPlayed = parseInt(localStorage.getItem('scoutdle_played') || '0');
+                    let localWins = parseInt(localStorage.getItem('scoutdle_wins') || '0');
+                    let localPoints = parseInt(localStorage.getItem('scoutdle_total_points') || '0');
+                    let localDist = JSON.parse(localStorage.getItem('scoutdle_dist') || '{"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"GX":0}');
+
+                    if (snap.exists()) {
+                        // Cloud data exists! Compare scores to make sure we keep the highest progress
+                        const cloudData = snap.data();
+                        const cloudPoints = cloudData.totalPoints || 0;
+                        
+                        if (cloudPoints >= localPoints) {
+                            // Cloud save is ahead or equal. Pull down cloud stats to local device
+                            localStorage.setItem('scoutdle_played', cloudData.totalPlayed || 0);
+                            localStorage.setItem('scoutdle_wins', cloudData.totalWins || 0);
+                            localStorage.setItem('scoutdle_total_points', cloudPoints);
+                            localStorage.setItem('scoutdle_dist', JSON.stringify(cloudData.guessDistribution || localDist));
+                            console.log("Profile successfully synced down from the cloud!");
+                        } else {
+                            // Local device stats are somehow ahead. Update cloud with local values
+                            await window.setDoc(userRef, {
+                                username: user.displayName,
+                                totalPlayed: localPlayed,
+                                totalWins: localWins,
+                                guessDistribution: localDist,
+                                totalPoints: localPoints,
+                                lastPlayedTimestamp: new Date().toISOString()
+                            }, { merge: true });
+                            console.log("Local milestone backup saved to cloud account!");
+                        }
+                    } else {
+                        // First time logging in ever! Back up existing local stats to their new cloud profile
+                        if (localPlayed > 0) {
+                            await window.setDoc(userRef, {
+                                username: user.displayName,
+                                totalPlayed: localPlayed,
+                                totalWins: localWins,
+                                guessDistribution: localDist,
+                                totalPoints: localPoints,
+                                lastPlayedTimestamp: new Date().toISOString()
+                            }, { merge: true });
+                            console.log("Anonymous milestone successfully synced to your new Google profile!");
+                        }
+                    }
+                    // Refresh stats visual panel if open
+                    if (typeof updateStats === "function") updateStats();
+                } catch (err) {
+                    console.error("Sync listener error:", err);
+                }
+                
             } else {
-                loginBtn.innerText = "Login";
+                loginBtn.innerText = "🔑 Login";
                 loginBtn.style.color = "#888";
             }
         });
@@ -353,20 +409,17 @@
             margin-bottom: 10px;
             box-sizing: border-box;
         }
-
         .lb-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-weight: bold;
         }
-
         .lb-rank {
             color: var(--yellow);
             font-size: 1.2rem;
             margin-right: 10px;
         }
-
         .mini-spread-container {
             display: flex;
             gap: 3px;
@@ -376,7 +429,6 @@
             border-radius: 6px;
             overflow-x: auto;
         }
-
         .mini-box {
             flex: 1;
             text-align: center;
@@ -386,16 +438,13 @@
             border-radius: 4px;
             min-width: 28px;
         }
-
         .mini-box.has-val {
             background: #2a442a;
             border: 1px solid var(--green);
         }
-
         .mini-box.failed-box {
             background: #221a1a;
         }
-
         .mini-box.failed-box.has-val {
             background: #442121;
             border: 1px solid var(--red);
@@ -403,93 +452,38 @@
 
         /* --- ANIMATIONS --- */
         @keyframes flipInGreen {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-                background: var(--green);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--green); }
         }
 
         @keyframes flipInYellow {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-                background: var(--yellow);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--yellow); }
         }
 
         @keyframes flipInOrange {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-                background: var(--orange);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--orange); }
         }
 
         @keyframes flipInNormal {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; }
         }
 
-        .attr-box.green {
-            animation: flipInGreen 0.6s ease-out forwards !important;
-        }
-
-        .attr-box.yellow {
-            animation: flipInYellow 0.6s ease-out forwards !important;
-        }
-
-        .attr-box.orange {
-            animation: flipInOrange 0.6s ease-out forwards !important;
-        }
+        .attr-box.green { animation: flipInGreen 0.6s ease-out forwards !important; }
+        .attr-box.yellow { animation: flipInYellow 0.6s ease-out forwards !important; }
+        .attr-box.orange { animation: flipInOrange 0.6s ease-out forwards !important; }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 480px) {
-            .attr-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .nav-buttons {
-                padding: 0 5px;
-            }
-
-            .nav-btn {
-                padding: 10px 6px;
-                font-size: 0.7rem;
-            }
+            .attr-grid { grid-template-columns: repeat(2, 1fr); }
+            .nav-buttons { padding: 0 5px; }
+            .nav-btn { padding: 10px 6px; font-size: 0.7rem; }
         }
     </style>
 </head>
@@ -508,10 +502,10 @@
                 <button class="nav-btn active" id="play-nav" onclick="showSection('game-view', this)">Play</button>
                 <button class="nav-btn" onclick="showSection('archive-view', this)">Archive</button>
                 <button class="nav-btn" onclick="showSection('stats-view', this)">Stats</button>
-                <button class="nav-btn" onclick="showSection('leaderboard-view', this)">Leaderboard</button>
+                <button class="nav-btn" onclick="showSection('leaderboard-view', this)">🏆 Leaderboard</button>
             </div>
             <div class="right-nav">
-                <button class="nav-btn" id="login-btn" onclick="toggleAuth()">Login</button>
+                <button class="nav-btn" id="login-btn" onclick="toggleAuth()">🔑 Login</button>
                 <a href="https://ko-fi.com/A4853SSA" target="_blank" class="kofi-btn">☕ Support</a>
             </div>
         </div>
@@ -579,8 +573,7 @@
 
     <div id="leaderboard-view" class="view-section">
         <h2 style="color: var(--green); font-size: 1.4rem; margin-bottom: 5px;">Global Leaderboard</h2>
-        <p style="color: #888; font-size: 0.8rem; margin-bottom: 15px; text-align: center;">Top 10 Global Players ranked
-            by lifetime score points</p>
+        <p style="color: #888; font-size: 0.8rem; margin-bottom: 15px; text-align: center;">Top 10 Global Players ranked by lifetime score points</p>
         <div id="leaderboard-container" style="width: 100%;">
             <p style="text-align: center; color: var(--yellow);">Loading global ranks...</p>
         </div>
@@ -855,12 +848,12 @@
 
             played++;
             localStorage.setItem('scoutdle_played', played);
-
+            
             let pointsEarned = 0;
             if (isWin) {
                 wins++;
                 localStorage.setItem('scoutdle_wins', wins);
-
+                
                 const guessCount = guesses.length;
                 dist[guessCount] = (dist[guessCount] || 0) + 1;
 
@@ -868,7 +861,7 @@
                 else if (guessCount === 2) pointsEarned = 11;
                 else if (guessCount === 3) pointsEarned = 10;
                 else if (guessCount === 4) pointsEarned = 9;
-                else if (guessCount === 5) pointsEarned = 6;
+                else if (guessCount === 5) pointsEarned = 6; 
                 else if (guessCount === 6) pointsEarned = 5;
                 else if (guessCount === 7) pointsEarned = 4;
                 else if (guessCount === 8) pointsEarned = 3;
@@ -876,7 +869,7 @@
                 else if (guessCount === 10) pointsEarned = 1;
             } else {
                 pointsEarned = 0;
-                dist["GX"] = (dist["GX"] || 0) + 1; // Add tracker point to GX failures
+                dist["GX"] = (dist["GX"] || 0) + 1;
             }
 
             localStorage.setItem('scoutdle_dist', JSON.stringify(dist));
@@ -889,12 +882,11 @@
                     const userRef = window.doc(window.db, "users", window.auth.currentUser.uid);
                     let currentCloudScore = 0;
                     try {
-                        const { getDoc } = await import("https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js");
-                        const snap = await getDoc(userRef);
+                        const snap = await window.getDoc(userRef);
                         if (snap.exists() && snap.data().totalPoints) {
                             currentCloudScore = snap.data().totalPoints;
                         }
-                    } catch (e) { console.error("Cloud point reading error: ", e); }
+                    } catch(e) { console.error("Cloud point reading error: ", e); }
 
                     let finalScoreToSave = currentCloudScore > 0 ? (currentCloudScore + pointsEarned) : localTotalPoints;
 
@@ -906,7 +898,7 @@
                         totalPoints: finalScoreToSave,
                         lastPlayedTimestamp: new Date().toISOString()
                     }, { merge: true });
-
+                    
                     console.log("Stats securely backed up online!");
                 } catch (error) {
                     console.error("Cloud saving issue:", error);
@@ -928,17 +920,15 @@
                 const width = Math.max((count / maxVal) * 100, 7);
                 distHtml += `<div style="display:flex; align-items:center; margin-bottom:6px;"><div style="width:25px; color:#fff; font-size:0.8rem;">${i}</div><div style="flex-grow:1; background:#111; border-radius:4px; height:20px;"><div style="width:${width}%; background:${count > 0 ? 'var(--green)' : '#333'}; color:white; height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:0.75rem;">${count > 0 ? count : ''}</div></div></div>`;
             }
-            // Include GX fails row onto user's internal personal stats screen
             const gxCount = dist["GX"] || 0;
             distHtml += `<div style="display:flex; align-items:center; margin-top:10px; border-top:1px dashed #333; padding-top:6px;"><div style="width:25px; color:var(--red); font-size:0.8rem; font-weight:bold;">GX</div><div style="flex-grow:1; background:#111; border-radius:4px; height:20px;"><div style="width:${Math.max((gxCount / maxVal) * 100, 7)}%; background:${gxCount > 0 ? 'var(--red)' : '#222'}; color:white; height:100%; display:flex; align-items:center; justify-content:flex-end; padding-right:8px; font-size:0.75rem;">${gxCount > 0 ? gxCount : ''}</div></div></div></div>`;
 
             document.getElementById('stats-container').innerHTML = `<div style="display:flex; justify-content:space-around;"><div><h2>${played}</h2><p>PLAYED</p></div><div><h2 style="color:var(--green);">${wins}</h2><p>WINS</p></div><div><h2 style="color:var(--orange);">${points}</h2><p>POINTS</p></div><div><h2 style="color:var(--yellow);">${played ? Math.round((wins / played) * 100) : 0}%</h2><p>WIN %</p></div></div>${distHtml}`;
         }
 
-        // Pulls top 10 profiles from Firestore and displays their total games + GX tab metric spreads
         async function fetchAndRenderLeaderboard() {
             const container = document.getElementById('leaderboard-container');
-            if (!window.db) {
+            if(!window.db) {
                 container.innerHTML = `<p style="text-align: center; color: var(--orange);">Database is offline. Connect to internet or wait initialization.</p>`;
                 return;
             }
@@ -963,16 +953,14 @@
                     const name = data.username || "Anonymous Scout";
                     const score = data.totalPoints || 0;
                     const totalPlayedGames = data.totalPlayed || 0;
-                    const d = data.guessDistribution || { "1": 0, "2": 0, "3": 0, "4": 0, "5": 0, "6": 0, "7": 0, "8": 0, "9": 0, "10": 0, "GX": 0 };
+                    const d = data.guessDistribution || {"1":0,"2":0,"3":0,"4":0,"5":0,"6":0,"7":0,"8":0,"9":0,"10":0,"GX":0};
 
-                    // Construct distribution layout grid matrix boxes string with appended GX module
                     let spreadBoxes = "";
-                    for (let i = 1; i <= 10; i++) {
+                    for(let i = 1; i <= 10; i++) {
                         const count = d[i] || 0;
                         spreadBoxes += `<div class="mini-box ${count > 0 ? 'has-val' : ''}"><b>G${i}</b><br>${count}</div>`;
                     }
-
-                    // Appended GX Box component module at final index
+                    
                     const gxCount = d["GX"] || 0;
                     spreadBoxes += `<div class="mini-box failed-box ${gxCount > 0 ? 'has-val' : ''}" style="color:var(--red);"><b>GX</b><br>${gxCount}</div>`;
 
@@ -996,7 +984,7 @@
 
                 container.innerHTML = html;
 
-            } catch (e) {
+            } catch(e) {
                 console.error("Leaderboard build failure: ", e);
                 container.innerHTML = `<p style="text-align: center; color: red;">Failed to retrieve data scores. Check Firestore permission Rules tab.</p>`;
             }
@@ -1133,7 +1121,7 @@
             document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             btn.classList.add('active');
-
+            
             if (id === 'stats-view') updateStats();
             if (id === 'leaderboard-view') fetchAndRenderLeaderboard();
         }
