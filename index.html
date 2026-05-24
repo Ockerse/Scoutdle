@@ -93,6 +93,15 @@
                             console.log("Anonymous milestone successfully synced to your new Google profile!");
                         }
                     }
+                    
+                    // Trigger a re-evaluation of daily state in case game board needs to refresh layout
+                    if (document.getElementById('game-content').style.display === 'block' && currentMode === 'daily') {
+                        const today = new Date().toISOString().split('T')[0];
+                        guesses = [];
+                        document.getElementById('gameGrid').innerHTML = '';
+                        await loadProgress(today);
+                    }
+                    
                     // Refresh stats visual panel if open
                     if (typeof updateStats === "function") updateStats();
                 } catch (err) {
@@ -799,7 +808,7 @@
             } else if (guesses.length >= MAX_GUESSES) {
                 await endGame("Game Over!");
             } else {
-                saveProgress();
+                await saveProgress();
                 updateHintButtonVisibility();
             }
         }
@@ -808,31 +817,77 @@
             document.getElementById('guess-counter').innerText = `Guesses: ${guesses.length} / ${MAX_GUESSES}`;
         }
 
-        function saveProgress() {
+        // --- NEW REALTIME CROSS-DEVICE SAVE METHOD ---
+        async function saveProgress() {
             if (currentMode !== 'daily') return;
             const today = new Date().toISOString().split('T')[0];
-            localStorage.setItem('scoutdle_daily', JSON.stringify({ date: today, guesses: guesses.map(g => g.Name), gameOver }));
+            const activeGameState = { date: today, guesses: guesses.map(g => g.Name), gameOver };
+
+            // 1. Fallback update to local device memory
+            localStorage.setItem('scoutdle_daily', JSON.stringify(activeGameState));
+
+            // 2. Main replication straight to cloud account if logged in
+            if (window.auth && window.auth.currentUser) {
+                try {
+                    const matchRef = window.doc(window.db, "daily_sessions", window.auth.currentUser.uid);
+                    await window.setDoc(matchRef, activeGameState, { merge: true });
+                    console.log("Mid-game progress securely replicated to Cloud session!");
+                } catch (e) {
+                    console.error("Failed to mirror active game state online:", e);
+                }
+            }
         }
 
+        // --- NEW REALTIME CROSS-DEVICE LOAD METHOD ---
         async function loadProgress(today) {
-            const saved = localStorage.getItem('scoutdle_daily');
-            if (saved) {
-                const data = JSON.parse(saved);
-                if (data.date === today) {
-                    for (const name of data.guesses) {
-                        const char = characters.find(c => c.Name === name);
-                        if (char) {
-                            guesses.push(char);
-                            await renderGuessCard(char);
+            let stateData = null;
+
+            // 1. Check cloud server logs first if signed into Google
+            if (window.auth && window.auth.currentUser) {
+                try {
+                    const matchRef = window.doc(window.db, "daily_sessions", window.auth.currentUser.uid);
+                    const snap = await window.getDoc(matchRef);
+                    if (snap.exists()) {
+                        const cloudState = snap.data();
+                        if (cloudState.date === today) {
+                            stateData = cloudState;
+                            console.log("Restored mid-game sequence from cloud session!");
                         }
                     }
-                    updateGuessCounter();
-                    if (data.gameOver) {
-                        const win = guesses.length > 0 && guesses[guesses.length - 1].Name === secretChar.Name;
-                        await endGame(win ? "Victory!" : "Game Over!", false);
+                } catch (e) {
+                    console.error("Cloud progress retrieval issue:", e);
+                }
+            }
+
+            // 2. Fall back to local browser storage if offline or cloud returned nothing
+            if (!stateData) {
+                const saved = localStorage.getItem('scoutdle_daily');
+                if (saved) {
+                    const localState = JSON.parse(saved);
+                    if (localState.date === today) {
+                        stateData = localState;
+                        console.log("Restored mid-game sequence from local browser memory.");
+                    } else {
+                        localStorage.removeItem('scoutdle_daily');
                     }
-                } else {
-                    localStorage.removeItem('scoutdle_daily');
+                }
+            }
+
+            // 3. Render any recovered active row calculations
+            if (stateData && stateData.guesses) {
+                guesses = []; // Ensure clear slate before running parsing arrays
+                for (const name of stateData.guesses) {
+                    const char = characters.find(c => c.Name === name);
+                    if (char) {
+                        guesses.push(char);
+                        await renderGuessCard(char);
+                    }
+                }
+                updateGuessCounter();
+                
+                if (stateData.gameOver) {
+                    const win = guesses.length > 0 && guesses[guesses.length - 1].Name === secretChar.Name;
+                    await endGame(win ? "Victory!" : "Game Over!", false);
                 }
             }
         }
@@ -1053,7 +1108,7 @@
             document.getElementById('hint-btn').style.display = 'none';
 
             if (shouldSave) {
-                saveProgress();
+                await saveProgress();
                 await recordGameOver(guesses[guesses.length - 1].Name === secretChar.Name);
             }
 
