@@ -287,56 +287,91 @@
             transition: 0.2s;
         }
 
+        /* --- DAILY REFRESH METRICS MODULE --- */
+        .daily-meta-container {
+            width: 100%;
+            background: var(--card-bg);
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 20px 15px;
+            margin-top: 25px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .daily-meta-split {
+            display: grid;
+            grid-template-columns: 1fr;
+            width: 100%;
+            gap: 15px;
+        }
+
+        @media (min-width: 480px) {
+            .daily-meta-split {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .meta-sub-block {
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 15px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .meta-caption {
+            font-size: 0.65rem;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .meta-countdown-timer {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--orange);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .yesterday-avatar {
+            width: 55px;
+            height: 75px;
+            border-radius: 6px;
+            object-fit: cover;
+            border: 1px solid #333;
+            margin-bottom: 6px;
+            background: #222;
+        }
+
         /* --- ANIMATIONS --- */
         @keyframes flipInGreen {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-                background: var(--green);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--green); }
         }
 
         @keyframes flipInYellow {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-                background: var(--yellow);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--yellow); }
         }
 
         @keyframes flipInOrange {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-                background: var(--orange);
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; background: var(--orange); }
         }
 
         @keyframes flipInNormal {
-            0% {
-                transform: rotateX(90deg);
-                opacity: 0;
-            }
-
-            100% {
-                transform: rotateX(0deg);
-                opacity: 1;
-            }
+            0% { transform: rotateX(90deg); opacity: 0; }
+            100% { transform: rotateX(0deg); opacity: 1; }
         }
 
         .attr-box.green {
@@ -352,15 +387,8 @@
         }
 
         @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-15px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 480px) {
@@ -424,6 +452,21 @@
             </div>
             <div id="gameGrid"></div>
         </div>
+
+        <div id="daily-dashboard-meta" class="daily-meta-container" style="display: none;">
+            <div class="daily-meta-split">
+                <div class="meta-sub-block" id="yesterday-meta-card">
+                    <span class="meta-caption">Yesterday's Answer</span>
+                    <img id="yesterday-char-img" class="yesterday-avatar" src="Scoutdle.jpeg" alt="Yesterday's Character">
+                    <strong id="yesterday-char-name" style="color: var(--green); font-size: 0.95rem;">-</strong>
+                    <small id="yesterday-char-series" style="color: #aaa; font-size: 0.75rem;">-</small>
+                </div>
+                <div class="meta-sub-block">
+                    <span class="meta-caption">Next Character In</span>
+                    <span id="meta-timer-countdown" class="meta-countdown-timer">00:00:00</span>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div id="archive-view" class="view-section">
@@ -481,6 +524,9 @@
             document.getElementById('hint-btn').style.display = 'none';
             document.getElementById('guessInput').value = '';
             document.getElementById('guessInput').disabled = false;
+            
+            // Re-render dashboard meta information context on home screen load
+            setupMetaDashboard();
             showSection('game-view', document.getElementById('play-nav'));
         }
 
@@ -517,6 +563,9 @@
                     populateArchive();
                     document.getElementById('loading-msg').style.display = "none";
                     document.getElementById('menu-options').style.display = 'block';
+                    
+                    // Boot up panel parameters on base initiation frame sequence
+                    setupMetaDashboard();
                     updateStats();
                 }
             });
@@ -536,6 +585,54 @@
             t ^= t + Math.imul(t ^ t >>> 7, t | 61);
             const randomFloat = ((t ^ t >>> 14) >>> 0) / 4294967296;
             return characters[Math.floor(randomFloat * characters.length)];
+        }
+
+        // CALCULATES YESTERDAY'S SOLUTION AND SETS UP DYNAMIC TIMER ENGINE
+        async function setupMetaDashboard() {
+            const dashboard = document.getElementById('daily-dashboard-meta');
+            dashboard.style.display = 'block';
+
+            // 1. Next Daily Character Countdown Timer Logic
+            function tickTimer() {
+                const now = new Date();
+                const midnight = new Date();
+                midnight.setHours(24, 0, 0, 0); // Sets local target context to coming midnight
+                
+                const gap = midnight - now;
+                if (gap <= 0) return;
+
+                const hrs = String(Math.floor((gap / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+                const mins = String(Math.floor((gap / (1000 * 60)) % 60)).padStart(2, '0');
+                const secs = String(Math.floor((gap / 1000) % 60)).padStart(2, '0');
+                
+                document.getElementById('meta-timer-countdown').innerText = `${hrs}:${mins}:${secs}`;
+            }
+            if(!window.metaTimerIntervalId) {
+                window.metaTimerIntervalId = setInterval(tickTimer, 1000);
+            }
+            tickTimer();
+
+            // 2. Derive Yesterday's Seeded Identity Profile
+            if (characters.length > 0) {
+                const now = new Date();
+                const yesterdayDate = new Date(now);
+                yesterdayDate.setDate(now.getDate() - 1); // Exact seed alignment formula calculation shifted back by 1 day
+                
+                const seed = yesterdayDate.getFullYear() * 10000 + (yesterdayDate.getMonth() + 1) * 100 + yesterdayDate.getDate();
+                let t = seed + 0x6D2B79F5;
+                t = Math.imul(t ^ t >>> 15, t | 1);
+                t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+                const randomFloat = ((t ^ t >>> 14) >>> 0) / 4294967296;
+                const yesterdayChar = characters[Math.floor(randomFloat * characters.length)];
+
+                if (yesterdayChar) {
+                    document.getElementById('yesterday-char-name').innerText = yesterdayChar.Name;
+                    document.getElementById('yesterday-char-series').innerText = yesterdayChar.Series;
+                    const imgUrl = await fetchImage(yesterdayChar.ID);
+                    document.getElementById('yesterday-char-img').src = imgUrl;
+                    document.getElementById('yesterday-meta-card').style.display = 'flex';
+                }
+            }
         }
 
         function revealHint() {
@@ -595,6 +692,9 @@
             document.getElementById('game-content').style.display = 'block';
             document.getElementById('guessInput').disabled = false;
             document.getElementById('guessInput').value = '';
+
+            // Cleanly clear/hide metadata summary container blocks during matching gameplay
+            document.getElementById('daily-dashboard-meta').style.display = 'none';
 
             if (mode === 'daily') {
                 secretChar = getDailyChar();
