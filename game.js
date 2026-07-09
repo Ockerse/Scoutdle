@@ -153,23 +153,32 @@ async function fetchImageNow(id, attempt = 0) {
     try {
         const res = await fetch(`https://api.jikan.moe/v4/characters/${id}`);
 
-        if (res.status === 429) {
+        // 429 = we're rate-limited. 502/503/504 = Jikan's upstream is
+        // overloaded/timing out (common on their free tier under load -
+        // this is what showed up as "504 Gateway Time-out" in testing).
+        // Both are transient and worth retrying; a 404 or other 4xx is
+        // not (the character just isn't there), so those fall straight
+        // through to the fallback image below without retrying.
+        const isRetryableStatus = res.status === 429 || (res.status >= 500 && res.status < 600);
+
+        if (isRetryableStatus) {
             if (attempt < IMG_MAX_RETRIES) {
-                // Respect a Retry-After header if Jikan sends one, otherwise
-                // back off exponentially so a burst of guesses doesn't keep
-                // hammering the API while it's already rate-limiting us.
+                // Respect a Retry-After header if Jikan sends one (mainly
+                // on 429s), otherwise back off exponentially so a burst of
+                // guesses - or a rough patch for Jikan's servers - doesn't
+                // keep hammering an already-struggling API.
                 const retryAfterHeader = parseInt(res.headers.get('Retry-After'), 10);
                 const delay = !isNaN(retryAfterHeader)
                     ? retryAfterHeader * 1000
                     : IMG_RETRY_BASE_DELAY_MS * Math.pow(2, attempt);
 
-                console.warn(`Jikan rate-limited character ${id} (attempt ${attempt + 1}/${IMG_MAX_RETRIES}) - retrying in ${delay}ms`);
+                console.warn(`Jikan returned HTTP ${res.status} for character ${id} (attempt ${attempt + 1}/${IMG_MAX_RETRIES}) - retrying in ${delay}ms`);
                 await new Promise(r => setTimeout(r, delay));
                 return fetchImageNow(id, attempt + 1);
             }
             // Retries exhausted - fall through to the local fallback image
             // rather than leaving the guess card without an image at all.
-            console.warn(`Jikan rate limit persisted for character ${id} after ${IMG_MAX_RETRIES} retries - using fallback image`);
+            console.warn(`Jikan HTTP ${res.status} persisted for character ${id} after ${IMG_MAX_RETRIES} retries - using fallback image`);
             return "Scoutdle.jpeg";
         }
 
@@ -181,12 +190,13 @@ async function fetchImageNow(id, attempt = 0) {
                 return "Scoutdle.jpeg";
             }
             imgCache.set(id, url);
+            saveImageCacheToLocalStorage();
             return url;
         }
 
-        // Non-ok, non-429 response (404 = character not found on Jikan,
-        // 500/503 = Jikan having issues, etc). Previously this failed
-        // completely silently - now it's visible in the console.
+        // Any other non-ok status (404 = character not found on Jikan,
+        // etc) isn't worth retrying. Previously this failed completely
+        // silently - now it's visible in the console.
         console.warn(`Jikan returned HTTP ${res.status} for character ${id} - using fallback image`);
     } catch (e) {
         // Network failure, CORS block, ad-blocker/extension interference,
@@ -200,6 +210,70 @@ async function fetchImage(id) {
     if (!id || isNaN(id)) return "Scoutdle.jpeg";
     if (imgCache.has(id)) return imgCache.get(id);
     return queueImageFetch(id);
+}
+
+// -------------------------------------------------------------------
+// Image cache persistence, in priority order:
+//   1. imgCache (in-memory, this page load only)
+//   2. images.json (a static manifest, pre-generated offline by
+//      generate-image-manifest.js - see that file for instructions)
+//   3. localStorage (images this browser has successfully fetched live
+//      before, kept around so a repeat visit never re-hits Jikan for
+//      the same character)
+//   4. a live Jikan API call, as a last resort
+//
+// The goal: once images.json exists and/or a browser has played a few
+// rounds, gameplay barely touches the live API at all, so Jikan's
+// uptime stops being a single point of failure for images loading.
+// -------------------------------------------------------------------
+const LOCAL_IMG_CACHE_KEY = 'scoutdle_img_cache';
+const LOCAL_IMG_CACHE_VERSION = 1;
+
+function loadImageCacheFromLocalStorage() {
+    try {
+        const raw = localStorage.getItem(LOCAL_IMG_CACHE_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (parsed.v !== LOCAL_IMG_CACHE_VERSION) {
+            localStorage.removeItem(LOCAL_IMG_CACHE_KEY);
+            return;
+        }
+        Object.entries(parsed.data).forEach(([id, url]) => imgCache.set(id, url));
+        console.log(`Loaded ${Object.keys(parsed.data).length} cached character images from localStorage`);
+    } catch (e) {
+        console.warn('Could not read cached images from localStorage - clearing it', e);
+        localStorage.removeItem(LOCAL_IMG_CACHE_KEY);
+    }
+}
+
+function saveImageCacheToLocalStorage() {
+    try {
+        localStorage.setItem(LOCAL_IMG_CACHE_KEY, JSON.stringify({
+            v: LOCAL_IMG_CACHE_VERSION,
+            data: Object.fromEntries(imgCache)
+        }));
+    } catch (e) {
+        // Likely localStorage quota exceeded (unlikely at ~900 short
+        // URLs, but not worth crashing the game over) - just skip
+        // persisting this round; imgCache still works for this session.
+        console.warn('Could not persist image cache to localStorage', e);
+    }
+}
+
+async function loadImageManifest() {
+    try {
+        const res = await fetch('images.json');
+        if (!res.ok) return; // no manifest yet - totally fine, not an error
+        const manifest = await res.json();
+        let count = 0;
+        Object.entries(manifest).forEach(([id, url]) => {
+            if (!imgCache.has(id)) { imgCache.set(id, url); count++; }
+        });
+        console.log(`Loaded ${count} pre-fetched character images from images.json`);
+    } catch (e) {
+        // images.json is optional (see generate-image-manifest.js) -
+        // its absence is expected until you've generated one.
+    }
 }
 
 // Called from onerror on <img> tags. Distinct from fetchImageNow's
@@ -242,6 +316,14 @@ function showLoadError(message) {
 // silently leaving `characters` empty forever.
 // -------------------------------------------------------------------
 async function init() {
+    // These don't depend on the character data and can load in parallel
+    // with the CSV. loadImageCacheFromLocalStorage is synchronous/instant;
+    // loadImageManifest is a fire-and-forget fetch - in the rare case a
+    // guess's image is needed before it resolves, fetchImage just falls
+    // back to a live Jikan call for that one character, no harm done.
+    loadImageCacheFromLocalStorage();
+    loadImageManifest();
+
     Papa.parse("anime.csv", {
         download: true, header: false, skipEmptyLines: true,
         error: function (err) {
