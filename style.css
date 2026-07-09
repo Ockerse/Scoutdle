@@ -172,6 +172,44 @@
             margin-bottom: 10px;
         }
 
+        /* --- GENRE TAGS (replaces the old Genre grid box) --- */
+        .genre-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 10px;
+        }
+
+        .genre-tag {
+            background: #262626;
+            color: #ccc;
+            border: 1px solid #3a3a3a;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .genre-tag.green {
+            background: var(--green);
+            border-color: var(--green);
+            color: #fff;
+        }
+
+        .genre-tag.yellow {
+            background: var(--yellow);
+            border-color: var(--yellow);
+            color: #000;
+        }
+
+        .genre-tag.plain {
+            background: #4a4a4a;
+            border-color: #4a4a4a;
+            color: #ddd;
+        }
+
         .char-image {
             width: 50px;
             height: 70px;
@@ -207,6 +245,21 @@
             text-transform: uppercase;
             margin-bottom: 2px;
             font-weight: 600;
+        }
+
+        /* Series box takes the space Genre used to occupy in the 4x2
+           grid, so it spans 2 columns instead of 1 to keep a clean
+           8-cell grid (2 for Series + 6 single boxes = 8). */
+        .attr-box-wide {
+            grid-column: span 2;
+        }
+
+        .attr-box-wide .attr-label {
+            font-size: 0.6rem;
+        }
+
+        .attr-box-wide span:last-child b {
+            font-size: 0.85rem;
         }
 
         /* --- LINKS --- */

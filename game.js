@@ -7,8 +7,42 @@ let hintsRevealed = 0;
 const MAX_GUESSES = 10;
 const imgCache = new Map();
 
-// Attributes compared every guess, in display order.
-const ATTRS = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
+// Attributes shown as scored grid boxes, in display order. Genre is
+// handled separately now (see GENRE_TIER / genre tag rendering below)
+// since it's multi-valued and uses its own set-overlap scoring rather
+// than a single exact-match comparison.
+const ATTRS = ["Series", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
+
+// Full display order used only for the share-result emoji grid, which
+// still shows one square per trait including Genre.
+const SHARE_ORDER = ["Series", "Genre", "Year", "Sex", "Age", "Height", "Hair", "Eyes"];
+
+// Genres are stored as a single "/"-delimited string in the CSV
+// (e.g. "Action/Adventure") so a character can have more than one.
+function parseGenres(raw) {
+    if (!raw || raw === "???") return [];
+    return raw.split('/').map(s => s.trim()).filter(Boolean);
+}
+
+// -------------------------------------------------------------------
+// Genre scoring: unlike the single-value attributes, a character can
+// have several genres, so we compare the guessed set against the
+// target set as a whole:
+//   - identical sets (order doesn't matter)  -> 'green'  (all tags green)
+//   - any overlap, but not identical         -> 'yellow' (all tags yellow)
+//   - no overlap at all                      -> 'black'  (plain/uncolored tags)
+//   - either side has no genre data          -> 'unknown'
+// -------------------------------------------------------------------
+function compareGenreSets(guessGenres, targetGenres) {
+    if (!guessGenres?.length || !targetGenres?.length) return 'unknown';
+
+    const g = new Set(guessGenres.map(x => x.toLowerCase()));
+    const t = new Set(targetGenres.map(x => x.toLowerCase()));
+
+    if (g.size === t.size && [...g].every(x => t.has(x))) return 'green';
+    if ([...g].some(x => t.has(x))) return 'yellow';
+    return 'black';
+}
 
 // -------------------------------------------------------------------
 // FIX #8: Guesses/lookups are keyed by MAL_ID (unique) instead of
@@ -171,18 +205,22 @@ async function init() {
 
                 const startIdx = (results.data[0][0]?.toLowerCase() === "name" || results.data[0][1]?.toLowerCase() === "series") ? 1 : 0;
 
-                const parsed = results.data.slice(startIdx).map(r => ({
-                    "Name": r[0]?.trim(),
-                    "Series": r[1]?.trim() === "FMA: B" ? "Full Metal Alchemist Brotherhood" : r[1]?.trim() || "???",
-                    "Age": r[2]?.trim(),
-                    "Height": r[3]?.trim(),
-                    "Sex": r[4]?.trim(),
-                    "Hair": r[5]?.trim(),
-                    "Eyes": r[6]?.trim(),
-                    "ID": r[7]?.trim(),
-                    "Genre": r[8]?.trim() || "???",
-                    "Year": r[9]?.trim() || "????"
-                })).filter(c => c.Name);
+                const parsed = results.data.slice(startIdx).map(r => {
+                    const genreRaw = r[8]?.trim() || "???";
+                    return {
+                        "Name": r[0]?.trim(),
+                        "Series": r[1]?.trim() === "FMA: B" ? "Full Metal Alchemist Brotherhood" : r[1]?.trim() || "???",
+                        "Age": r[2]?.trim(),
+                        "Height": r[3]?.trim(),
+                        "Sex": r[4]?.trim(),
+                        "Hair": r[5]?.trim(),
+                        "Eyes": r[6]?.trim(),
+                        "ID": r[7]?.trim(),
+                        "Genre": genreRaw,
+                        "Genres": parseGenres(genreRaw),
+                        "Year": r[9]?.trim() || "????"
+                    };
+                }).filter(c => c.Name);
 
                 if (parsed.length === 0) {
                     showLoadError("⚠️ No valid characters found in data file.");
@@ -294,9 +332,14 @@ async function setupMetaDashboard() {
 
 function revealHint() {
     const hintText = document.getElementById('hint-text');
-    const categories = ATTRS.map(key => ({ key, label: key }));
+    const categories = ATTRS.map(key => ({ key, label: key, isGenre: false }))
+        .concat([{ key: 'Genre', label: 'Genre', isGenre: true }]);
 
     const unsolved = categories.filter(cat => {
+        if (cat.isGenre) {
+            const solved = guesses.some(g => compareGenreSets(g.Genres, secretChar.Genres) === 'green');
+            return !solved;
+        }
         const isCorrect = guesses.some(g => String(g[cat.key]).trim().toLowerCase() === String(secretChar[cat.key]).trim().toLowerCase());
         return !isCorrect;
     });
@@ -307,7 +350,8 @@ function revealHint() {
     if (availableToReveal.length > 0) {
         hintsRevealed++;
         const randomCat = availableToReveal[Math.floor(Math.random() * availableToReveal.length)];
-        const newHint = `<span style="color:#ffffff">${randomCat.label}:</span> ${secretChar[randomCat.key]}`;
+        const value = randomCat.isGenre ? (secretChar.Genres.join(', ') || '???') : secretChar[randomCat.key];
+        const newHint = `<span style="color:#ffffff">${randomCat.label}:</span> ${value}`;
 
         const currentContent = hintText.innerHTML;
         hintText.innerHTML = currentContent ? `${currentContent} | ${newHint}` : newHint;
@@ -519,8 +563,10 @@ function shareResult() {
 
     guesses.forEach(g => {
         let row = "";
-        ATTRS.forEach(key => {
-            const { state } = compareAttr(key, g[key], secretChar[key]);
+        SHARE_ORDER.forEach(key => {
+            const state = key === 'Genre'
+                ? compareGenreSets(g.Genres, secretChar.Genres)
+                : compareAttr(key, g[key], secretChar[key]).state;
             row += STATE_EMOJI[state];
         });
         shareText += row + "\n";
@@ -571,6 +617,8 @@ async function renderGuessCard(guess) {
     card.className = 'char-card';
     const imgUrl = await fetchImage(guess.ID);
 
+    // Series gets a wider box (spans 2 grid columns) to fill the space
+    // Genre used to occupy in the 4x2 grid.
     const attrHtml = ATTRS.map((key, i) => {
         const val = guess[key];
         const target = secretChar[key];
@@ -579,12 +627,29 @@ async function renderGuessCard(guess) {
         const cls = state === 'black' ? '' : state;
         const arrow = direction === 'up' ? ' ↑' : direction === 'down' ? ' ↓' : '';
         const displayVal = state === 'unknown' ? (val || '?') : val;
+        const sizeCls = key === 'Series' ? ' attr-box-wide' : '';
 
-        return `<div class="attr-box ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${key}</span><span><b style="color:#ffffff;">${displayVal}${arrow}</b></span></div>`;
+        return `<div class="attr-box${sizeCls} ${cls}" style="animation-delay:${i * 0.05}s"><span class="attr-label">${key}</span><span><b style="color:#ffffff;">${displayVal}${arrow}</b></span></div>`;
     }).join('');
 
+    // Genre tags: each tag is colored on its own merit against the
+    // secret's genre set - EXCEPT when the guess's full genre set is
+    // an exact match, in which case every tag gets the "perfect"
+    // green treatment instead of individual yellows.
+    const genreOverallTier = compareGenreSets(guess.Genres, secretChar.Genres);
+    const targetGenreSet = new Set(secretChar.Genres.map(g => g.toLowerCase()));
+    const genreTagsHtml = guess.Genres.length > 0
+        ? guess.Genres.map(g => {
+            let cls;
+            if (genreOverallTier === 'green') cls = 'green';
+            else if (targetGenreSet.has(g.toLowerCase())) cls = 'yellow';
+            else cls = 'plain';
+            return `<span class="genre-tag ${cls}">${g}</span>`;
+        }).join('')
+        : `<span class="genre-tag plain">???</span>`;
+
     const nameLink = `<a href="https://myanimelist.net/character/${guess.ID}" target="_blank" class="char-link"><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong></a>`;
-    card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div>${nameLink}<br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="attr-grid">${attrHtml}</div>`;
+    card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div>${nameLink}<br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="genre-tags">${genreTagsHtml}</div><div class="attr-grid">${attrHtml}</div>`;
     grid.prepend(card);
 }
 
