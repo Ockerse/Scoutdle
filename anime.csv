@@ -23,7 +23,7 @@ Griffith,Berserk,24,178,M,White,Blue,424,Action/Dark Fantasy/Horror,1997
 Casca,Berserk,24,165,F,Black,Brown,423,Action/Dark Fantasy/Horror,1997
 Puck,Berserk,100,10,NB,Blue,Black,5060,Action/Dark Fantasy/Horror,1997
 Judeau,Berserk,19,168,M,Blonde,Green,597,Action/Dark Fantasy/Horror,1997
-Pippin,Berserk,27,215,M,Black,Black,597,Action/Dark Fantasy/Horror,1997
+Pippin,Berserk,27,215,M,Black,Black,253903,Action/Dark Fantasy/Horror,1997
 Rickert,Berserk,19,155,M,Blonde,Brown,598,Action/Dark Fantasy/Horror,1997
 Serpico,Berserk,25,178,M,Blonde,Blue,5059,Action/Dark Fantasy/Horror,1997
 Farnese,Berserk,19,162,F,Blonde,Blue,7857,Action/Dark Fantasy/Horror,1997
@@ -55,7 +55,7 @@ Orihime Inoue,Bleach,17,157,F,Orange,Grey,7,Action/Adventure/Supernatural,2004
 Yasutora Sado (Chad),Bleach,17,197,M,Black,Brown,575,Action/Adventure/Supernatural,2004
 Sosuke Aizen,Bleach,500,186,M,Brown,Brown,1086,Action/Adventure/Supernatural,2004
 Kisuke Urahara,Bleach,400,183,M,Blonde,Grey,210,Action/Adventure/Supernatural,2004
-Toshiro Hitsugaya,Bleach,130,133,M,White,Teal,245,Action/Adventure/Supernatural,2004
+Toshiro Hitsugaya,Bleach,130,133,M,White,Teal,205724,Action/Adventure/Supernatural,2004
 Kenpachi Zaraki,Bleach,1000,202,M,Black,Black,909,Action/Adventure/Supernatural,2004
 Byakuya Kuchiki,Bleach,250,180,M,Black,Slate,907,Action/Adventure/Supernatural,2004
 Rangiku Matsumoto,Bleach,200,172,F,Blonde,Blue,904,Action/Adventure/Supernatural,2004
@@ -71,7 +71,7 @@ Isagi Yoichi,Blue Lock,17,175,M,Blue,Blue,177491,Sports/Psychological,2024
 Nagi Seishiro,Blue Lock,17,190,M,White,Grey,178722,Sports/Psychological,2024
 Meguru Bachira,Blue Lock,17,176,M,Black/Yellow,Yellow,178716,Sports/Psychological,2024
 Rin Itoshi,Blue Lock,16,186,M,Black,Teal,188026,Sports/Psychological,2024
-Chigiri Hyoma,Blue Lock,17,177,M,Red,Pink,178712,Sports/Psychological,2022
+Chigiri Hyoma,Blue Lock,17,177,M,Red,Pink,191871,Sports/Psychological,2022
 Hitori Gotoh,Bocchi the Rock!,15,156,F,Pink,Blue,206276,Comedy/Music/Slice of Life,2022
 Nijika Ijichi,Bocchi the Rock!,16,154,F,Blonde,Red,206277,Comedy/Music/Slice of Life,2022
 Ryo Yamada,Bocchi the Rock!,16,163,F,Blue,Yellow,206278,Comedy/Music/Slice of Life,2022
@@ -94,7 +94,7 @@ Lelouch vi Britannia,Code Geass,17,178,M,Black,Violet,417,Mecha/Sci-Fi/Drama,200
 Suzaku Kururugi,Code Geass,17,176,M,Brown,Green,559,Mecha/Sci-Fi/Drama,2006
 C.C.,Code Geass,600,168,F,Green,Gold,1111,Mecha/Sci-Fi/Drama,2006
 Kallen Stadtfeld,Code Geass,17,173,F,Red,Blue,558,Mecha/Sci-Fi/Drama,2006
-Nunnally vi Britannia,Code Geass,14,160,F,Brown,Violet,1110,Mecha/Sci-Fi/Drama,2006
+Nunnally vi Britannia,Code Geass,14,160,F,Brown,Violet,287061,Mecha/Sci-Fi/Drama,2006
 Shirley Fenette,Code Geass,17,172,F,Orange,Yellow,1120,Mecha/Sci-Fi/Drama,2006
 Euphemia li Britannia,Code Geass,16,166,F,Pink,Violet,1114,Mecha/Sci-Fi/Drama,2006
 Cornelia li Britannia,Code Geass,27,180,F,Purple,Violet,797,Mecha/Sci-Fi/Drama,2006
@@ -114,7 +114,7 @@ Julia,Cowboy Bebop,27,168,F,Blonde,Blue,2735,Neo-noir/Sci-Fi/Action,2001
 Gren,Cowboy Bebop,28,175,NB,Blonde,Blue,2736,Neo-noir/Sci-Fi/Action,2017
 Goku Black,Dragon Ball Super,30,175,M,Black,Grey,141729,Action/Adventure/Fantasy,2017
 Jaco,Dragon Ball Super,40,148,M,Purple,Yellow,88229,Action/Adventure/Fantasy,2017
-Hit,Dragon Ball Super,1000,193,M,Purple,Red,138959,Action/Adventure/Fantasy,2017
+Hit,Dragon Ball Super,1000,193,M,Purple,Red,246295,Action/Adventure/Fantasy,2017
 Toppo,Dragon Ball Super,1600,205,M,,Yellow,151305,Action/Adventure/Fantasy,2017
 Dyspo,Dragon Ball Super,1800,175,M,,Yellow,155563,Action/Adventure/Fantasy,2017
 Jiren,Dragon Ball Super,4000,195,M,,Black,150769,Action/Adventure/Fantasy,2017
@@ -165,7 +165,7 @@ Kaworu Nagisa,Evangelion,15,165,M,Grey,Red,1261,Mecha/Sci-Fi/Psychological,1995
 Ryoji Kaji,Evangelion,30,182,M,Black,Brown,1260,Mecha/Sci-Fi/Psychological,1995
 Toji Suzuhara,Evangelion,14,160,M,Black,Blue,1262,Mecha/Sci-Fi/Psychological,1995
 Mari Illustrious Makinami,Evangelion,34,168,F,Brown,Teal,21512,Mecha/Sci-Fi/Psychological,1995
-Pen Pen,Evangelion,2,50,M,Blue,Black,1892,Mecha/Sci-Fi/Psychological,1995
+Pen Pen,Evangelion,2,50,M,Blue,Black,216358,Mecha/Sci-Fi/Psychological,1995
 Maya Ibuki,Evangelion,24,160,F,Brown,Brown,1256,Mecha/Sci-Fi/Psychological,1995
 Kozo Fuyutsuki,Evangelion,60,178,M,Grey,Brown,1253,Mecha/Sci-Fi/Psychological,1995
 Yui Ikari,Evangelion,27,163,F,Brown,Brown,1258,Mecha/Sci-Fi/Psychological,2006
@@ -236,9 +236,9 @@ Himmel,Frieren,26,178,M,Blue,Blue,186854,Fantasy/Adventure/Drama,2023
 Sein,Frieren,30,182,M,Brown,Brown,196912,Fantasy/Adventure/Drama,2003
 Gintoki Sakata,Gintama,27,177,M,Silver,Brown,672,Action/Adventure/Comedy,2003
 Shinpachi Shimura,Gintama,16,166,M,Black,Brown,673,Action/Adventure/Comedy,2003
-Kagura,Gintama,14,155,F,Orange,Blue,674,Action/Adventure/Comedy,2003
-Sadaharu,Gintama,2,170,M,White,Black,2651,Action/Adventure/Comedy,2003
-Toshiro Hijikata,Gintama,27,177,M,Black,Blue,2650,Action/Adventure/Comedy,2003
+Kagura,Gintama,14,155,F,Orange,Blue,286647,Action/Adventure/Comedy,2003
+Sadaharu,Gintama,2,170,M,White,Black,250848,Action/Adventure/Comedy,2003
+Toshiro Hijikata,Gintama,27,177,M,Black,Blue,35374,Action/Adventure/Comedy,2003
 Sougo Okita,Gintama,18,170,M,Brown,Brown,2282,Action/Adventure/Comedy,2003
 Isao Kondo,Gintama,28,184,M,Brown,Brown,2943,Action/Adventure/Comedy,2003
 Kotaro Katsura,Gintama,27,175,M,Black,Brown,1533,Action/Adventure/Comedy,2003
@@ -254,7 +254,7 @@ Abuto,Gintama,32,186,M,Brown,Brown,26731,Action/Adventure/Comedy,2003
 Nobume Imai,Gintama,18,159,F,Blue,Blue,55577,Action/Adventure/Comedy,2003
 Shigeshige Tokugawa,Gintama,20,175,M,Black,Black,7157,Action/Adventure/Comedy,2003
 Tae Shimura,Gintama,18,168,F,Brown,Brown,2944,Action/Adventure/Comedy,2007
-Simon,Gurren Lagann,14,150,M,Dark Blue,Indigo,2257,Mecha/Action/Sci-Fi,2007
+Simon,Gurren Lagann,14,150,M,Dark Blue,Indigo,291673,Mecha/Action/Sci-Fi,2007
 Kamina,Gurren Lagann,18,184,M,Blue,Red,2075,Mecha/Action/Sci-Fi,2007
 Yoko Littner,Gurren Lagann,14,160,F,Red,Amber,2063,Mecha/Action/Sci-Fi,2007
 Nia Teppelin,Gurren Lagann,14,152,F,Blue,Flower,2761,Mecha/Action/Sci-Fi,2007
@@ -301,7 +301,7 @@ Kurapika,Hunter x Hunter,17,171,M,Blonde,Grey,28,Action/Adventure/Fantasy,2011
 Leorio Paradinight,Hunter x Hunter,19,193,M,Black,Brown,29,Action/Adventure/Fantasy,2011
 Hisoka Morow,Hunter x Hunter,28,187,M,Red,Yellow,31,Action/Adventure/Fantasy,2011
 Isaac Netero,Hunter x Hunter,110,155,M,Grey,Black,14489,Action/Adventure/Fantasy,2011
-Meruem,Hunter x Hunter,0,150,M,Purple,Violet,23277,Action/Adventure/Fantasy,2011
+Meruem,Hunter x Hunter,0,150,M,Purple,Violet,278470,Action/Adventure/Fantasy,2011
 Chrollo Lucilfer,Hunter x Hunter,26,177,M,Black,Grey,58,Action/Adventure/Fantasy,2011
 Biscuit Krueger,Hunter x Hunter,57,137,F,Blonde,Blue,13898,Action/Adventure/Fantasy,2011
 Illumi Zoldyck,Hunter x Hunter,24,185,M,Black,Black,57,Action/Adventure/Fantasy,2011
@@ -376,7 +376,7 @@ Rumiko Manbagi,Komi Can't Communicate,16,168,F,Blonde,Brown,171514,Comedy/Slice 
 Kaguya Shinomiya,Love is War,17,158,F,Black,Red,136359,Comedy/Romance,2019
 Miyuki Shirogane,Love is War,17,175,M,Blonde,Blue,136685,Comedy/Romance,2019
 Chika Fujiwara,Love is War,17,154,F,Pink,Blue,140810,Comedy/Romance,2019
-Yuu Ishigami,Love is War,16,172,M,Black,Black,143185,Comedy/Romance,2019
+Yu Ishigami,Love is War,16,172,M,Black,Black,290248,Comedy/Romance,2019
 Ai Hayasaka,Love is War,17,162,F,Blonde,Blue,143196,Comedy/Romance,2019
 Miko Iino,Love is War,15,147,F,Brown,Brown,152052,Comedy/Romance,2019
 Kei Shirogane,Love is War,14,158,F,Silver,Blue,161287,Comedy/Romance,2019
@@ -384,8 +384,8 @@ Maki Shijo,Love is War,17,158,F,Black,Red,182574,Comedy/Romance,2019
 Nagisa Kashiwagi,Love is War,17,156,F,Black,Brown,152051,Comedy/Romance,2019
 Tsubame Koyasu,Love is War,18,164,F,Pink,Brown,176685,Comedy/Romance,2019
 Kobachi Osaragi,Love is War,16,153,F,Black,Black,168664,Comedy/Romance,2019
-Papa Shirogane,Love is War,40,175,M,Blonde,Blue,167438,Comedy/Romance,2019
-Tanuma Shōzō,Love is War,17,176,M,Brown,Brown,183244,Comedy/Romance,2019
+Papa Shirogane,Love is War,40,175,M,Blonde,Blue,141388,Comedy/Romance,2019
+Tanuma Shōzō,Love is War,17,176,M,Brown,Brown,280737,Comedy/Romance,2019
 Chisato Nishikigi,Lycoris Recoil,17,162,F,Blonde,Red,204621,Action/Slice of Life,2022
 Takina Inoue,Lycoris Recoil,16,160,F,Black,Purple,204620,Action/Slice of Life,2022
 Mob Kageyama,Mob Psycho 100,14,157,M,Black,Black,109929,Action/Comedy/Supernatural,2016
@@ -400,6 +400,7 @@ Marin Kitagawa,My Dress-Up Darling,15,164,F,Blonde,Pink,166439,Romance/Comedy/Sl
 Wakana Gojo,My Dress-Up Darling,15,180,M,Black,Brown,166438,Romance/Comedy/Slice of Life,2022
 Sajuna Inui,My Dress-Up Darling,17,142,F,Pink,Pink,193037,Romance/Comedy/Slice of Life,2022
 Shinju Inui,My Dress-Up Darling,15,178,F,Pink,Pink,195814,Romance/Comedy/Slice of Life,2022
+Liz,My Dress-Up Darling,100,150,F,Black,Red,207323,Romance/Comedy/Slice of Life,2022
 Izuku Midoriya,My Hero Academia,16,166,M,Green,Green,117909,Action/Adventure/Comedy,2016
 Katsuki Bakugo,My Hero Academia,16,172,M,Blonde,Red,117911,Action/Adventure/Comedy,2016
 Shoto Todoroki,My Hero Academia,16,176,M,White/Red,Grey/Blue,118489,Action/Adventure/Comedy,2016
@@ -414,8 +415,8 @@ Fumikage Tokoyami,My Hero Academia,16,158,M,Black,Red,129826,Action/Adventure/Co
 Mina Ashido,My Hero Academia,16,159,F,Pink,Yellow,125318,Action/Adventure/Comedy,2016
 Shota Aizawa,My Hero Academia,31,183,M,Black,Black,117915,Action/Adventure/Comedy,2016
 All Might,My Hero Academia,49,220,M,Blonde,Blue,117921,Action/Adventure/Comedy,2016
-Endeavor,My Hero Academia,46,195,M,Red,Turquoise,141624,Action/Adventure/Comedy,2016
-Hawks,My Hero Academia,23,172,M,Blonde,Gold,162597,Action/Adventure/Comedy,2016
+Endeavor,My Hero Academia,46,195,M,Red,Turquoise,49013,Action/Adventure/Comedy,2016
+Hawks,My Hero Academia,23,172,M,Blonde,Gold,224418,Action/Adventure/Comedy,2016
 Mirio Togata,My Hero Academia,18,181,M,Blonde,Blue,149296,Action/Adventure/Comedy,2016
 Nejire Hado,My Hero Academia,18,164,F,Periwinkle,Blue,149909,Action/Adventure/Comedy,2016
 Tamaki Amajiki,My Hero Academia,18,177,M,Indigo,Black,149910,Action/Adventure/Comedy,2016
@@ -451,7 +452,7 @@ Zetsu,Naruto,1000,177,M,Green,Yellow,3150,Action/Adventure/Fantasy,2002
 Yuko Aioi,Nichijou,16,152,F,Brown,Brown,10418,Comedy/Slice of Life,2011
 Mio Naganohara,Nichijou,16,150,F,Blue,Blue,40081,Comedy/Slice of Life,2011
 Mai Minakami,Nichijou,16,154,F,Black,Black,10421,Comedy/Slice of Life,2011
-Nano Shinonome,Nichijou,1,156,F,Black,Black,10422,Comedy/Slice of Life,2011
+Nano Shinonome,Nichijou,1,156,F,Black,Black,235852,Comedy/Slice of Life,2011
 "Hakase ""Professor"" Shinonome",Nichijou,8,80,F,Ginger,Blue,41055,Comedy/Slice of Life,2011
 Sakamoto,Nichijou,20,25,M,Black,Black,41069,Comedy/Slice of Life,2011
 Misato Tachibana,Nichijou,16,155,F,Peach,Hazel,41615,Comedy/Slice of Life,2011
@@ -467,7 +468,7 @@ Makoto Sakurai,Nichijou,15,155,M,Black,Brown,43937,Comedy/Slice of Life,2011
 Principal Shinonome,Nichijou,62,164,M,Grey,Black,41618,Comedy/Slice of Life,2011
 Vice Principal,Nichijou,59,162,M,Brown,Black,41613,Comedy/Slice of Life,2011
 Mihoshi Tachibana,Nichijou,14,148,F,Peach,Hazel,45375,Comedy/Slice of Life,2011
-Tanaka,Nichijou,16,172,M,Afro,Black,42958,Comedy/Slice of Life,2011
+Tanaka,Nichijou,16,172,M,Afro,Black,264502,Comedy/Slice of Life,2011
 Monkey D. Luffy,One Piece,19,174,M,Black,Black,40,Action/Adventure/Fantasy,1999
 Roronoa Zoro,One Piece,21,181,M,Green,Black,62,Action/Adventure/Fantasy,1999
 Nami,One Piece,20,170,F,Orange,Brown,723,Action/Adventure/Fantasy,1999
@@ -510,14 +511,14 @@ Silver Fang,One Punch Man,81,165,M,Silver,Blue,81141,Action/Comedy/Supernatural,
 King,One Punch Man,29,187,M,Blonde,Blue,184065,Action/Comedy/Supernatural,2015
 Mumen Rider,One Punch Man,25,170,M,Brown,Brown,81935,Action/Comedy/Supernatural,2015
 Speed-o'-Sound Sonic,One Punch Man,25,174,M,Black,Grey,74167,Action/Comedy/Supernatural,2015
-Garou,One Punch Man,18,177,M,Silver,Yellow,112889,Action/Comedy/Supernatural,2015
+Garou,One Punch Man,18,177,M,Silver,Yellow,280150,Action/Comedy/Supernatural,2015
 Puri-Puri Prisoner,One Punch Man,33,220,M,Black,Black,86029,Action/Comedy/Supernatural,2015
 Child Emperor,One Punch Man,10,135,M,Brown,Brown,127449,Action/Comedy/Supernatural,2015
 Atomic Samurai,One Punch Man,37,182,M,Black,Black,127453,Action/Comedy/Supernatural,2015
 Zombieman,One Punch Man,30,174,M,Black,Red,278494,Action/Comedy/Supernatural,2015
 Drive Knight,One Punch Man,25,185,M,Black,Red,127452,Action/Comedy/Supernatural,2015
 Boros,One Punch Man,1000,240,M,Pink,Blue,247169,Action/Comedy/Supernatural,2015
-Orochi,One Punch Man,500,270,M,,Red,166791,Action/Comedy/Supernatural,2015
+Orochi,One Punch Man,500,270,M,,Red,278494,Action/Comedy/Supernatural,2015
 Hachiman Hikigaya,Oregairu,17,172,M,Black,Black,67065,Comedy/Romance/Drama,2013
 Yukino Yukinoshita,Oregairu,17,165,F,Black,Blue,67067,Comedy/Romance/Drama,2013
 Ai Hoshino,Oshi no Ko,16,151,F,Purple,Pink,188037,Drama/Mystery/Psychological,2023
@@ -527,7 +528,7 @@ Kana Arima,Oshi no Ko,17,150,F,Red,Pink,188038,Drama/Mystery/Psychological,2023
 Akane Kurokawa,Oshi no Ko,17,163,F,Blue,Blue,195178,Drama/Mystery/Psychological,2023
 Ash Ketchum,Pokemon,10,140,M,Black,Brown,2473,Adventure/Fantasy/Comedy,1997
 Misty,Pokemon,12,155,F,Orange,Blue,2909,Adventure/Fantasy/Comedy,1997
-Brock,Pokemon,15,175,M,Brown,Black,3854,Adventure/Fantasy/Comedy,1997
+Brock,Pokemon,15,175,M,Brown,Black,285481,Adventure/Fantasy/Comedy,1997
 Cynthia,Pokemon,28,178,F,Blonde,Grey,17947,Adventure/Fantasy/Comedy,1997
 Gary Oak,Pokemon,10,140,M,Brown,Black,4848,Adventure/Fantasy/Comedy,1997
 Jessie,Pokemon,25,170,F,Magenta,Blue,3935,Adventure/Fantasy/Comedy,1997
@@ -535,9 +536,9 @@ James,Pokemon,25,175,M,Blue,Green,3936,Adventure/Fantasy/Comedy,1997
 Professor Oak,Pokemon,65,175,M,Grey,Brown,17783,Adventure/Fantasy/Comedy,1997
 Dawn,Pokemon,10,145,F,Dark Blue,Blue,3966,Adventure/Fantasy/Comedy,1997
 May,Pokemon,10,145,F,Brown,Blue,6841,Adventure/Fantasy/Comedy,1997
-Serena,Pokemon,10,148,F,Honey,Blue,91975,Adventure/Fantasy/Comedy,1997
-Leon,Pokemon,25,180,M,Purple,Amber,178273,Adventure/Fantasy/Comedy,1997
-Steven Stone,Pokemon,25,177,M,Silver,Blue,27162,Adventure/Fantasy/Comedy,1997
+Serena,Pokemon,10,148,F,Honey,Blue,272474,Adventure/Fantasy/Comedy,1997
+Leon,Pokemon,25,180,M,Purple,Amber,288257,Adventure/Fantasy/Comedy,1997
+Steven Stone,Pokemon,25,177,M,Silver,Blue,271462,Adventure/Fantasy/Comedy,1997
 Giovanni,Pokemon,44,185,M,Brown,Black,9881,Adventure/Fantasy/Comedy,1997
 Erika,Pokemon,18,160,F,Blue,Black,17283,Adventure/Fantasy/Comedy,1997
 Sabrina,Pokemon,21,165,F,Black,Red,17112,Adventure/Fantasy/Comedy,1997
@@ -595,7 +596,7 @@ Tamao Tamamura,Shaman King,13,154,F,Pink,Pink,6195,Action/Adventure/Supernatural
 Manta Oyamada,Shaman King,14,80,M,Blonde,Black,174,Action/Adventure/Supernatural,2001
 Jun Tao,Shaman King,17,168,F,Purple,Brown,4327,Action/Adventure/Supernatural,2001
 Silva,Shaman King,27,185,M,Black,Brown,7145,Action/Adventure/Supernatural,2001
-Shirayuki,Snow White with the Red Hair,18,162,F,Red,Green,18323,Romance/Fantasy,2015
+Shirayuki,Snow White with the Red Hair,18,162,F,Red,Green,246450,Romance/Fantasy,2015
 Zen Wistaria,Snow White with the Red Hair,19,176,M,Silver,Blue,18324,Romance/Fantasy,2015
 Sung Jinwoo,Solo Leveling,24,185,M,Black,Blue,174185,Power Fantasy/Action/Fantasy,2024
 Cha Hae-In,Solo Leveling,23,165,F,Blonde,Grey,173979,Power Fantasy/Action/Fantasy,2024
@@ -612,7 +613,7 @@ Lord Death,Soul Eater,1000,250,M,,Yellow,8457,Action/Adventure/Supernatural,2008
 Marie Mjolnir,Soul Eater,30,170,F,Blonde,Grey,15769,Action/Adventure/Supernatural,2008
 Sid Barrett,Soul Eater,35,185,M,Blue,Blue,16582,Action/Adventure/Supernatural,2008
 Justin Law,Soul Eater,17,174,M,Blonde,Blue,14019,Action/Adventure/Supernatural,2008
-Excalibur,Soul Eater,1000,60,M,White,Black,13046,Action/Adventure/Supernatural,2008
+Excalibur,Soul Eater,1000,60,M,White,Black,265606,Action/Adventure/Supernatural,2008
 Holo,Spice and Wolf,600,155,F,Brown,Red,7373,Adventure/Romance/Drama,2008
 Anya Forger,Spy x Family,6,99,F,Pink,Green,170256,Comedy/Slice of Life/Action,2022
 Yor Forger,Spy x Family,27,170,F,Black,Red,170329,Comedy/Slice of Life/Action,2022
@@ -644,7 +645,8 @@ Argo,Sword Art Online,17,155,F,Brown,Brown,66645,Action/Fantasy/Sci-Fi,2012
 Asuna,Sword Art Online,18,168,F,Orange,Hazel,36828,Action/Fantasy/Sci-Fi,2012
 Lisbeth,Sword Art Online,18,160,F,Pink,Blue,43906,Action/Fantasy/Sci-Fi,2012
 Alice Zuberg,Sword Art Online,19,165,F,Blonde,Blue,75450,Action/Fantasy/Sci-Fi,2012
-Klein,Sword Art Online,25,175,M,Red,Brown,36830,Action/Fantasy/Sci-Fi,2012
+Death Gun,Sword Art Online,20,175,M,Black,Red,289049,Action/Fantasy/Sci-Fi,2012
+Klein,Sword Art Online,25,175,M,Red,Brown,224052,Action/Fantasy/Sci-Fi,2012
 Heathcliff,Sword Art Online,28,190,M,Grey,Grey,68885,Action/Fantasy/Sci-Fi,2012
 Agil,Sword Art Online,29,204,M,Bald,Brown,54099,Action/Fantasy/Sci-Fi,2012
 Oberon,Sword Art Online,30,180,M,Blonde,Green,71581,Action/Fantasy/Sci-Fi,2012
@@ -671,7 +673,7 @@ Ken Kaneki,Tokyo Ghoul,19,169,M,White,Grey,87275,Horror/Action/Dark Fantasy,2014
 Touka Kirishima,Tokyo Ghoul,17,156,F,Blue,Blue,87277,Horror/Action/Dark Fantasy,2014
 Rize Kamishiro,Tokyo Ghoul,18,164,F,Purple,Purple,103409,Horror/Action/Dark Fantasy,2014
 Hinami Fueguchi,Tokyo Ghoul,14,148,F,Brown,Brown,99675,Horror/Action/Dark Fantasy,2014
-Kotaro Amon,Tokyo Ghoul,26,191,M,Black,Grey,99671,Horror/Action/Dark Fantasy,2014
+Kotaro Amon,Tokyo Ghoul,26,191,M,Black,Grey,89025,Horror/Action/Dark Fantasy,2014
 Thorfinn,Vinland Saga,19,155,M,Blonde,Brown,10138,History/Action/Drama,2019
 Askeladd,Vinland Saga,44,180,M,Blonde,Blue,13020,History/Action/Drama,2019
 Canute,Vinland Saga,19,170,M,Blonde,Blue,17438,History/Action/Drama,2019
@@ -760,7 +762,7 @@ Hiro,Darling in the FranXX,14,168,M,Black,Blue,155678,Mecha/Sci-Fi/Drama,2018
 Kokoro,Darling in the FranXX,14,165,F,Blonde,Blue,155684,Mecha/Sci-Fi/Drama,2018
 Gorou,Darling in the FranXX,14,175,M,Blonde,Amber,155681,Mecha/Sci-Fi/Drama,2018
 Miku,Darling in the FranXX,14,156,F,Red,Blue,155682,Mecha/Sci-Fi/Drama,2018
-Mitsuru,Darling in the FranXX,14,165,M,Brown,Brown,155687,Mecha/Sci-Fi/Drama,2018
+Mitsuru,Darling in the FranXX,14,165,M,Brown,Brown,158653,Mecha/Sci-Fi/Drama,2018
 Zorome,Darling in the FranXX,14,161,M,Brown,Hazel,155683,Mecha/Sci-Fi/Drama,2018
 Ikuno,Darling in the FranXX,14,163,F,Purple,Grey,155686,Mecha/Sci-Fi/Drama,2018
 Futoshi,Darling in the FranXX,14,168,M,Brown,Brown,155685,Mecha/Sci-Fi/Drama,2018

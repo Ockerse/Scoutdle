@@ -5,7 +5,6 @@
 let characters = [], secretChar = null, fuse = null, guesses = [], gameOver = false, currentMode = 'daily';
 let hintsRevealed = 0;
 const MAX_GUESSES = 10;
-const imgCache = new Map();
 
 // Attributes shown as scored grid boxes, in display order. Genre is
 // handled separately now (see GENRE_TIER / genre tag rendering below)
@@ -112,104 +111,28 @@ function compareAttr(key, guessVal, targetVal) {
 }
 
 // -------------------------------------------------------------------
-// FIX #3: Image fetches are now queued and throttled instead of
-// firing one uncapped request per guess. Jikan's public tier is rate
-// limited (~3 req/sec, 60/min); a queue with a small delay keeps us
-// well under that and avoids silent fallback-image failures.
+// Character images now come from a local /character_images folder
+// (file named <MAL_ID>.jpg), not the live Jikan API. Since the path is
+// fully deterministic from the ID, there's no fetch, no rate limit, no
+// retry logic, and no manifest needed - the browser just tries to load
+// the file, and onImgLoadError (below) swaps in Scoutdle.jpeg if that
+// particular character's file doesn't exist yet.
 // -------------------------------------------------------------------
-const imgQueue = [];
-let imgQueueRunning = false;
-const IMG_REQUEST_DELAY_MS = 350; // ~3 req/sec ceiling
-
-function queueImageFetch(id) {
-    return new Promise((resolve) => {
-        imgQueue.push({ id, resolve });
-        runImgQueue();
-    });
-}
-
-async function runImgQueue() {
-    if (imgQueueRunning) return;
-    imgQueueRunning = true;
-    while (imgQueue.length > 0) {
-        const { id, resolve } = imgQueue.shift();
-        resolve(await fetchImageNow(id));
-        if (imgQueue.length > 0) {
-            await new Promise(r => setTimeout(r, IMG_REQUEST_DELAY_MS));
-        }
-    }
-    imgQueueRunning = false;
-}
-
-const IMG_MAX_RETRIES = 3;
-const IMG_RETRY_BASE_DELAY_MS = 800; // doubles each retry: 800ms, 1600ms, 3200ms
-
-async function fetchImageNow(id, attempt = 0) {
-    if (!id || isNaN(id)) {
-        console.warn(`fetchImage: skipped - invalid/missing MAL_ID "${id}"`);
-        return "Scoutdle.jpeg";
-    }
-    if (imgCache.has(id)) return imgCache.get(id);
-    try {
-        const res = await fetch(`https://api.jikan.moe/v4/characters/${id}`);
-
-        if (res.status === 429) {
-            if (attempt < IMG_MAX_RETRIES) {
-                // Respect a Retry-After header if Jikan sends one, otherwise
-                // back off exponentially so a burst of guesses doesn't keep
-                // hammering the API while it's already rate-limiting us.
-                const retryAfterHeader = parseInt(res.headers.get('Retry-After'), 10);
-                const delay = !isNaN(retryAfterHeader)
-                    ? retryAfterHeader * 1000
-                    : IMG_RETRY_BASE_DELAY_MS * Math.pow(2, attempt);
-
-                console.warn(`Jikan rate-limited character ${id} (attempt ${attempt + 1}/${IMG_MAX_RETRIES}) - retrying in ${delay}ms`);
-                await new Promise(r => setTimeout(r, delay));
-                return fetchImageNow(id, attempt + 1);
-            }
-            // Retries exhausted - fall through to the local fallback image
-            // rather than leaving the guess card without an image at all.
-            console.warn(`Jikan rate limit persisted for character ${id} after ${IMG_MAX_RETRIES} retries - using fallback image`);
-            return "Scoutdle.jpeg";
-        }
-
-        if (res.ok) {
-            const data = await res.json();
-            const url = data.data?.images?.jpg?.image_url;
-            if (!url) {
-                console.warn(`Jikan returned no image_url for character ${id} - using fallback image`, data);
-                return "Scoutdle.jpeg";
-            }
-            imgCache.set(id, url);
-            return url;
-        }
-
-        // Non-ok, non-429 response (404 = character not found on Jikan,
-        // 500/503 = Jikan having issues, etc). Previously this failed
-        // completely silently - now it's visible in the console.
-        console.warn(`Jikan returned HTTP ${res.status} for character ${id} - using fallback image`);
-    } catch (e) {
-        // Network failure, CORS block, ad-blocker/extension interference,
-        // offline, etc. all land here.
-        console.error(`fetchImage: network error fetching character ${id} - using fallback image`, e);
-    }
-    return "Scoutdle.jpeg";
-}
-
-async function fetchImage(id) {
+function getCharacterImageSrc(id) {
     if (!id || isNaN(id)) return "Scoutdle.jpeg";
-    if (imgCache.has(id)) return imgCache.get(id);
-    return queueImageFetch(id);
+    return `character_images/${id}.jpg`;
 }
 
-// Called from onerror on <img> tags. Distinct from fetchImageNow's
-// failure logging - this catches the case where the Jikan API call
-// succeeded and returned a real image URL, but the BROWSER couldn't
-// actually load/display it (mixed content on an https page, hotlink
-// protection, a dead/expired CDN link, etc). Without this, that case
-// failed completely silently.
+// Kept as an async function so existing `await fetchImage(id)` call
+// sites don't need to change - awaiting a plain value resolves
+// immediately, so this has no real cost.
+async function fetchImage(id) {
+    return getCharacterImageSrc(id);
+}
+
+// Called from onerror on <img> tags - swaps in the fallback image if
+// a character's local file is missing (or any other load failure).
 function onImgLoadError(imgEl) {
-    console.warn(`Image failed to load in the browser (mixed content, hotlink block, or dead link): ${imgEl.src}`);
     imgEl.onerror = null; // avoid a loop if Scoutdle.jpeg itself is missing
     imgEl.src = 'Scoutdle.jpeg';
 }
@@ -475,8 +398,11 @@ function setupSearch() {
             // duplicate-name characters resolve to the exact one clicked.
             dropdown.innerHTML = results.map(r => `
                 <div class="item" onclick="selectGuess('${r.item.ID}')">
-                    <strong style="color:#ffffff; font-size:1rem;">${r.item.Name}</strong><br>
-                    <small style="color:#aaa;">${r.item.Series}</small>
+                    <img src="${getCharacterImageSrc(r.item.ID)}" class="dropdown-thumb" onerror="onImgLoadError(this)">
+                    <div>
+                        <strong style="color:#ffffff; font-size:1rem;">${r.item.Name}</strong><br>
+                        <small style="color:#aaa;">${r.item.Series}</small>
+                    </div>
                 </div>`).join('');
             dropdown.style.display = 'block';
         } else {
