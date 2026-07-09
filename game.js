@@ -141,18 +141,58 @@ async function runImgQueue() {
     imgQueueRunning = false;
 }
 
-async function fetchImageNow(id) {
-    if (!id || isNaN(id)) return "Scoutdle.jpeg";
+const IMG_MAX_RETRIES = 3;
+const IMG_RETRY_BASE_DELAY_MS = 800; // doubles each retry: 800ms, 1600ms, 3200ms
+
+async function fetchImageNow(id, attempt = 0) {
+    if (!id || isNaN(id)) {
+        console.warn(`fetchImage: skipped - invalid/missing MAL_ID "${id}"`);
+        return "Scoutdle.jpeg";
+    }
     if (imgCache.has(id)) return imgCache.get(id);
     try {
         const res = await fetch(`https://api.jikan.moe/v4/characters/${id}`);
+
+        if (res.status === 429) {
+            if (attempt < IMG_MAX_RETRIES) {
+                // Respect a Retry-After header if Jikan sends one, otherwise
+                // back off exponentially so a burst of guesses doesn't keep
+                // hammering the API while it's already rate-limiting us.
+                const retryAfterHeader = parseInt(res.headers.get('Retry-After'), 10);
+                const delay = !isNaN(retryAfterHeader)
+                    ? retryAfterHeader * 1000
+                    : IMG_RETRY_BASE_DELAY_MS * Math.pow(2, attempt);
+
+                console.warn(`Jikan rate-limited character ${id} (attempt ${attempt + 1}/${IMG_MAX_RETRIES}) - retrying in ${delay}ms`);
+                await new Promise(r => setTimeout(r, delay));
+                return fetchImageNow(id, attempt + 1);
+            }
+            // Retries exhausted - fall through to the local fallback image
+            // rather than leaving the guess card without an image at all.
+            console.warn(`Jikan rate limit persisted for character ${id} after ${IMG_MAX_RETRIES} retries - using fallback image`);
+            return "Scoutdle.jpeg";
+        }
+
         if (res.ok) {
             const data = await res.json();
-            const url = data.data?.images?.jpg?.image_url || "Scoutdle.jpeg";
+            const url = data.data?.images?.jpg?.image_url;
+            if (!url) {
+                console.warn(`Jikan returned no image_url for character ${id} - using fallback image`, data);
+                return "Scoutdle.jpeg";
+            }
             imgCache.set(id, url);
             return url;
         }
-    } catch (e) { console.error("Img fetch error", e); }
+
+        // Non-ok, non-429 response (404 = character not found on Jikan,
+        // 500/503 = Jikan having issues, etc). Previously this failed
+        // completely silently - now it's visible in the console.
+        console.warn(`Jikan returned HTTP ${res.status} for character ${id} - using fallback image`);
+    } catch (e) {
+        // Network failure, CORS block, ad-blocker/extension interference,
+        // offline, etc. all land here.
+        console.error(`fetchImage: network error fetching character ${id} - using fallback image`, e);
+    }
     return "Scoutdle.jpeg";
 }
 
@@ -160,6 +200,18 @@ async function fetchImage(id) {
     if (!id || isNaN(id)) return "Scoutdle.jpeg";
     if (imgCache.has(id)) return imgCache.get(id);
     return queueImageFetch(id);
+}
+
+// Called from onerror on <img> tags. Distinct from fetchImageNow's
+// failure logging - this catches the case where the Jikan API call
+// succeeded and returned a real image URL, but the BROWSER couldn't
+// actually load/display it (mixed content on an https page, hotlink
+// protection, a dead/expired CDN link, etc). Without this, that case
+// failed completely silently.
+function onImgLoadError(imgEl) {
+    console.warn(`Image failed to load in the browser (mixed content, hotlink block, or dead link): ${imgEl.src}`);
+    imgEl.onerror = null; // avoid a loop if Scoutdle.jpeg itself is missing
+    imgEl.src = 'Scoutdle.jpeg';
 }
 
 function resetToHome() {
@@ -350,7 +402,11 @@ function revealHint() {
     if (availableToReveal.length > 0) {
         hintsRevealed++;
         const randomCat = availableToReveal[Math.floor(Math.random() * availableToReveal.length)];
-        const value = randomCat.isGenre ? (secretChar.Genres.join(', ') || '???') : secretChar[randomCat.key];
+        const value = randomCat.isGenre
+            ? (secretChar.Genres.length > 0
+                ? secretChar.Genres[Math.floor(Math.random() * secretChar.Genres.length)]
+                : '???')
+            : secretChar[randomCat.key];
         const newHint = `<span style="color:#ffffff">${randomCat.label}:</span> ${value}`;
 
         const currentContent = hintText.innerHTML;
@@ -604,7 +660,7 @@ async function endGame(status, shouldSave = true) {
 
     document.getElementById('end-actions').innerHTML = `
         <div style="margin-bottom:20px; padding:20px; background:#222; border-radius:15px; border: 2px solid var(--green); text-align: center;">
-            <img src="${secretImgUrl}" style="width: 120px; height: 170px; border-radius: 10px; border: 2px solid var(--green); margin-bottom: 15px; object-fit: cover;" onerror="this.src='Scoutdle.jpeg'">
+            <img src="${secretImgUrl}" style="width: 120px; height: 170px; border-radius: 10px; border: 2px solid var(--green); margin-bottom: 15px; object-fit: cover;" onerror="onImgLoadError(this)">
             <h3 style="color: white; margin-top: 0;">${msg}</h3>
             <button class="menu-btn" style="background:var(--green); color:black;" onclick="shareResult()">Share Result 📊</button>
             <button class="menu-btn" style="background:#444; color:white; margin-top:10px;" onclick="resetToHome()">Back to Menu</button>
@@ -649,7 +705,7 @@ async function renderGuessCard(guess) {
         : `<span class="genre-tag plain">???</span>`;
 
     const nameLink = `<a href="https://myanimelist.net/character/${guess.ID}" target="_blank" class="char-link"><strong style="color:var(--green); font-size:1.1rem;">${guess.Name}</strong></a>`;
-    card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="this.src='Scoutdle.jpeg'"><div>${nameLink}<br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="genre-tags">${genreTagsHtml}</div><div class="attr-grid">${attrHtml}</div>`;
+    card.innerHTML = `<div class="char-header"><img src="${imgUrl}" class="char-image" onerror="onImgLoadError(this)"><div>${nameLink}<br><small style="color:#ffffff;">${guess.Series}</small></div></div><div class="genre-tags">${genreTagsHtml}</div><div class="attr-grid">${attrHtml}</div>`;
     grid.prepend(card);
 }
 
