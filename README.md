@@ -1,0 +1,1 @@
+Daily Anime Game
