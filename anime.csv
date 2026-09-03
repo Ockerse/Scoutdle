@@ -55,7 +55,7 @@ Orihime Inoue,Bleach,17,157,F,Orange,Grey,7,Action/Adventure/Supernatural,2004
 Yasutora Sado (Chad),Bleach,17,197,M,Black,Brown,575,Action/Adventure/Supernatural,2004
 Sosuke Aizen,Bleach,500,186,M,Brown,Brown,1086,Action/Adventure/Supernatural,2004
 Kisuke Urahara,Bleach,400,183,M,Blonde,Grey,210,Action/Adventure/Supernatural,2004
-Toshiro Hitsugaya,Bleach,130,133,M,White,Teal,205724,Action/Adventure/Supernatural,2004
+Toshiro Hitsugaya,Bleach,130,133,M,White,l,205724,Action/Adventure/Supernatural,2004
 Kenpachi Zaraki,Bleach,1000,202,M,Black,Black,909,Action/Adventure/Supernatural,2004
 Byakuya Kuchiki,Bleach,250,180,M,Black,Slate,907,Action/Adventure/Supernatural,2004
 Rangiku Matsumoto,Bleach,200,172,F,Blonde,Blue,904,Action/Adventure/Supernatural,2004
@@ -70,7 +70,7 @@ Funny Valentine,JoJo Part 7,48,190,M,Blonde,Blue,20147,Action/Sports/Adventure,2
 Isagi Yoichi,Blue Lock,17,175,M,Blue,Blue,177491,Sports/Psychological,2024
 Nagi Seishiro,Blue Lock,17,190,M,White,Grey,178722,Sports/Psychological,2024
 Meguru Bachira,Blue Lock,17,176,M,Black/Yellow,Yellow,178716,Sports/Psychological,2024
-Rin Itoshi,Blue Lock,16,186,M,Black,Teal,188026,Sports/Psychological,2024
+Rin Itoshi,Blue Lock,16,186,M,Black,l,188026,Sports/Psychological,2024
 Chigiri Hyoma,Blue Lock,17,177,M,Red,Pink,178712,Sports/Psychological,2022
 Hitori Gotoh,Bocchi the Rock!,15,156,F,Pink,Blue,206276,Comedy/Music/Slice of Life,2022
 Nijika Ijichi,Bocchi the Rock!,16,154,F,Blonde,Red,206277,Comedy/Music/Slice of Life,2022
@@ -164,7 +164,7 @@ Ritsuko Akagi,Evangelion,30,170,F,Blonde,Hazel,1251,Mecha/Sci-Fi/Psychological,1
 Kaworu Nagisa,Evangelion,15,165,M,Grey,Red,1261,Mecha/Sci-Fi/Psychological,1995
 Ryoji Kaji,Evangelion,30,182,M,Black,Brown,1260,Mecha/Sci-Fi/Psychological,1995
 Toji Suzuhara,Evangelion,14,160,M,Black,Blue,1262,Mecha/Sci-Fi/Psychological,1995
-Mari Illustrious Makinami,Evangelion,34,168,F,Brown,Teal,21512,Mecha/Sci-Fi/Psychological,1995
+Mari Illustrious Makinami,Evangelion,34,168,F,Brown,l,21512,Mecha/Sci-Fi/Psychological,1995
 Pen Pen,Evangelion,2,50,M,Blue,Black,216358,Mecha/Sci-Fi/Psychological,1995
 Maya Ibuki,Evangelion,24,160,F,Brown,Brown,1256,Mecha/Sci-Fi/Psychological,1995
 Kozo Fuyutsuki,Evangelion,60,178,M,Grey,Brown,1253,Mecha/Sci-Fi/Psychological,1995
@@ -427,7 +427,7 @@ Sasuke Uchiha,Naruto,13,168,M,Black,Black,13,Action/Adventure/Fantasy,2002
 Sakura Haruno,Naruto,13,161,F,Pink,Green,145,Action/Adventure/Fantasy,2002
 Kakashi Hatake,Naruto,30,181,M,Silver,Dark Grey,85,Action/Adventure/Fantasy,2002
 Itachi Uchiha,Naruto,21,178,M,Black,Black,14,Action/Adventure/Fantasy,2002
-Gaara,Naruto,13,166,M,Red,Teal,1662,Action/Adventure/Fantasy,2002
+Gaara,Naruto,13,166,M,Red,l,1662,Action/Adventure/Fantasy,2002
 Hinata Hyuga,Naruto,13,160,F,Dark Blue,Lavender,1555,Action/Adventure/Fantasy,2002
 Jiraiya,Naruto,54,191,M,White,Black,2423,Action/Adventure/Fantasy,2002
 Tsunade,Naruto,54,163,F,Blonde,Amber,2767,Action/Adventure/Fantasy,2002
@@ -479,7 +479,7 @@ Nico Robin,One Piece,30,188,F,Black,Brown,61,Action/Adventure/Fantasy,1999
 Akainu,One Piece,55,306,M,Black,Brown,22687,Action/Adventure/Fantasy,1999
 Jewelry Bonney,One Piece,12,174,F,Pink,Brown,20295,Action/Adventure/Fantasy,1999
 Kizaru,One Piece,58,302,M,Black,Amber,21093,Action/Adventure/Fantasy,1999
-Marshall D. Teach (Blackbeard),One Piece,40,344,M,Black,Brown,3331,Action/Adventure/Fantasy,1999
+Marshall D. ch (Blackbeard),One Piece,40,344,M,Black,Brown,3331,Action/Adventure/Fantasy,1999
 Edward Newgate (Whitebeard),One Piece,72,666,M,White,Yellow,2751,Action/Adventure/Fantasy,1999
 Monkey D. Garp,One Piece,78,287,M,White,Brown,8064,Action/Adventure/Fantasy,1999
 Franky,One Piece,36,240,M,Blue,Black,64,Action/Adventure/Fantasy,1999
@@ -688,9 +688,9 @@ Yami Yugi,Yu-Gi-Oh!,3000,153,M,Tri-color,Crimson,1375,Action/Adventure/Fantasy,1
 Joey Wheeler,Yu-Gi-Oh!,16,178,M,Blonde,Brown,1377,Action/Adventure/Fantasy,1998
 Seto Kaiba,Yu-Gi-Oh!,16,186,M,Brown,Blue,1378,Action/Adventure/Fantasy,1998
 Maximillion Pegasus,Yu-Gi-Oh!,24,188,M,White,Brown,5991,Action/Adventure/Fantasy,1998
-Tea Gardner,Yu-Gi-Oh!,16,165,F,Brown,Blue,1376,Action/Adventure/Fantasy,1998
+Tea Gardner,Yu-Gi-Oh!,16,165,F,Brown,Blue,1379,Action/Adventure/Fantasy,1998
 Bakura Ryou,Yu-Gi-Oh!,16,176,M,White,Brown,1379,Action/Adventure/Fantasy,1998
-Yami Bakura,Yu-Gi-Oh!,3000,176,M,White,Brown,1380,Action/Adventure/Fantasy,1998
+Yami Bakura,Yu-Gi-Oh!,3000,176,M,White,Brown,1489,Action/Adventure/Fantasy,1998
 Mai Valentine,Yu-Gi-Oh!,24,175,F,Blonde,Purple,5994,Action/Adventure/Fantasy,1998
 Marik Ishtar,Yu-Gi-Oh!,16,180,M,Blonde,Violet,5287,Action/Adventure/Fantasy,1998
 Ishizu Ishtar,Yu-Gi-Oh!,20,167,F,Black,Blue,5993,Action/Adventure/Fantasy,1998
